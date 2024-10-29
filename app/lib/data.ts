@@ -11,6 +11,16 @@ export async function fetchExcerpts() {
   }
 }
 
+export async function fetchLatestExcerpts(count: number) {
+  try {
+    const data = await sql<Excerpt>`SELECT * FROM excerpts ORDER BY ASC LIMIT ${count}`;
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch latest excerpt data.');
+  }
+}
+
 export async function fetchExcerptById(id: string) {
   try {
     const data = await sql<Excerpt>`SELECT * FROM excerpts WHERE excerpts.id = ${id}`;
