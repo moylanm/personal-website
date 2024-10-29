@@ -1,4 +1,5 @@
 import { fetchExcerptById } from "@/app/lib/data";
+import { Card, CardContent, Container, Typography } from "@mui/material";
 import Markdown from 'react-markdown';
 
 export default async function Page({
@@ -14,11 +15,25 @@ export default async function Page({
   } = await fetchExcerptById(id);
 
   return (
-    <>
-      <h2>Excerpt detail page...</h2>
-      <h3>{author}</h3>
-      <h3>{work}</h3>
-      <Markdown>{body}</Markdown>
-    </>
-  );
+		<Container maxWidth='md'>
+			<Card sx={{
+				p: 2,
+        my: 10,
+				mx: 3,
+				display: 'flex',
+				justifyContent: 'center',
+			}}>
+				<CardContent>
+					<Typography sx={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
+						{author}
+						<br />
+						{work}
+					</Typography>
+					<Markdown>
+						{body}
+					</Markdown>
+				</CardContent>
+			</Card>
+		</Container>
+	);
 }
