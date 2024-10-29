@@ -13,7 +13,7 @@ export async function fetchExcerpts() {
 
 export async function fetchLatestExcerpts(count: number) {
   try {
-    const data = await sql<Excerpt>`SELECT * FROM excerpts ORDER BY ASC LIMIT ${count}`;
+    const data = await sql<Excerpt>`SELECT * FROM excerpts ORDER BY id DESC LIMIT ${count}`;
     return data.rows;
   } catch (error) {
     console.error('Database Error:', error);
