@@ -22,7 +22,9 @@ export default function RootLayout({
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <Navbar />
-            {children}
+            <main>
+              {children}
+            </main>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
