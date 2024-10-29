@@ -1,6 +1,16 @@
 import { fetchExcerptById } from "@/app/lib/data";
 import { Card, CardContent, Container, Typography } from "@mui/material";
+import { notFound } from "next/navigation";
+import { cache } from "react";
 import Markdown from 'react-markdown';
+
+const getExcerpt = cache(async (id: string) => {
+  const excerpt = await fetchExcerptById(id);
+
+  if (!excerpt) notFound()
+
+  return excerpt;
+})
 
 export default async function Page({
   params
@@ -12,7 +22,7 @@ export default async function Page({
     author,
     work,
     body
-  } = await fetchExcerptById(id);
+  } = await getExcerpt(id);
 
   return (
 		<Container maxWidth='md'>
