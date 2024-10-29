@@ -1,6 +1,6 @@
 export type User = {
 	email: string;
-	password_hash: string;
+	password_hash: Buffer;
 }
 
 export type Excerpt = {
