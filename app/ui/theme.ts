@@ -7,7 +7,8 @@ const theme = createTheme({
 		MuiCssBaseline: {
 			styleOverrides: {
 				body: {
-					paddingTop: '65px'
+					marginTop: '100px',
+					paddingBottom: '30px'
 				}
 			}
 		}
