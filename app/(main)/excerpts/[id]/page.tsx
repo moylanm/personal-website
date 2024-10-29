@@ -1,15 +1,10 @@
-import { fetchExcerptById, fetchExcerpts } from "@/app/lib/data";
-import type { Excerpt } from "@/app/lib/definitions";
+import { fetchExcerptById } from "@/app/lib/data";
 import Markdown from 'react-markdown';
-
-export async function generateStaticParams() {
-  return await fetchExcerpts();
-}
 
 export default async function Page({
   params
 }: {
-  params: Excerpt
+  params: { id: string }
 }) {
   const { id } = await params;
   const {
