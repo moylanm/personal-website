@@ -2,7 +2,8 @@ import Image from 'next/image';
 
 export default function NavbarLogo() {
   return <Image
-    className='md:none mr-1'
+    style={{ marginRight: '20px' }}
+    className='md:none'
     src='/yin-yang.png'
     width={32}
     height={32}
