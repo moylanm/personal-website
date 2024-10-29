@@ -8,5 +8,5 @@ export type Excerpt = {
 	author: string;
 	work: string;
 	body: string;
-	createdAt?: string;
+	created_at: string;
 }
