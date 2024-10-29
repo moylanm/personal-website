@@ -10,8 +10,6 @@ export const StyledTableContainer = styled(TableContainer)<TableContainerProps>(
 	marginRight: 'auto',
 	maxWidth: '800px',
 	overflow: 'auto',
-	alignItems: 'center',
-	justifyContent: 'center'
 });
 
 export const StyledLink = styled(Link)<LinkProps>({
