@@ -7,7 +7,7 @@ export default async function Page() {
 
   return (
     <>
-      <FilterForm excerpts={excerpts} />
+      <FilterForm />
       <List excerpts={excerpts} />
     </>
   );
