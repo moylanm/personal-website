@@ -1,4 +1,4 @@
-import { fetchExcerptById } from "@/app/lib/data";
+import { fetchExcerptById } from "@/app/_lib/data";
 import { Card, CardContent, Container, Typography } from "@mui/material";
 import { notFound } from "next/navigation";
 import { cache } from "react";

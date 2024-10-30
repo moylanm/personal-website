@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import { merriweather } from './ui/fonts';
+import { merriweather } from './_ui/fonts';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from './ui/theme';
-import Navbar from './ui/components/Navbar';
+import theme from './_ui/theme';
+import Navbar from './_ui/_components/Navbar';
 import { CssBaseline } from '@mui/material';
 
 export const metadata: Metadata = {

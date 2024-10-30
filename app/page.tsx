@@ -1,27 +1,27 @@
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { fetchLatestExcerpts } from "./lib/data";
-import { StyledLink, StyledTableContainer } from "./ui/style";
-import type { Excerpt } from "./lib/definitions";
+import { fetchLatestExcerpts } from "./_lib/data";
+import { StyledLink, StyledTableContainer } from "./_ui/style";
+import type { Excerpt } from "./_lib/definitions";
 
 export default async function Home() {
   const latest = await fetchLatestExcerpts(7);
 
   return (
-		<>
-			<StyledTableContainer component={Paper}>
-				<Table sx={{ minWidth: 650 }}>
-					<TableHead>
-						<TableRow>
-							<TableCell>Author & Work</TableCell>
-							<TableCell align="right">Created</TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{latest.map((excerpt) => <Row key={excerpt.id} excerpt={excerpt} />)}
-					</TableBody>
-				</Table>
-			</StyledTableContainer>
-		</>
+    <>
+      <StyledTableContainer component={Paper}>
+	<Table sx={{ minWidth: 650 }}>
+	  <TableHead>
+	    <TableRow>
+	      <TableCell>Author & Work</TableCell>
+	      <TableCell align="right">Created</TableCell>
+	    </TableRow>
+	  </TableHead>
+	  <TableBody>
+	    {latest.map((excerpt) => <Row key={excerpt.id} excerpt={excerpt} />)}
+	  </TableBody>
+	</Table>
+      </StyledTableContainer>
+    </>
   );
 }
 
