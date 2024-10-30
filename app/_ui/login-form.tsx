@@ -1,9 +1,9 @@
 'use client';
 
-import { authenticate } from '@/app/lib/actions';
+import { authenticate } from '@/app/_lib/actions';
 import { useActionState, useState } from 'react';
 import { Button, TextField } from '@mui/material';
-import MessageSnackbar from './components/Snackbar';
+import MessageSnackbar from './_components/Snackbar';
 
 export default function LoginForm() {
   const [snackbarOpen, setSnackbarOpen] = useState(true);
