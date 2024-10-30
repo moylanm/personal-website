@@ -28,6 +28,8 @@ export default async function Page({
 		<Container maxWidth='md'>
 			<Card sx={{
 				p: 2,
+				mt: '180px',
+				mb: '110px',
 				mx: 3,
 				display: 'flex',
 				justifyContent: 'center',
