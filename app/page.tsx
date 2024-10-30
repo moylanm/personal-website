@@ -1,10 +1,25 @@
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { fetchLatestExcerpts } from "./_lib/data";
+import { fetchAllExcerpts, fetchLatestExcerpts } from "./_lib/data";
 import { StyledLink, StyledTableContainer } from "./_ui/style";
 import type { Excerpt } from "./_lib/definitions";
+import { cache } from "react";
+
+const LATEST_COUNT = 7;
+
+const getLatestExcerpts = cache(async () => {
+  const allExcerpts = await fetchAllExcerpts();
+
+  let excerpts = allExcerpts.slice(-LATEST_COUNT);
+
+  if (!excerpts) {
+    excerpts = await fetchLatestExcerpts(LATEST_COUNT);
+  }
+
+  return excerpts;
+});
 
 export default async function Home() {
-  const latest = await fetchLatestExcerpts(7);
+  const latestExcerpts = await getLatestExcerpts();
 
   return (
     <>
@@ -17,7 +32,7 @@ export default async function Home() {
 	    </TableRow>
 	  </TableHead>
 	  <TableBody>
-	    {latest.map((excerpt) => <Row key={excerpt.id} excerpt={excerpt} />)}
+	    {latestExcerpts.map((excerpt) => <Row key={excerpt.id} excerpt={excerpt} />)}
 	  </TableBody>
 	</Table>
       </StyledTableContainer>
