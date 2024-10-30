@@ -4,7 +4,7 @@ import { cache } from 'react';
 
 export const fetchAllExcerpts = cache(async () => {
   try {
-    const data = await sql<Excerpt>`SELECT * FROM excerpts`;
+    const data = await sql<Excerpt>`SELECT * FROM excerpts ORDER BY id DESC`;
     return data.rows;
   } catch (error) {
     console.error('Database Error:', error);
