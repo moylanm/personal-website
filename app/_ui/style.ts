@@ -6,6 +6,7 @@ import { TableContainer } from '@mui/material';
 import Link, { type LinkProps } from 'next/link';
 
 export const StyledTableContainer = styled(TableContainer)<TableContainerProps>({
+	marginTop: '180px',
 	marginLeft: 'auto',
 	marginRight: 'auto',
 	maxWidth: '800px',
