@@ -5,6 +5,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './_ui/theme';
 import Navbar from './_ui/_components/Navbar';
 import { CssBaseline } from '@mui/material';
+import Footer from './_ui/_components/Footer';
 
 export const metadata: Metadata = {
   title: "mylesmoylan.net",
@@ -25,6 +26,7 @@ export default function RootLayout({
             <main>
               {children}
             </main>
+            <Footer />
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
