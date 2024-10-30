@@ -9,7 +9,7 @@ const List = ({
 }) => {
   return (
     <>
-
+      {excerpts}
     </>
   );
 }

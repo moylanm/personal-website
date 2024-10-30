@@ -9,6 +9,7 @@ const FilterForm = ({
 }) => {
   return (
     <>
+      {excerpts}
     </>
   );
 };
