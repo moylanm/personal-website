@@ -16,7 +16,7 @@ const getExcerpt = cache(async (id: string) => {
   if (!excerpt) notFound()
 
   return excerpt;
-})
+});
 
 export default async function Page({
   params
