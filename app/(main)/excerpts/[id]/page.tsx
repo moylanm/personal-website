@@ -1,17 +1,11 @@
-import { fetchAllExcerpts, fetchExcerptById } from "@/app/_lib/data";
+import { fetchExcerptById } from "@/app/_lib/data";
 import { Card, CardContent, Container, Typography } from "@mui/material";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import Markdown from 'react-markdown';
 
 const getExcerpt = cache(async (id: string) => {
-	const allExcerpts = await fetchAllExcerpts();
-
-	let excerpt = allExcerpts.find((excerpt) => excerpt.id === id);
-
-	if (!excerpt) {
-		excerpt = await fetchExcerptById(id);
-	}
+	const excerpt = await fetchExcerptById(id);
 
   if (!excerpt) notFound()
 
