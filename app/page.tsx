@@ -9,7 +9,7 @@ const LATEST_COUNT = 7;
 const getLatestExcerpts = cache(async () => {
   const allExcerpts = await fetchAllExcerpts();
 
-  let excerpts = allExcerpts.slice(-LATEST_COUNT);
+  let excerpts = allExcerpts.slice(0, LATEST_COUNT);
 
   if (!excerpts) {
     excerpts = await fetchLatestExcerpts(LATEST_COUNT);
