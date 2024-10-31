@@ -5,7 +5,7 @@ import type { TableContainerProps } from '@mui/material';
 import { Card, FormControl, Grid2, TableContainer } from '@mui/material';
 import Link, { type LinkProps } from 'next/link';
 
-export const StyledTableContainer = styled(TableContainer)<TableContainerProps>({
+export const HomeTableContainer = styled(TableContainer)<TableContainerProps>({
 	marginTop: '180px',
 	marginLeft: 'auto',
 	marginRight: 'auto',
@@ -21,7 +21,7 @@ export const StyledLink = styled(Link)<LinkProps>({
 	color: '#62CB31'
 });
 
-export const StyledContainer = styled(Container)({
+export const AboutContainer = styled(Container)({
 	marginTop: '150px',
 	marginBottom: '150px',
 	marginLeft: 'auto',

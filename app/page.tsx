@@ -1,6 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { fetchLatestExcerpts } from "./_lib/data";
-import { StyledLink, StyledTableContainer } from "./_ui/style";
+import { StyledLink, HomeTableContainer } from "./_ui/style";
 import type { Excerpt } from "./_lib/definitions";
 import { unstable_cache } from "next/cache";
 
@@ -19,7 +19,7 @@ export default async function Home() {
 
   return (
     <>
-      <StyledTableContainer component={Paper}>
+      <HomeTableContainer component={Paper}>
 	<Table sx={{ minWidth: 650 }}>
 	  <TableHead>
 	    <TableRow>
@@ -31,7 +31,7 @@ export default async function Home() {
 	    {latestExcerpts.map((excerpt) => <Row key={excerpt.id} excerpt={excerpt} />)}
 	  </TableBody>
 	</Table>
-      </StyledTableContainer>
+      </HomeTableContainer>
     </>
   );
 }
