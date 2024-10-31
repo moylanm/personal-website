@@ -4,6 +4,7 @@ import type { Excerpt } from '@/app/_lib/definitions';
 import { useCallback, useMemo, useReducer } from 'react';
 import { initialState, reducer } from '../_lib/reducer';
 import { ActionType, SortDirection, type AppState } from '../_lib/types';
+import { FilterFormContainer } from '@/app/_ui/style';
 import List from './List';
 import {
   type SelectChangeEvent,
@@ -104,7 +105,7 @@ const Excerpts = ({
 
   return (
     <>
-      <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <FilterFormContainer maxWidth='sm'>
         <FormControl>
           <FormLabel id='sort-by'>Sort by:</FormLabel>
           <RadioGroup
@@ -157,7 +158,7 @@ const Excerpts = ({
             </FormControl>
           )
         }
-      </Container>
+      </FilterFormContainer>
       <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Button type='button' onClick={handleRandomClick} aria-label='Select a random excerpt'>Random Excerpt</Button>
         <Button type='button' onClick={handleReset} aria-label='Reset filter'>Reset</Button>

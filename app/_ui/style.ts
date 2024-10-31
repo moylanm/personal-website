@@ -37,3 +37,13 @@ export const StyledGrid2 = styled(Grid2)({
 export const StyledCard = styled(Card)({
 	padding: '30px'
 })
+
+export const FilterFormContainer = styled(Container)(({theme}) => ({
+	position: 'relative',
+	alignItems: 'center',
+	display: 'flex',
+	flexDirection: 'column',
+	[theme.breakpoints.up(600)]: {
+		flexDirection: 'row'
+	},
+}));
