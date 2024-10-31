@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     'existentialism',
     'transcendentalism',
     'Buddhism',
-    'literature'
+    'literature',
   ],
 };
 

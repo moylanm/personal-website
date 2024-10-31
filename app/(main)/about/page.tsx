@@ -4,7 +4,7 @@ import { AboutCard, AboutContainer, AboutGrid2 } from '@/app/_ui/style';
 
 export const metadata: Metadata = {
 	title: 'About'
-}
+};
 
 export default function Page() {
 	return (
