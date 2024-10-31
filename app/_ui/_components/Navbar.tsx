@@ -103,16 +103,16 @@ const Navbar = () => {
             <Link href='mailto:contact@mylesmoylan.net'>
               <Image
                 style={{ marginRight: '10px' }}
-                width={32}
-                height={32}
+                width={24}
+                height={24}
                 src='/mail.png'
                 alt='Contact email'
               />
             </Link>
             <Link href='https://www.linkedin.com/in/myles-moylan/'>
               <Image
-                  width={32}
-                  height={32}
+                  width={24}
+                  height={24}
                   src='/linkedin.png'
                   alt='LinkedIn page'
               />
