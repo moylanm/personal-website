@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Link from 'next/link';
 import NavbarLogo from './NavbarLogo';
+import Image from 'next/image';
 
 const pages = [
   { url: '/', value: 'home'},
@@ -99,12 +100,23 @@ const Navbar = () => {
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-					{ /*
-            <DarkModeSwitch
-              checked={theme.darkTheme}
-              onChange={() => dispatch(toggleTheme())}
-            />
-						*/ }
+            <Link href='mailto:contact@mylesmoylan.net'>
+              <Image
+                style={{ marginRight: '10px' }}
+                width={32}
+                height={32}
+                src='/mail.png'
+                alt='Contact email'
+              />
+            </Link>
+            <Link href='https://www.linkedin.com/in/myles-moylan/'>
+              <Image
+                  width={32}
+                  height={32}
+                  src='/linkedin.png'
+                  alt='LinkedIn page'
+              />
+            </Link>
           </Box>
         </Toolbar>
       </Container>
