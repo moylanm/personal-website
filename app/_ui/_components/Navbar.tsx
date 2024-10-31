@@ -15,7 +15,7 @@ import Link from 'next/link';
 import NavbarLogo from './NavbarLogo';
 import Image from 'next/image';
 
-const pages = [
+const PAGES = [
   { url: '/', value: 'home'},
   { url: '/excerpts', value: 'excerpts'},
   { url: '/about', value: 'about'}
@@ -61,7 +61,7 @@ const Navbar = () => {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
-              {pages.map((page) => (
+              {PAGES.map((page) => (
                  <MenuItem
                   key={page.value}
 									component={Link}
@@ -87,7 +87,7 @@ const Navbar = () => {
             }}
           />
           <Box sx={{ marginLeft: 2, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {PAGES.map((page) => (
                <Button
                 key={page.value}
 								component={Link}
