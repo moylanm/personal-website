@@ -10,7 +10,22 @@ import Navbar from './_ui/_components/Navbar';
 import Footer from './_ui/_components/Footer';
 
 export const metadata: Metadata = {
-  title: "mylesmoylan.net",
+  title: {
+    template: '%s | mylesmoylan.net',
+    default: 'mylesmoylan.net',
+  },
+  description: 'The personal website of Myles Moylan',
+  creator: 'Myles Moylan',
+  keywords: [
+    'philosophy',
+    'psychology',
+    'religion',
+    'mythology',
+    'existentialism',
+    'transcendentalism',
+    'Buddhism',
+    'literature'
+  ],
 };
 
 export default function RootLayout({
