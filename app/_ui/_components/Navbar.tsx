@@ -86,7 +86,7 @@ const Navbar = () => {
               flexGrow: 1,
             }}
           />
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ marginLeft: 2, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
                <Button
                 key={page.value}
