@@ -1,7 +1,7 @@
 'use client'
 
 import { Container, styled } from '@mui/system';
-import type { TableContainerProps } from '@mui/material';
+import type { TableContainerProps, Grid2Props } from '@mui/material';
 import { Card, FormControl, Grid2, TableContainer } from '@mui/material';
 import Link, { type LinkProps } from 'next/link';
 
@@ -29,12 +29,12 @@ export const AboutContainer = styled(Container)({
 	maxWidth: '800px'
 });
 
-export const StyledGrid2 = styled(Grid2)({
+export const AboutGrid2 = styled(Grid2)<Grid2Props>({
 	alignItems: 'center',
 	justifyContent: 'center',
 });
 
-export const StyledCard = styled(Card)({
+export const AboutCard = styled(Card)({
 	padding: '30px'
 })
 

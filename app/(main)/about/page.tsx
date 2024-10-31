@@ -1,5 +1,5 @@
 import { Grid2 } from '@mui/material';
-import { AboutCard, AboutContainer, AboutGrid2} from '@/app/_ui/style';
+import { AboutCard, AboutContainer, AboutGrid2 } from '@/app/_ui/style';
 
 export default function Page() {
 	return (
