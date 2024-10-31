@@ -1,7 +1,6 @@
-import { fetchAllExcerpts } from "@/app/_lib/data";
-import FilterForm from "./_components/FilterForm";
-import List from "./_components/List";
-import { unstable_cache } from "next/cache";
+import { fetchAllExcerpts } from '@/app/_lib/data';
+import { unstable_cache } from 'next/cache';
+import Excerpts from './_components/Excerpts'
 
 const getAllExcerpts = unstable_cache(
   async () => {
@@ -14,11 +13,5 @@ const getAllExcerpts = unstable_cache(
 export default async function Page() {
   const excerpts = await getAllExcerpts();
 
-  return (
-    <>
-      <FilterForm />
-      <List excerpts={excerpts} />
-    </>
-  );
+  return <Excerpts excerpts={excerpts} />;
 }
-
