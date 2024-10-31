@@ -4,7 +4,7 @@ import type { Excerpt } from '@/app/_lib/definitions';
 import { useCallback, useMemo, useReducer } from 'react';
 import { initialState, reducer } from '../_lib/reducer';
 import { ActionType, SortDirection, type AppState } from '../_lib/types';
-import { FilterFormContainer } from '@/app/_ui/style';
+import { FilterFormContainer, FilterFormControl } from '@/app/_ui/style';
 import List from './List';
 import {
   type SelectChangeEvent,
@@ -106,7 +106,7 @@ const Excerpts = ({
   return (
     <>
       <FilterFormContainer maxWidth='sm'>
-        <FormControl>
+        <FilterFormControl>
           <FormLabel id='sort-by'>Sort by:</FormLabel>
           <RadioGroup
             aria-labelledby='sort-by'
@@ -117,8 +117,8 @@ const Excerpts = ({
             <FormControlLabel value={SortDirection.Newest} control={<Radio />} label='Newest' />
             <FormControlLabel value={SortDirection.Oldest} control={<Radio />} label='Oldest' />
           </RadioGroup>
-        </FormControl>
-        <FormControl>
+        </FilterFormControl>
+        <FilterFormControl>
           <InputLabel id='author'>Author</InputLabel>
           <Select
             sx={{ minWidth: '200px' }}
@@ -135,7 +135,7 @@ const Excerpts = ({
               ))
             }
           </Select>
-        </FormControl>
+        </FilterFormControl>
         {
           state.selectedAuthor && (
             <FormControl>

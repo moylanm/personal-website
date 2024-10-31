@@ -2,7 +2,7 @@
 
 import { Container, styled } from '@mui/system';
 import type { TableContainerProps } from '@mui/material';
-import { Card, Grid2, TableContainer } from '@mui/material';
+import { Card, FormControl, Grid2, TableContainer } from '@mui/material';
 import Link, { type LinkProps } from 'next/link';
 
 export const StyledTableContainer = styled(TableContainer)<TableContainerProps>({
@@ -45,5 +45,12 @@ export const FilterFormContainer = styled(Container)(({theme}) => ({
 	flexDirection: 'column',
 	[theme.breakpoints.up(600)]: {
 		flexDirection: 'row'
+	},
+}));
+
+export const FilterFormControl = styled(FormControl)(({theme}) => ({
+	marginRight: '0px',
+	[theme.breakpoints.up(600)]: {
+		marginRight: '25px'
 	},
 }));
