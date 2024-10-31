@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { fetchExcerptById } from "@/app/_lib/data";
 import { Card, CardContent, Container, Typography } from "@mui/material";
 import { notFound } from "next/navigation";
@@ -11,6 +12,20 @@ const getExcerpt = cache(async (id: string) => {
 
   return excerpt;
 });
+
+export async function generateMetadata({
+	params
+}: {
+	params: Promise<{ id: string }>
+}): Promise<Metadata> {
+	const { id } = await params;
+
+	const { author } = await getExcerpt(id);
+
+	return {
+		title: author
+	};
+}
 
 export default async function Page({
   params
