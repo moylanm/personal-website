@@ -4,9 +4,9 @@ export type User = {
 }
 
 export type Excerpt = {
-	id: string;
+	id?: string;
 	author: string;
 	work: string;
-	body: string;
-	created_at: string;
+	body?: string;
+	created_at?: string;
 }
