@@ -19,13 +19,18 @@ export async function fetchAllExcerpts() {
 
 export async function fetchLatestExcerpts(count: number) {
   try {
-    const data = await sql<Excerpt>`
+    const data = await sql`
       SELECT id, author, work, created_at
       FROM excerpts
       ORDER BY id DESC
       LIMIT ${count}
     `;
-    return data.rows;
+    return data.rows.map((row) => {
+      return <Excerpt>{
+        ...row,
+        createdAt: row.created_at
+      };
+    });
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch latest excerpt data.');
