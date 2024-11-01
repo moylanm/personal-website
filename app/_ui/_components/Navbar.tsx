@@ -100,14 +100,14 @@ const Navbar = () => {
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <Link href='mailto:contact@mylesmoylan.net'>
+            <Link href='https://github.com/moylanm'>
               <Image
                 style={{ marginRight: '10px' }}
                 width={24}
                 height={24}
-                src='/mail.png'
-                alt='Contact email'
-                title='LinkedIn'
+                src='/github.png'
+                alt='Github page'
+                title='Github'
               />
             </Link>
             <Link href='https://www.linkedin.com/in/myles-moylan/'>
@@ -116,7 +116,7 @@ const Navbar = () => {
                   height={24}
                   src='/linkedin.png'
                   alt='LinkedIn page'
-                  title='Contact'
+                  title='LinkedIn'
               />
             </Link>
           </Box>
