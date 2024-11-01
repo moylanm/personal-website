@@ -48,7 +48,7 @@ const Row: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
             {`${excerpt.author} - ${excerpt.work}`}
           </StyledLink>
         </TableCell>
-        <TableCell align="right">{new Date(excerpt.created_at).toDateString()}</TableCell>
+        <TableCell align="right">{new Date(excerpt.createdAt).toDateString()}</TableCell>
       </TableRow>
     </>
   )

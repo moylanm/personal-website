@@ -1,6 +1,6 @@
 export type User = {
 	email: string;
-	password_hash: Buffer;
+	passwordHash: Buffer;
 }
 
 export type Excerpt = {
@@ -8,5 +8,10 @@ export type Excerpt = {
 	author: string;
 	work: string;
 	body: string;
-	created_at: string;
+	createdAt: string;
+}
+
+export type SessionPayload = {
+	userId: string;
+	expiresAt: Date;
 }
