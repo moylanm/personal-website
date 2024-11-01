@@ -20,7 +20,7 @@ export async function fetchAllExcerpts() {
 export async function fetchLatestExcerpts(count: number) {
   try {
     const data = await sql<Excerpt>`
-      SELECT id, author, work, created_at
+      SELECT id, author, work, createdat
       FROM excerpts
       ORDER BY id DESC
       LIMIT ${count}
