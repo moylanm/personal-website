@@ -20,7 +20,7 @@ export async function fetchAllExcerpts() {
 export async function fetchLatestExcerpts(count: number) {
   try {
     const data = await sql<Excerpt>`
-      SELECT id, author, work, createdat
+      SELECT id, author, work, created_at
       FROM excerpts
       ORDER BY id DESC
       LIMIT ${count}
@@ -38,7 +38,7 @@ export async function fetchExcerptById(id: string) {
       SELECT author, work, body
       FROM excerpts
       WHERE id = ${id}
-      `;
+    `;
     return data.rows[0];
   } catch (error) {
     console.error('Database Error:', error);
