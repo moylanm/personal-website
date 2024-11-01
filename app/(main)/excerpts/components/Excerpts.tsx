@@ -1,10 +1,10 @@
 'use client'
 
-import type { Excerpt } from '@/app/_lib/definitions';
+import type { Excerpt } from '@/app/lib/definitions';
 import { useCallback, useMemo, useReducer } from 'react';
-import { initialState, reducer } from '../_lib/reducer';
-import { ActionType, SortDirection, type AppState } from '../_lib/types';
-import { FilterFormContainer, FilterFormControl } from '@/app/_ui/style';
+import { initialState, reducer } from '../lib/reducer';
+import { ActionType, SortDirection, type AppState } from '../lib/types';
+import { FilterFormContainer, FilterFormControl } from '@/app/ui/style';
 import List from './List';
 import {
   type SelectChangeEvent,

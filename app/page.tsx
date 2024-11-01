@@ -1,7 +1,7 @@
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { fetchLatestExcerpts } from "./_lib/data";
-import { StyledLink, HomeTableContainer } from "./_ui/style";
-import type { Excerpt } from "./_lib/definitions";
+import { fetchLatestExcerpts } from "./lib/data";
+import { StyledLink, HomeTableContainer } from "./ui/style";
+import type { Excerpt } from "./lib/definitions";
 import { unstable_cache } from "next/cache";
 
 const LATEST_COUNT = 7;
