@@ -107,6 +107,7 @@ const Navbar = () => {
                 height={24}
                 src='/mail.png'
                 alt='Contact email'
+                title='LinkedIn'
               />
             </Link>
             <Link href='https://www.linkedin.com/in/myles-moylan/'>
@@ -115,6 +116,7 @@ const Navbar = () => {
                   height={24}
                   src='/linkedin.png'
                   alt='LinkedIn page'
+                  title='Contact'
               />
             </Link>
           </Box>
