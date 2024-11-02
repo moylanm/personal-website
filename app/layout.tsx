@@ -6,8 +6,8 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import theme from './ui/theme';
-import Navbar from './ui/components/Navbar';
-import Footer from './ui/components/Footer';
+import Navbar from './ui/main/Navbar';
+import Footer from './ui/main/Footer';
 
 export const metadata: Metadata = {
   title: {

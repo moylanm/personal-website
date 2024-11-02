@@ -52,5 +52,4 @@ const Row: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
       </TableRow>
     </>
   )
-}
-
+};
