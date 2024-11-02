@@ -36,6 +36,10 @@ export const {
   },
   providers: [
     CredentialsProvider({
+      credentials: {
+        email: {},
+        password: {},
+      },
       async authorize(credentials) {
         if (credentials === null) return null;
 
