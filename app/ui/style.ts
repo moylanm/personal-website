@@ -2,7 +2,7 @@
 
 import { Container, styled } from '@mui/system';
 import type { TableContainerProps, Grid2Props } from '@mui/material';
-import { Card, FormControl, Grid2, TableContainer } from '@mui/material';
+import { Card, FormControl, Grid2, Paper, TableContainer } from '@mui/material';
 import Link, { type LinkProps } from 'next/link';
 
 export const HomeTableContainer = styled(TableContainer)<TableContainerProps>({
@@ -54,3 +54,14 @@ export const FilterFormControl = styled(FormControl)(({theme}) => ({
 		marginRight: '25px'
 	},
 }));
+
+export const LoginFormContainer = styled(Container)({
+	marginTop: '180px',
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+});
+
+export const LoginFormCard = styled(Paper) ({
+	padding: '25px'
+});
