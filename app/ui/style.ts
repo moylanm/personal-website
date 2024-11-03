@@ -1,6 +1,6 @@
 'use client'
 
-import { display, styled, width } from '@mui/system';
+import { styled} from '@mui/system';
 import type { TableContainerProps, Grid2Props } from '@mui/material';
 import {
 	Container,
@@ -151,9 +151,7 @@ export const NavLink = styled(Link)<LinkProps>(({theme}) => ({
 	fontSize: '14px',
 	lineHeight: '20px',
 	fontWeight: 500,
-	'&:hover': {
-
-	},
+	textDecoration: 'none',
 	[theme.breakpoints.up('md')]: {
 		flex: 'none',
 		WebkitJustifyContent: 'flex-start',
@@ -176,9 +174,6 @@ export const SideNavButton = styled(Button)(({theme}) => ({
 	fontSize: '14px',
 	lineHeight: '20px',
 	fontWeight: 500,
-	'&:hover': {
-
-	},
 	[theme.breakpoints.up('md')]: {
 		flex: 'none',
 		WebkitJustifyContent: 'flex-start',

@@ -1,5 +1,11 @@
+import {
+	SideNavOuterBox,
+	SideNavButton,
+	SideNavInnerBox,
+	SideNavSpacer,
+	SignOutBox
+} from '../style';
 import { signOut } from '@/auth';
-import { SideNavOuterBox, SideNavButton, SideNavInnerBox, SideNavSpacer, SignOutBox } from '../style';
 import { PowerSettingsNewOutlined } from '@mui/icons-material'
 import NavLinks from './NavLinks';
 

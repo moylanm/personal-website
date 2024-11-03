@@ -3,7 +3,7 @@
 import { PostAddOutlined, EditOutlined } from '@mui/icons-material'
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { NavLink } from '../style';
+import { NavLink, SideNavButton } from '../style';
 
 const LINKS = [
 	{
@@ -31,8 +31,10 @@ export default function NavLinks() {
 						key={link.name}
 						href={link.href}
 					>
-						<LinkIcon className='h-6 w-6' />
-						<p className='hidden md:block'>{link.name}</p>
+						<SideNavButton>
+							<LinkIcon className='h-6 w-6' />
+							<p className='hidden md:block'>{link.name}</p>
+						</SideNavButton>
 					</NavLink>
 				);
 			})}
