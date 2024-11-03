@@ -8,8 +8,7 @@ export default async function Page() {
 	
 	return (
 		<>
-			<div>{session.user.email}</div>
-			<div>{session.user.name}</div>
+			Dashboard page...
 		</>
 	);
 }
