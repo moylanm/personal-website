@@ -1,6 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { fetchLatestExcerpts } from "./lib/data";
-import { StyledLink, HomeTableContainer } from "./ui/style";
+import { ExcerptLink, HomeTableContainer } from "./ui/style";
 import type { Excerpt } from "./lib/definitions";
 import { unstable_cache } from "next/cache";
 
@@ -44,9 +44,9 @@ const Row: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
         <TableCell component="th" scope="row">
-          <StyledLink href={`excerpts/${excerpt.id}`}>
+          <ExcerptLink href={`excerpts/${excerpt.id}`}>
             {`${excerpt.author} - ${excerpt.work}`}
-          </StyledLink>
+          </ExcerptLink>
         </TableCell>
         <TableCell align="right">{new Date(excerpt.createdAt).toDateString()}</TableCell>
       </TableRow>

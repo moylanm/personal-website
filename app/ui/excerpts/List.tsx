@@ -8,7 +8,7 @@ import {
   Typography
 } from "@mui/material";
 import type { Excerpt } from "@/app/lib/definitions";
-import { StyledLink } from "@/app/ui/style";
+import { ExcerptLink } from "@/app/ui/style";
 import { Container } from "@mui/system";
 import { useEffect, useRef, useState } from "react";
 import Markdown from "react-markdown";
@@ -72,13 +72,13 @@ const Item: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
 				justifyContent: 'center',
 			}}>
 				<CardContent>
-          <StyledLink href={`/excerpts/${excerpt.id}`}>
+          <ExcerptLink href={`/excerpts/${excerpt.id}`}>
             <Typography sx={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
               {excerpt.author}
               <br />
               {excerpt.work}
             </Typography>
-          </StyledLink>
+          </ExcerptLink>
 					<Markdown>
 						{excerpt.body}
 					</Markdown>
