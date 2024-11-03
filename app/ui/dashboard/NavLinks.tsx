@@ -1,7 +1,6 @@
 'use client'
 
 import { PostAddOutlined, EditOutlined } from '@mui/icons-material'
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { NavLink, SideNavButton } from '../style';
 
@@ -19,8 +18,6 @@ const LINKS = [
 ];
 
 export default function NavLinks() {
-	const pathname = usePathname();
-
 	return (
 		<>
 			{LINKS.map((link) => {
