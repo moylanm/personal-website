@@ -22,9 +22,9 @@ export default function LoginForm() {
       <LoginFormContainer>
         <LoginFormCard>
           <form action={formAction}>
-            <TextField type='email' id='email' name='email' label='Email' margin='normal' required />
+            <TextField fullWidth type='email' id='email' name='email' label='Email' margin='normal' required />
             <br />
-            <TextField type='password' id='password' name='password' label='Password' margin='normal' required />
+            <TextField fullWidth type='password' id='password' name='password' label='Password' margin='normal' required />
             <br />
             <Button type='submit' disabled={isPending}>
               Login

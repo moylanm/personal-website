@@ -63,5 +63,6 @@ export const LoginFormContainer = styled(Container)({
 });
 
 export const LoginFormCard = styled(Paper) ({
+	minWidth: '400px',
 	padding: '25px'
 });
