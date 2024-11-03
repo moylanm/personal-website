@@ -2,8 +2,8 @@
 
 import type { Excerpt } from '@/app/lib/definitions';
 import { useCallback, useMemo, useReducer } from 'react';
-import { initialState, reducer } from './lib/reducer';
-import { ActionType, SortDirection, type AppState } from './lib/types';
+import { initialState, reducer } from '@/lib/reducer';
+import { ActionType, SortDirection, type AppState } from '@/lib/types';
 import { FilterFormContainer, FilterFormControl } from '@/app/ui/style';
 import List from './List';
 import {
