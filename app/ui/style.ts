@@ -152,6 +152,7 @@ export const NavLink = styled(Link)<LinkProps>(({theme}) => ({
 	lineHeight: '20px',
 	fontWeight: 500,
 	textDecoration: 'none',
+	color: '#62CB31',
 	[theme.breakpoints.up('md')]: {
 		flex: 'none',
 		WebkitJustifyContent: 'flex-start',
@@ -174,6 +175,7 @@ export const SideNavButton = styled(Button)(({theme}) => ({
 	fontSize: '14px',
 	lineHeight: '20px',
 	fontWeight: 500,
+	color: '#62CB31',
 	[theme.breakpoints.up('md')]: {
 		flex: 'none',
 		WebkitJustifyContent: 'flex-start',
