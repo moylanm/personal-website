@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Publish Excerpt'
+  title: 'Publish'
 };
 
 export default async function Page() {
