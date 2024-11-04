@@ -4,22 +4,12 @@ import { sql } from '@vercel/postgres';
 import type { Excerpt } from './definitions';
 import { unstable_cache } from 'next/cache';
 
-const LATEST_COUNT = 7;
-
 export const allExcerpts = unstable_cache(
   async () => {
     return await fetchAllExcerpts();
   },
   ['excerpts'],
   { revalidate: 3600, tags: ['excerpts'] }
-);
-
-export const latestExcerpts = unstable_cache(
-  async () => {
-    return await fetchLatestExcerpts(LATEST_COUNT);
-  },
-  ['latest'],
-  { revalidate: 3600, tags: ['latest'] }
 );
 
 async function fetchAllExcerpts() {
@@ -36,7 +26,7 @@ async function fetchAllExcerpts() {
   }
 }
 
-async function fetchLatestExcerpts(count: number) {
+export async function fetchLatestExcerpts(count: number) {
   try {
     const data = await sql`
       SELECT id, author, work, created_at

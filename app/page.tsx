@@ -1,10 +1,21 @@
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { latestExcerpts } from "./lib/data";
+import { fetchLatestExcerpts } from "./lib/data";
 import { ExcerptLink, HomeTableContainer } from "./ui/style";
 import type { Excerpt } from "./lib/definitions";
+import { unstable_cache } from "next/cache";
+
+const LATEST_COUNT = 7;
+
+const getLatestExcerpts = unstable_cache(
+  async () => {
+    return await fetchLatestExcerpts(LATEST_COUNT);
+  },
+  ['latest'],
+  { revalidate: 3600, tags: ['latest'] }
+);
 
 export default async function Home() {
-  const excerpts = await latestExcerpts();
+  const latestExcerpts = await getLatestExcerpts();
 
   return (
     <>
@@ -17,7 +28,7 @@ export default async function Home() {
 	    </TableRow>
 	  </TableHead>
 	  <TableBody>
-	    {excerpts.map((excerpt) => <Row key={excerpt.id} excerpt={excerpt} />)}
+	    {latestExcerpts.map((excerpt) => <Row key={excerpt.id} excerpt={excerpt} />)}
 	  </TableBody>
 	</Table>
       </HomeTableContainer>
