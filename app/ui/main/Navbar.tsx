@@ -92,7 +92,6 @@ const Navbar = () => {
                 key={page.value}
 								component={Link}
 								href={page.url}
-                onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: '#62CB21', display: 'block' }}
                >
                   {page.value}
