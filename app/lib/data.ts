@@ -91,7 +91,23 @@ export async function editExcerpt({
       WHERE id = ${id}
     `;
   } catch (error) {
-    console.error('Database Erro:', error);
+    console.error('Database Error:', error);
     throw new Error('Failed to update excerpt data.');
+  }
+}
+
+export async function deleteExcerpt({
+  id
+}: {
+  id: string
+}) {
+  try {
+    await sql`
+      DELETE FROM excerpts
+      WHERE id = ${id}
+    `;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to delete excerpt.');
   }
 }
