@@ -50,3 +50,48 @@ export async function fetchExcerptById(id: string) {
     throw new Error('Failed to fetch excerpt by id data.');
   }
 }
+
+export async function publishExcerpt({
+  author,
+  work,
+  body
+}: {
+  author: string,
+  work: string,
+  body: string
+}) {
+  try {
+    const id = await sql`
+      INSERT INTO excerpts (author, work, body)
+      VALUES (${author}, ${work}, ${body})
+      RETURNING id
+    `;
+    return id;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to insert excerpt data.');
+  } 
+}
+
+export async function editExcerpt({
+  id,
+  author,
+  work,
+  body
+}: {
+  id: string,
+  author: string,
+  work: string,
+  body: string
+}) {
+  try {
+    await sql`
+      UPDATE excerpts
+      SET author = ${author}, work = ${work}, body = ${body}
+      WHERE id = ${id}
+    `;
+  } catch (error) {
+    console.error('Database Erro:', error);
+    throw new Error('Failed to update excerpt data.');
+  }
+}
