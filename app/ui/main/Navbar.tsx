@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -22,6 +23,7 @@ const PAGES = [
 ];
 
 const Navbar = () => {
+  const pathname = usePathname();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -67,6 +69,7 @@ const Navbar = () => {
 									component={Link}
 									href={page.url}
                   onClick={handleCloseNavMenu}
+                  style={ pathname === page.url ? { backgroundColor: '#303539' } : {} }
                 >
                   <Typography sx={{ color: '#62CB21', textAlign: 'center' }}>
                     {page.value.toUpperCase()}
@@ -93,6 +96,7 @@ const Navbar = () => {
 								component={Link}
 								href={page.url}
                 sx={{ my: 2, color: '#62CB21', display: 'block' }}
+                style={ pathname === page.url ? { backgroundColor: '#303539' } : {} }
                >
                   {page.value}
               </Button>
