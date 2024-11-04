@@ -1,10 +1,15 @@
 'use client'
 
-import { PostAddOutlined, EditOutlined } from '@mui/icons-material'
+import { HomeOutlined, PostAddOutlined, EditOutlined } from '@mui/icons-material'
 import Link from 'next/link';
 import { NavLink, SideNavButton } from '../style';
 
 const LINKS = [
+	{
+		name: 'Home',
+		href: '/dashboard',
+		icon: HomeOutlined
+	},
 	{
 		name: 'Publish',
 		href: '/dashboard/publish',
