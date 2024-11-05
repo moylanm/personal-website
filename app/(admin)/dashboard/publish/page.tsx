@@ -1,7 +1,7 @@
 'use client'
 
 import { publishExcerpt } from '@/app/lib/data';
-import { PublisherButton } from '@/app/ui/style';
+import { DashboardFormButton } from '@/app/ui/style';
 import {
   resetPublishForm,
   selectAllExcerpts,
@@ -139,9 +139,9 @@ export default function Page() {
           multiline
           rows={10}
         />
-        <PublisherButton variant='contained' type='submit'>Publish</PublisherButton>
+        <DashboardFormButton variant='contained' type='submit'>Publish</DashboardFormButton>
         <Box sx={{ boxSizing: 'border-box', width: '5px', height: 'auto', display: 'inline-block' }} />
-        <PublisherButton variant='contained' onClick={clearForm}>Clear</PublisherButton>
+        <DashboardFormButton variant='contained' onClick={clearForm}>Clear</DashboardFormButton>
       </form>
     </>
   );

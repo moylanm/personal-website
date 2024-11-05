@@ -13,7 +13,8 @@ import {
 	TableContainer,
 	Link,
 	type LinkProps,
-	type ButtonProps
+	type ButtonProps,
+    DialogTitle
 } from '@mui/material';
 import NextLink, { type LinkProps as NextLinkProps } from 'next/link';
 
@@ -194,6 +195,10 @@ export const SignOutBox = styled(Box)(({theme}) => ({
 	},
 }));
 
-export const PublisherButton = styled(Button)<ButtonProps>({
+export const DashboardFormButton = styled(Button)<ButtonProps>({
 	backgroundColor: '#62CB31'
+});
+
+export const CloseDialogTitle = styled(DialogTitle)({
+	fontSize: '1rem'
 });
