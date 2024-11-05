@@ -1,6 +1,6 @@
 'use client'
 
-import { publishExcerpt } from '@/app/lib/data';
+import { publishExcerpt } from '@/app/lib/actions';
 import { DashboardFormButton } from '@/app/ui/style';
 import {
   resetPublishForm,
