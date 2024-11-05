@@ -85,59 +85,64 @@ export default function Page() {
 
   return (
     <>
-      <Autocomplete
-        freeSolo
-        inputValue={authorField}
-        onInputChange={handleAuthorFieldChange}
-        options={authors}
-        renderOption={(props, option) => (
-          <Typography {...props} key={option}>
-            {option}
-          </Typography>
-        )}
-        renderInput={(authors) =>
-          <TextField
-            {...authors}
-            fullWidth
-            id='author'
-            label='Author'
-            margin='normal'
-          />}
-      />
-      <Autocomplete
-        freeSolo
-        inputValue={workField}
-        onInputChange={handlWorkFieldChange}
-        options={sortedWorksOptions}
-        groupBy={(option) => option.author}
-        getOptionLabel={(option) => typeof option === 'string' ? option : option.work}
-        renderOption={(props, option) => (
-          <Typography {...props} key={option.work}>
-            {option.work}
-          </Typography>
-        )}
-        renderInput={(params) =>
-          <TextField
-            {...params}
-            fullWidth
-            id='work'
-            label='Work'
-            margin='normal'
-          />}
-      />
-      <TextField
-        fullWidth
-        id='body'
-        label='Body'
-        margin='normal'
-        onChange={handleBodyFieldChange}
-        value={bodyField}
-        multiline
-        rows={10}
-      />
-      <PublisherButton variant='contained' onClick={submitForm}>Publish</PublisherButton>
-      <Box sx={{ boxSizing: 'border-box', width: '5px', height: 'auto', display: 'inline-block' }} />
-      <PublisherButton variant='contained' onClick={clearForm}>Clear</PublisherButton>
+      <form action={submitForm}>
+        <Autocomplete
+          freeSolo
+          inputValue={authorField}
+          onInputChange={handleAuthorFieldChange}
+          options={authors}
+          renderOption={(props, option) => (
+            <Typography {...props} key={option}>
+              {option}
+            </Typography>
+          )}
+          renderInput={(authors) =>
+            <TextField
+              {...authors}
+              fullWidth
+              required
+              id='author'
+              label='Author'
+              margin='normal'
+            />}
+        />
+        <Autocomplete
+          freeSolo
+          inputValue={workField}
+          onInputChange={handlWorkFieldChange}
+          options={sortedWorksOptions}
+          groupBy={(option) => option.author}
+          getOptionLabel={(option) => typeof option === 'string' ? option : option.work}
+          renderOption={(props, option) => (
+            <Typography {...props} key={option.work}>
+              {option.work}
+            </Typography>
+          )}
+          renderInput={(params) =>
+            <TextField
+              {...params}
+              fullWidth
+              required
+              id='work'
+              label='Work'
+              margin='normal'
+            />}
+        />
+        <TextField
+          fullWidth
+          required
+          id='body'
+          label='Body'
+          margin='normal'
+          onChange={handleBodyFieldChange}
+          value={bodyField}
+          multiline
+          rows={10}
+        />
+        <PublisherButton variant='contained' type='submit'>Publish</PublisherButton>
+        <Box sx={{ boxSizing: 'border-box', width: '5px', height: 'auto', display: 'inline-block' }} />
+        <PublisherButton variant='contained' onClick={clearForm}>Clear</PublisherButton>
+      </form>
     </>
   );
 }
