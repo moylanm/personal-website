@@ -60,7 +60,7 @@ export async function fetchExcerptById(id: string) {
   }
 }
 
-export async function publishExcerpt({
+export async function publishExcerptToDb({
   author,
   work,
   body
@@ -70,19 +70,17 @@ export async function publishExcerpt({
   body: string
 }) {
   try {
-    const id = await sql`
+    await sql`
       INSERT INTO excerpts (author, work, body)
       VALUES (${author}, ${work}, ${body})
-      RETURNING id
     `;
-    return id;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to insert excerpt data.');
   } 
 }
 
-export async function editExcerpt({
+export async function updateExcerptInDb({
   id,
   author,
   work,
@@ -105,7 +103,7 @@ export async function editExcerpt({
   }
 }
 
-export async function deleteExcerpt({
+export async function deleteExcerptFromDb({
   id
 }: {
   id: string
