@@ -14,7 +14,8 @@ import {
 	Link,
 	type LinkProps,
 	type ButtonProps,
-    DialogTitle
+    DialogTitle,
+    AccordionSummary
 } from '@mui/material';
 import NextLink, { type LinkProps as NextLinkProps } from 'next/link';
 
@@ -91,6 +92,7 @@ export const DashboardLayoutBox = styled(Box)(({theme}) => ({
 }));
 
 export const DashboardLayoutSideNavBox = styled(Box)(({theme}) => ({
+	position: 'fixed',
 	width: '100%',
 	flex: 'none',
 	[theme.breakpoints.up('md')]: {
@@ -196,7 +198,14 @@ export const SignOutBox = styled(Box)(({theme}) => ({
 }));
 
 export const DashboardFormButton = styled(Button)<ButtonProps>({
-	backgroundColor: '#62CB31'
+	backgroundColor: '#62CB31',
+	color: '#0D1A07'
+});
+
+export const EditorAccordionSummary = styled(AccordionSummary)({
+	'&:hover': {
+		backgroundColor: '#303539'
+	}
 });
 
 export const CloseDialogTitle = styled(DialogTitle)({
