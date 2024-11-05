@@ -1,6 +1,5 @@
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import StoreProvider from './StoreProvider';
 import SideNav from '@/app/ui/dashboard/SideNav';
 import {
   DashboardLayoutBox,
@@ -8,15 +7,18 @@ import {
   DashboardLayoutSideNavBox,
 } from '@/app/ui/style';
 import { Grid2 } from '@mui/material';
+import StoreProvider from './StoreProvider';
+import { allExcerpts } from '@/app/lib/data';
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
   const session = await auth();
 
   if (!session?.user) redirect('/');
 
+  const excerpts = await allExcerpts();
+
   return (
     <>
-      <StoreProvider>
         <Grid2 container>
           <Grid2 size={2}>
             <DashboardLayoutBox>
@@ -25,13 +27,14 @@ export default async function Layout({ children }: { children: React.ReactNode }
               </DashboardLayoutSideNavBox>
             </DashboardLayoutBox>
           </Grid2>
-          <Grid2>
+          <Grid2 size={6}>
             <DashboardLayoutChildrenBox>
-              {children}
+              <StoreProvider excerpts={excerpts}>
+                {children}
+              </StoreProvider>
             </DashboardLayoutChildrenBox>
           </Grid2>
         </Grid2>
-      </StoreProvider>
     </>
   );
 }
