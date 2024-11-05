@@ -5,14 +5,16 @@ import type { TableContainerProps, Grid2Props } from '@mui/material';
 import {
 	Container,
 	Box,
+	Button,
 	Card,
 	FormControl,
 	Grid2,
 	Paper,
 	TableContainer,
 	Link,
-	type LinkProps, 
-    Button} from '@mui/material';
+	type LinkProps,
+	type ButtonProps
+} from '@mui/material';
 import NextLink, { type LinkProps as NextLinkProps } from 'next/link';
 
 export const HomeTableContainer = styled(TableContainer)<TableContainerProps>({
@@ -191,3 +193,7 @@ export const SignOutBox = styled(Box)(({theme}) => ({
 		display: 'block',
 	},
 }));
+
+export const PublisherButton = styled(Button)<ButtonProps>({
+	backgroundColor: '#62CB31'
+});
