@@ -1,10 +1,6 @@
-import type { Metadata } from 'next';
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Edit'
-};
-
-export default async function Page() {
+export default function Page() {
   return (
     <>
       Edit page...
