@@ -42,15 +42,12 @@ export default function Page() {
     dispatch(resetPublishForm());
   }, [dispatch]);
 
-  const submitForm = useCallback(async () => {
-    await publishExcerpt({
+  const submitForm = useCallback(() => {
+    publishExcerpt({
       author: authorField,
       work: workField,
       body: bodyField
     });
-
-    revalidateTag('latest');
-    revalidateTag('excerpts');
   }, [authorField, workField, bodyField]);
 
   const authors = useMemo<string[]>(() => {
