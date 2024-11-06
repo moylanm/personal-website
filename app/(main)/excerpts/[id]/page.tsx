@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
-import { fetchExcerptById } from "@/app/lib/data";
-import { Card, CardContent, Container, Typography } from "@mui/material";
-import { notFound } from "next/navigation";
-import { cache } from "react";
+import { excerptById } from '@/app/lib/data';
+import { Card, CardContent, Container, Typography } from '@mui/material';
+import { notFound } from 'next/navigation';
+import { cache } from 'react';
 import Markdown from 'react-markdown';
 
 const getExcerpt = cache(async (id: string) => {
-	const excerpt = await fetchExcerptById(id);
+	const excerpt = await excerptById(id);
 
   if (!excerpt) notFound()
 
