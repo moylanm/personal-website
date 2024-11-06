@@ -29,7 +29,7 @@ const List = ({
 				setDisplayCount(prevCount => Math.min(prevCount + CHUNK_SIZE, excerpts.length));
 			}
 		}, {
-				rootMargin: '250px'
+				rootMargin: '500px'
 		});
 
 		let observerRefValue = null;

@@ -23,7 +23,7 @@ export default function Page() {
         setDisplayCount(prevCount => Math.min(prevCount + CHUNK_SIZE, excerptIds.length));
       }
     }, {
-      rootMargin: '250px'
+      rootMargin: '500px'
     });
 
 		let observerRefValue = null;
