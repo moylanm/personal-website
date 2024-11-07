@@ -2,7 +2,7 @@
 
 import { authenticate } from '@/lib/actions';
 import { useActionState } from 'react';
-import { Button, TextField } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import { LoginFormContainer, LoginFormCard } from '../style';
 
 export default function LoginForm() {
@@ -24,7 +24,7 @@ export default function LoginForm() {
               Login
             </Button>
           </form>
-          {errorMessage && <div>{errorMessage}</div>}
+          {errorMessage && <Box sx={{ textAlign: 'center' }}>{errorMessage}</Box>}
         </LoginFormCard>
       </LoginFormContainer>
     </>
