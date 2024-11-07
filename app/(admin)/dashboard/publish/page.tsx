@@ -58,13 +58,13 @@ export default function Page() {
         work: workField,
         body: bodyField
       } as Excerpt));
-  }, [authorField, workField, bodyField]);
+  }, [dispatch, authorField, workField, bodyField]);
 
   useEffect(() => {
     if (status === APIStatus.Fulfilled) {
       clearForm();
     }
-  }, [status])
+  }, [status, clearForm])
 
   const authors = useMemo<string[]>(() => {
     return [...new Set(excerpts.map(excerpt => excerpt.author))];

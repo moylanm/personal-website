@@ -90,7 +90,7 @@ const Item: React.FC<{ excerptId: string }> = ({ excerptId }) => {
   const handleDelete = useCallback(() => {
     handleCloseDialog();
     dispatch(deleteExcerpt(excerptId));
-  }, [excerptId, handleCloseDialog]);
+  }, [dispatch, excerptId, handleCloseDialog]);
 
   const handleUpdate = useCallback(() => {
     dispatch(updateExcerpt({
@@ -99,7 +99,7 @@ const Item: React.FC<{ excerptId: string }> = ({ excerptId }) => {
       work: workRef.current?.value ?? '',
       body: bodyRef.current?.value ?? ''
     } as Excerpt));
-  }, [excerptId]);
+  }, [dispatch, excerptId]);
 
   return (
     <>

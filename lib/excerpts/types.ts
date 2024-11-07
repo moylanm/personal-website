@@ -1,8 +1,8 @@
-import type { Excerpt } from '@/app/lib/definitions';
+import type { Excerpt } from '@/lib/definitions';
 
 export enum SortDirection {
-	Newest = 'newest',
-	Oldest = 'oldest',
+	Newest = 'NEWEST',
+	Oldest = 'OLDEST',
 }
 
 export type AppState = {
