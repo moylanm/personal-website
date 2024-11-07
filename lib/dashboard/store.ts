@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import excerptsReducer from './features/excerpts/excerptsSlice';
+import excerptsReducer from './features/excerpts/excerptSlice';
 
 export const makeStore = () => {
   return configureStore({

@@ -1,17 +1,20 @@
 'use client'
 
-import { publishExcerpt } from '@/app/lib/actions';
 import { DashboardFormButton } from '@/app/ui/style';
 import {
-  resetPublishForm,
+  createExcerpt,
+  clearPublishForm,
   selectAllExcerpts,
   setAuthorField,
   setBodyField,
-  setWorkField
-} from '@/lib/dashboard/features/excerpts/excerptsSlice';
+  setWorkField,
+  resetState
+} from '@/lib/dashboard/features/excerpts/excerptSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
 import { Autocomplete, Box, TextField, Typography } from '@mui/material';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
+import { APIStatus, type Excerpt } from '@/lib/definitions';
+import MessageSnackbar from '@/app/ui/dashboard/MessageSnackbar';
 
 interface WorksOption {
   author: string;
@@ -21,9 +24,17 @@ interface WorksOption {
 export default function Page() {
   const dispatch = useAppDispatch();
   const excerpts = useAppSelector(selectAllExcerpts);
+  const status = useAppSelector(state => state.excerpts.status);
+  const error = useAppSelector(state => state.excerpts.error);
+  const statusMessage = useAppSelector(state => state.excerpts.statusMessage);
+
   const authorField = useAppSelector(state => state.excerpts.authorField);
   const workField = useAppSelector(state => state.excerpts.workField);
   const bodyField = useAppSelector(state => state.excerpts.bodyField);
+
+  const handleSnackbarClose = useCallback(() => {
+    dispatch(resetState());
+  }, [dispatch]);
 
   const handleAuthorFieldChange = useCallback((_: React.SyntheticEvent, value: string) => {
     dispatch(setAuthorField(value));
@@ -38,16 +49,22 @@ export default function Page() {
   }, [dispatch]);
 
   const clearForm = useCallback(() => {
-    dispatch(resetPublishForm());
+    dispatch(clearPublishForm());
   }, [dispatch]);
 
   const submitForm = useCallback(() => {
-    publishExcerpt({
-      author: authorField,
-      work: workField,
-      body: bodyField
-    });
+    dispatch(createExcerpt({
+        author: authorField,
+        work: workField,
+        body: bodyField
+      } as Excerpt));
   }, [authorField, workField, bodyField]);
+
+  useEffect(() => {
+    if (status === APIStatus.Fulfilled) {
+      clearForm();
+    }
+  }, [status])
 
   const authors = useMemo<string[]>(() => {
     return [...new Set(excerpts.map(excerpt => excerpt.author))];
@@ -96,7 +113,6 @@ export default function Page() {
             <TextField
               {...authors}
               fullWidth
-              required
               id='author'
               label='Author'
               margin='normal'
@@ -118,7 +134,6 @@ export default function Page() {
             <TextField
               {...params}
               fullWidth
-              required
               id='work'
               label='Work'
               margin='normal'
@@ -126,7 +141,6 @@ export default function Page() {
         />
         <TextField
           fullWidth
-          required
           id='body'
           label='Body'
           margin='normal'
@@ -135,10 +149,23 @@ export default function Page() {
           multiline
           rows={10}
         />
-        <DashboardFormButton variant='contained' type='submit'>Publish</DashboardFormButton>
+        <DashboardFormButton
+          disabled={status === APIStatus.Pending}
+          variant='contained'
+          type='submit'>Publish</DashboardFormButton>
         <Box sx={{ boxSizing: 'border-box', width: '5px', height: 'auto', display: 'inline-block' }} />
-        <DashboardFormButton variant='contained' onClick={clearForm}>Clear</DashboardFormButton>
+        <DashboardFormButton
+        disabled={status === APIStatus.Pending}
+        variant='contained'
+        onClick={clearForm}>Clear</DashboardFormButton>
       </form>
+    
+      {(status === APIStatus.Fulfilled && statusMessage) &&
+        <MessageSnackbar
+          key={statusMessage}
+          severity='success' response={statusMessage} handleClose={handleSnackbarClose} />}
+      {(status === APIStatus.Rejected && error?.message) &&
+        <MessageSnackbar severity='error' response={error.message} handleClose={handleSnackbarClose} />}
     </>
   );
 }

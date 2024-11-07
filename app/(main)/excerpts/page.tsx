@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { allExcerpts } from '@/app/lib/data';
+import { allExcerpts } from '@/lib/data';
 import Excerpts from '@/app/ui/excerpts/Excerpts'
 
 export const metadata: Metadata = {

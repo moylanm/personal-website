@@ -3,22 +3,20 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { Typography } from '@mui/material';
 
-type ResponseSnackbarProps = {
-  open: boolean;
+type SnackbarProps = {
   response: string;
   severity: 'success' | 'error';
   handleClose: () => void;
 };
 
-const MessageSnackbar: React.FC<ResponseSnackbarProps> = ({
-  open,
+const MessageSnackbar: React.FC<SnackbarProps> = ({
   response,
   severity,
   handleClose
 }) => {
   return (
     <Snackbar
-      open={open}
+      open={true}
       autoHideDuration={5000}
       onClose={handleClose}>
       <Alert
@@ -26,7 +24,7 @@ const MessageSnackbar: React.FC<ResponseSnackbarProps> = ({
         severity={severity}
         variant='filled'
       >
-        <Typography sx={{ padding: 0 }} >
+        <Typography>
           {response}
         </Typography>
       </Alert>

@@ -4,6 +4,8 @@ import { sql } from '@vercel/postgres';
 import type { Excerpt } from './definitions';
 import { unstable_cache } from 'next/cache';
 import { revalidateTag } from 'next/cache';
+import { cache } from 'react';
+import { notFound } from 'next/navigation';
 
 // Cache configuration
 const CACHE_CONFIG = {
@@ -24,11 +26,13 @@ export const latestExcerpts = unstable_cache(
   CACHE_CONFIG
 );
 
-export const excerptById = unstable_cache(
-  async (id: string) => await fetchExcerptById(id),
-  ['excerpt-by-id'],
-  CACHE_CONFIG
-);
+export const excerptById = cache(async (id: string) => {
+  const excerpt = await fetchExcerptById(id);
+
+  if (!excerpt) notFound();
+
+  return excerpt;
+});
 
 // Base queries
 async function fetchAllExcerpts() {
@@ -77,19 +81,25 @@ async function fetchExcerptById(id: string) {
   }
 }
 
-// Mutation queries with cache revalidation
-export async function publishExcerptToDb(data: {
-  author: string,
-  work: string,
+export async function publishExcerptToDb({
+  author,
+  work,
+  body
+}: {
+  author: string
+  work: string
   body: string
 }) {
   try {
-    await sql`
+    const data = await sql`
       INSERT INTO excerpts (author, work, body)
-      VALUES (${data.author}, ${data.work}, ${data.body})
+      VALUES (${author}, ${work}, ${body})
+      RETURNING id
     `;
-    // Revalidate all excerpt-related caches
+    
     await revalidateExcerptCaches();
+
+    return data.rows[0].id;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to insert excerpt data.');
@@ -128,8 +138,6 @@ export async function deleteExcerptFromDb({ id }: { id: string }) {
   }
 }
 
-// Helper function to revalidate all excerpt-related caches
 async function revalidateExcerptCaches() {
-  // Revalidate all excerpt-related tags
   revalidateTag('excerpts');
 }

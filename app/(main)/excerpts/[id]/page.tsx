@@ -1,17 +1,7 @@
 import type { Metadata } from 'next';
-import { excerptById } from '@/app/lib/data';
+import { excerptById } from '@/lib/data';
 import { Card, CardContent, Container, Typography } from '@mui/material';
-import { notFound } from 'next/navigation';
-import { cache } from 'react';
 import Markdown from 'react-markdown';
-
-const getExcerpt = cache(async (id: string) => {
-	const excerpt = await excerptById(id);
-
-  if (!excerpt) notFound()
-
-  return excerpt;
-});
 
 export async function generateMetadata({
 	params
@@ -20,7 +10,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
 	const id = (await params).id;
 
-	const { author } = await getExcerpt(id);
+	const { author } = await excerptById(id);
 
 	return {
 		title: author
@@ -37,7 +27,7 @@ export default async function Page({
     author,
     work,
     body
-  } = await getExcerpt(id);
+  } = await excerptById(id);
 
   return (
 		<Container maxWidth='md'>

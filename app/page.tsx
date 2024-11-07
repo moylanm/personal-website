@@ -1,7 +1,7 @@
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-import { latestExcerpts } from './lib/data';
 import { ExcerptLink, HomeTableContainer } from './ui/style';
-import type { Excerpt } from './lib/definitions';
+import { latestExcerpts } from '@/lib/data';
+import type { Excerpt } from '@/lib/definitions';
 
 const LATEST_COUNT = 7;
 
@@ -11,17 +11,17 @@ export default async function Home() {
   return (
     <>
       <HomeTableContainer component={Paper}>
-	<Table sx={{ minWidth: 650 }}>
-	  <TableHead>
-	    <TableRow>
-	      <TableCell>Author & Work</TableCell>
-	      <TableCell align="right">Created</TableCell>
-	    </TableRow>
-	  </TableHead>
-	  <TableBody>
-	    {excerpts.map((excerpt) => <Row key={excerpt.id} excerpt={excerpt} />)}
-	  </TableBody>
-	</Table>
+        <Table sx={{ minWidth: 650 }}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Author & Work</TableCell>
+              <TableCell align="right">Created</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {excerpts.map((excerpt) => <Row key={excerpt.id} excerpt={excerpt} />)}
+          </TableBody>
+        </Table>
       </HomeTableContainer>
     </>
   );

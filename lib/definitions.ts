@@ -17,3 +17,10 @@ export type SessionPayload = {
 	userId: string;
 	expiresAt: Date;
 }
+
+export enum APIStatus {
+	Idle = 'IDLE',
+	Pending = 'PENDING',
+	Rejected = 'REJECTED',
+	Fulfilled = 'FULFILLED'
+}

@@ -7,7 +7,7 @@ import {
 	publishExcerptToDb,
 	updateExcerptInDb,
 	deleteExcerptFromDb
-} from '@/app/lib/data';
+} from '@/lib/data';
 
 async function checkAuth() {
 	const session = await auth();
@@ -41,7 +41,7 @@ export async function GET(request: Request) {
 		const data = await allExcerpts();
 		return NextResponse.json(data);
 	} catch {
-		return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+		return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
 	}
 }
 
@@ -56,13 +56,13 @@ export async function POST(request: Request) {
 			body
 		} = await request.json();
 
-		await publishExcerptToDb({
+		const data = await publishExcerptToDb({
 			author,
 			work,
 			body
 		});
 
-		return NextResponse.json({ success: true });
+		return NextResponse.json(data);
 	} catch {
 		return NextResponse.json({ error: 'Internal Server Error '}, { status: 500 });
 	}
@@ -97,12 +97,16 @@ export async function DELETE(request: Request) {
 	const session = await checkAuth();
 	if (session instanceof NextResponse) return session;
 
+	const { searchParams } = new URL(request.url);
+	const id = searchParams.get('id');
+	
 	try {
-		const { id } = await request.json();
+		if (id) {
+			await deleteExcerptFromDb({ id });
+			return NextResponse.json({ success: true });
+		}
 
-		await deleteExcerptFromDb({ id });
-		
-		return NextResponse.json({ success: true });
+		return NextResponse.json({ success: false });
 	} catch {
 		return NextResponse.json({ error: 'Internal Server Error '}, { status: 500 });
 	}

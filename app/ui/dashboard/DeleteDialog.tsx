@@ -1,4 +1,4 @@
-import type { Excerpt } from '@/app/lib/definitions';
+import type { Excerpt } from '@/lib/definitions';
 import {
 	Dialog,
 	DialogContent,

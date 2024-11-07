@@ -1,6 +1,6 @@
 'use client'
 
-import type { Excerpt } from '@/app/lib/definitions';
+import type { Excerpt } from '@/lib/definitions';
 import { useCallback, useMemo, useReducer } from 'react';
 import { initialState, reducer } from '@/lib/excerpts/reducer';
 import { ActionType, SortDirection, type AppState } from '@/lib/excerpts/types';

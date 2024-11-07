@@ -1,21 +1,36 @@
 'use client'
 
 import React, { useRef, useState, useEffect, useCallback, Suspense } from 'react';
-import { deleteExcerpt, updateExcerpt } from '@/app/lib/actions';
 import { DashboardFormButton, EditorAccordionSummary } from '@/app/ui/style';
-import { selectExcerptById, selectExcerptIds } from '@/lib/dashboard/features/excerpts/excerptsSlice';
-import { useAppSelector } from '@/lib/dashboard/hooks';
+import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
 import { Accordion, AccordionActions, AccordionDetails, LinearProgress, TextField, Typography } from '@mui/material';
+import { APIStatus, type Excerpt } from '@/lib/definitions';
+import {
+  deleteExcerpt,
+  updateExcerpt,
+  selectExcerptById,
+  selectExcerptIds,
+  resetState,
+} from '@/lib/dashboard/features/excerpts/excerptSlice';
+import MessageSnackbar from '@/app/ui/dashboard/MessageSnackbar';
 
 const DeleteDialog = React.lazy(() => import('@/app/ui/dashboard/DeleteDialog'));
 
 const CHUNK_SIZE = 15;
 
 export default function Page() {
-  const excerptIds = useAppSelector(selectExcerptIds);
+  const dispatch = useAppDispatch();
+  const status = useAppSelector(state => state.excerpts.status);
+  const error = useAppSelector(state => state.excerpts.error);
+  const statusMessage = useAppSelector(state => state.excerpts.statusMessage);
 
+  const excerptIds = useAppSelector(selectExcerptIds);
   const [displayCount, setDisplayCount] = useState(CHUNK_SIZE);
   const loadMoreRef = useRef(null);
+
+  const handleSnackbarClose = useCallback(() => {
+    dispatch(resetState());
+  }, [dispatch]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -44,12 +59,19 @@ export default function Page() {
     <>
       {excerptIds.slice(0, displayCount).map((excerptId) => <Item key={excerptId} excerptId={excerptId} />)}
 			{displayCount < excerptIds.length && <LinearProgress ref={loadMoreRef} />}
+
+      {(status === APIStatus.Fulfilled && statusMessage) &&
+        <MessageSnackbar severity='success' response={statusMessage} handleClose={handleSnackbarClose} />}
+      {(status === APIStatus.Rejected && error?.message) &&
+        <MessageSnackbar severity='error' response={error.message} handleClose={handleSnackbarClose} />}
     </>
   );
 }
 
 const Item: React.FC<{ excerptId: string }> = ({ excerptId }) => {
-  const excerpt = useAppSelector((state) => selectExcerptById(state, excerptId));
+  const dispatch = useAppDispatch();
+  const excerpt = useAppSelector(state => selectExcerptById(state, excerptId));
+  const status = useAppSelector(state => state.excerpts.status);
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -67,16 +89,16 @@ const Item: React.FC<{ excerptId: string }> = ({ excerptId }) => {
 
   const handleDelete = useCallback(() => {
     handleCloseDialog();
-    deleteExcerpt({ id: excerptId });
+    dispatch(deleteExcerpt(excerptId));
   }, [excerptId, handleCloseDialog]);
 
   const handleUpdate = useCallback(() => {
-    updateExcerpt({
+    dispatch(updateExcerpt({
       id: excerptId,
       author: authorRef.current?.value ?? '',
       work: workRef.current?.value ?? '',
       body: bodyRef.current?.value ?? ''
-    });
+    } as Excerpt));
   }, [excerptId]);
 
   return (
@@ -116,8 +138,12 @@ const Item: React.FC<{ excerptId: string }> = ({ excerptId }) => {
           />
         </AccordionDetails>
         <AccordionActions>
-          <DashboardFormButton onClick={handleOpenDialog}>Delete</DashboardFormButton>
-          <DashboardFormButton onClick={handleUpdate}>Update</DashboardFormButton>
+          <DashboardFormButton
+            disabled={status === APIStatus.Pending}
+            onClick={handleOpenDialog}>Delete</DashboardFormButton>
+          <DashboardFormButton
+            disabled={status === APIStatus.Pending}
+            onClick={handleUpdate}>Update</DashboardFormButton>
         </AccordionActions>
       </Accordion>
       <Suspense>

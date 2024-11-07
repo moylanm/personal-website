@@ -7,7 +7,7 @@ import {
   Grid2,
   Typography
 } from "@mui/material";
-import type { Excerpt } from "@/app/lib/definitions";
+import type { Excerpt } from "@/lib/definitions";
 import { ExcerptLink } from "@/app/ui/style";
 import { Container } from "@mui/system";
 import { useEffect, useRef, useState } from "react";
