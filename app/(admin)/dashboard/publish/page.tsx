@@ -155,15 +155,13 @@ export default function Page() {
           type='submit'>Publish</DashboardFormButton>
         <Box sx={{ boxSizing: 'border-box', width: '5px', height: 'auto', display: 'inline-block' }} />
         <DashboardFormButton
-        disabled={status === APIStatus.Pending}
-        variant='contained'
-        onClick={clearForm}>Clear</DashboardFormButton>
+          disabled={status === APIStatus.Pending}
+          variant='contained'
+          onClick={clearForm}>Clear</DashboardFormButton>
       </form>
     
       {(status === APIStatus.Fulfilled && statusMessage) &&
-        <MessageSnackbar
-          key={statusMessage}
-          severity='success' response={statusMessage} handleClose={handleSnackbarClose} />}
+        <MessageSnackbar severity='success' response={statusMessage} handleClose={handleSnackbarClose} />}
       {(status === APIStatus.Rejected && error?.message) &&
         <MessageSnackbar severity='error' response={error.message} handleClose={handleSnackbarClose} />}
     </>

@@ -7,11 +7,6 @@ import { usePathname } from 'next/navigation';
 
 const LINKS = [
 	{
-		name: 'Home',
-		href: '/dashboard',
-		icon: HomeOutlined
-	},
-	{
 		name: 'Publish',
 		href: '/dashboard/publish',
 		icon: PostAddOutlined

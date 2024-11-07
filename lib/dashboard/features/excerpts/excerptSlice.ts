@@ -50,6 +50,10 @@ export const createExcerpt = createAsyncThunk(
 	'excerpts/create',
 	async (excerpt: Omit<Excerpt, 'id'>, { rejectWithValue }) => {
 		try {
+			if (!excerpt.author || !excerpt.work || !excerpt.body) {
+				return rejectWithValue('Empty field detected');
+			}
+
 			const response = await fetch('/api/excerpts', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
