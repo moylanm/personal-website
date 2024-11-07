@@ -1,6 +1,6 @@
 'use client'
 
-import { HomeOutlined, PostAddOutlined, EditOutlined } from '@mui/icons-material'
+import { PostAddOutlined, EditOutlined } from '@mui/icons-material'
 import Link from 'next/link';
 import { NavLink, SideNavButton } from '../style';
 import { usePathname } from 'next/navigation';
