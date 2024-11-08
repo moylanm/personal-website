@@ -67,7 +67,7 @@ export default function Page() {
   }, [status, clearForm])
 
   const authors = useMemo<string[]>(() => {
-    return [...new Set(excerpts.map(excerpt => excerpt.author))];
+    return [...new Set(excerpts.map(excerpt => excerpt.author))].sort();
   }, [excerpts]);
 
   const works = useMemo<{ [author: string]: string[] }>(() => {
