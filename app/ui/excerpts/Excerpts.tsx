@@ -22,7 +22,7 @@ import {
 } from '@mui/material';
 
 const createInitialState = (excerpts: Excerpt[]): AppState => {
-  const authors = [...new Set(excerpts.map((excerpt) => excerpt.author))].toSorted();
+  const authors = [...new Set(excerpts.map((excerpt) => excerpt.author))].sort();
   const works = excerpts.reduce<{ [author: string]: string[] }>((acc, excerpt) => {
     if (!acc[excerpt.author]) {
       acc[excerpt.author] = [];
