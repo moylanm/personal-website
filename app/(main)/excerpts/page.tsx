@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 export default async function Page() {
   const excerpts = await allExcerpts();
 
-  return <Excerpts excerpts={excerpts} />;
+  return <Excerpts excerpts={excerpts} />
 }

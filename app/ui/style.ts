@@ -211,3 +211,9 @@ export const EditorAccordionSummary = styled(AccordionSummary)({
 export const CloseDialogTitle = styled(DialogTitle)({
 	fontSize: '1rem'
 });
+
+export const ScrollToTopButton = styled(Button)({
+	position: 'fixed',
+	bottom: 100,
+	right: 50,
+});

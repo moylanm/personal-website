@@ -6,6 +6,7 @@ import { initialState, reducer } from '@/lib/excerpts/reducer';
 import { ActionType, SortDirection, type AppState } from '@/lib/excerpts/types';
 import { FilterFormContainer, FilterFormControl } from '@/app/ui/style';
 import List from './List';
+import ScrollToTop from './ScrollToTop';
 import {
   type SelectChangeEvent,
   FormControl,
@@ -164,6 +165,7 @@ const Excerpts = ({
         <Button type='button' onClick={handleReset} aria-label='Reset filter'>Reset</Button>
       </Container>
       <List excerpts={sortedAndFilteredExcerpts} />
+      <ScrollToTop />
     </>
   );
 };
