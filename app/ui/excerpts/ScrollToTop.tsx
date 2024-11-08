@@ -27,7 +27,7 @@ export default function ScrollToTop() {
     return () => {
       window.removeEventListener('scroll', toggleVisibility);
     };
-  }, []);
+  }, [toggleVisibility]);
 
   return (
     <>
