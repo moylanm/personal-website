@@ -122,7 +122,7 @@ const Excerpts = ({
         <FilterFormControl>
           <InputLabel id='author'>Author</InputLabel>
           <Select
-            sx={{ minWidth: '200px' }}
+            sx={{ width: '200px' }}
             labelId='author'
             id='author-select'
             value={state.selectedAuthor}
@@ -142,7 +142,7 @@ const Excerpts = ({
             <FormControl>
               <InputLabel id='work'>Work</InputLabel>
               <Select
-                sx={{ minWidth: '200px' }}
+                sx={{ width: '200px' }}
                 labelId='work'
                 id='work-select'
                 value={state.selectedWork}
