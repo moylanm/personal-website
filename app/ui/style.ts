@@ -1,6 +1,6 @@
 'use client'
 
-import { styled} from '@mui/system';
+import { maxWidth, styled} from '@mui/system';
 import type { TableContainerProps, Grid2Props } from '@mui/material';
 import {
 	Container,
@@ -19,13 +19,15 @@ import {
 } from '@mui/material';
 import NextLink, { type LinkProps as NextLinkProps } from 'next/link';
 
-export const HomeTableContainer = styled(TableContainer)<TableContainerProps>({
+export const HomeTableContainer = styled(TableContainer)<TableContainerProps>(({theme }) => ({
 	marginTop: '180px',
 	marginLeft: 'auto',
 	marginRight: 'auto',
-	maxWidth: '800px',
-	overflow: 'auto',
-});
+	maxWidth: '400px',
+	[theme.breakpoints.up('md')]: {
+		maxWidth: '800px',
+	}
+}));
 
 export const ExcerptLink = styled(NextLink)<NextLinkProps>({
 	'&:hover': {

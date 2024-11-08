@@ -11,11 +11,11 @@ export default async function Home() {
   return (
     <>
       <HomeTableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }}>
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell>Author & Work</TableCell>
-              <TableCell align="right">Created</TableCell>
+              <TableCell align='right'>Created</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -34,12 +34,12 @@ const Row: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
         key={excerpt.id}
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
-        <TableCell component="th" scope="row">
+        <TableCell component='th' scope='row'>
           <ExcerptLink href={`excerpts/${excerpt.id}`}>
             {`${excerpt.author} - ${excerpt.work}`}
           </ExcerptLink>
         </TableCell>
-        <TableCell align="right">{new Date(excerpt.createdAt).toDateString()}</TableCell>
+        <TableCell align='right'>{new Date(excerpt.createdAt).toDateString()}</TableCell>
       </TableRow>
     </>
   )
