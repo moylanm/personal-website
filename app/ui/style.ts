@@ -1,6 +1,6 @@
 'use client'
 
-import { maxWidth, styled} from '@mui/system';
+import { styled } from '@mui/system';
 import type { TableContainerProps, Grid2Props } from '@mui/material';
 import {
 	Container,
