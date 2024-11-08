@@ -16,7 +16,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
 
   return (
     <>
-      <Grid2 container>
+      <Grid2 container spacing={4}>
         <Grid2 size={2}>
           <DashboardLayoutBox>
             <DashboardLayoutSideNavBox>
@@ -24,7 +24,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
             </DashboardLayoutSideNavBox>
           </DashboardLayoutBox>
         </Grid2>
-        <Grid2 size={6}>
+        <Grid2 size={8}>
           <DashboardLayoutChildrenBox>
             <StoreProvider>
               {children}
