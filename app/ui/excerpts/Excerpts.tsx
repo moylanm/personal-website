@@ -160,7 +160,7 @@ const Excerpts = ({
           )
         }
       </FilterFormContainer>
-      <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Container sx={{ marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Button type='button' onClick={handleRandomClick} aria-label='Select a random excerpt'>Random Excerpt</Button>
         <Button type='button' onClick={handleReset} aria-label='Reset filter'>Reset</Button>
       </Container>
