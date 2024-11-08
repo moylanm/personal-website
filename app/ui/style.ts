@@ -21,6 +21,7 @@ import NextLink, { type LinkProps as NextLinkProps } from 'next/link';
 
 export const HomeTableContainer = styled(TableContainer)<TableContainerProps>(({theme }) => ({
 	marginTop: '180px',
+	marginBottom: '180px',
 	marginLeft: 'auto',
 	marginRight: 'auto',
 	maxWidth: '400px',
