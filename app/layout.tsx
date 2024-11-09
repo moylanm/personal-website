@@ -9,8 +9,6 @@ import theme from './ui/theme';
 import Navbar from './ui/main/Navbar';
 import Footer from './ui/main/Footer';
 
-export const dynamic = 'force-dynamic';
-
 export const metadata: Metadata = {
   title: {
     template: '%s | mylesmoylan.net',
