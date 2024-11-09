@@ -161,8 +161,8 @@ const Excerpts = ({
         }
       </FilterFormContainer>
       <Container sx={{ marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Button sx={{ color: '#62CB21' }} type='button' onClick={handleRandomClick} aria-label='Select a random excerpt'>Random Excerpt</Button>
-        <Button sx={{ color: '#62CB21' }} type='button' onClick={handleReset} aria-label='Reset filter'>Reset</Button>
+        <Button type='button' onClick={handleRandomClick} aria-label='Select a random excerpt'>Random Excerpt</Button>
+        <Button type='button' onClick={handleReset} aria-label='Reset filter'>Reset</Button>
       </Container>
       <List excerpts={sortedAndFilteredExcerpts} />
       <ScrollToTop />
