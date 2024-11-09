@@ -215,8 +215,11 @@ export const CloseDialogTitle = styled(DialogTitle)({
 	fontSize: '1rem'
 });
 
-export const ScrollToTopButton = styled(Button)({
+export const ScrollToTopButton = styled(Button)(({theme}) => ({
 	position: 'fixed',
 	bottom: 100,
-	right: 50,
-});
+	right: 15,
+	[theme.breakpoints.up('md')]: {
+		right: 50
+	}
+}));
