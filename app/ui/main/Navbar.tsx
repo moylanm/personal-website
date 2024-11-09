@@ -79,16 +79,6 @@ const Navbar = () => {
             </Menu>
           </Box>
           <NavbarLogo />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-            }}
-          />
           <Box sx={{ marginLeft: 2, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {PAGES.map((page) => (
                <Button
