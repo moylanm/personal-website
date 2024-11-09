@@ -79,12 +79,8 @@ const Navbar = () => {
             </Menu>
           </Box>
           <NavbarLogo />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
+          <Box
             sx={{
-              mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
             }}
