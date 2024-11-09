@@ -2,6 +2,7 @@
 
 import { styled } from '@mui/system';
 import type { TableContainerProps, Grid2Props } from '@mui/material';
+import NextLink, { type LinkProps as NextLinkProps } from 'next/link';
 import {
 	Container,
 	Box,
@@ -12,12 +13,11 @@ import {
 	Paper,
 	TableContainer,
 	Link,
+	DialogTitle,
+	AccordionSummary,
 	type LinkProps,
 	type ButtonProps,
-    DialogTitle,
-    AccordionSummary
 } from '@mui/material';
-import NextLink, { type LinkProps as NextLinkProps } from 'next/link';
 
 export const HomeTableContainer = styled(TableContainer)<TableContainerProps>(({theme }) => ({
 	marginTop: '180px',
