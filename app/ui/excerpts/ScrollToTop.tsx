@@ -2,6 +2,7 @@
 
 import { useCallback, useState, useEffect } from 'react';
 import { ScrollToTopButton } from '../style';
+import Image from 'next/image';
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -33,7 +34,13 @@ export default function ScrollToTop() {
     <>
       {isVisible && (
         <ScrollToTopButton onClick={handleClick}>
-          Scroll to top
+          <Image
+            width={24}
+            height={24}
+            src='/up-arrow.png'
+            alt='Scroll to top'
+            title='Scroll to top'
+          />
         </ScrollToTopButton>
       )}
     </>
