@@ -7,13 +7,11 @@ import { revalidateTag } from 'next/cache';
 import { cache } from 'react';
 import { notFound } from 'next/navigation';
 
-// Cache configuration
 const CACHE_CONFIG = {
   revalidate: 3600,  // 1 hour
   tags: ['excerpts']
 };
 
-// Cached queries
 export const allExcerpts = unstable_cache(
   async () => await fetchAllExcerpts(),
   ['all-excerpts'],
@@ -34,7 +32,6 @@ export const excerptById = cache(async (id: string) => {
   return excerpt;
 });
 
-// Base queries
 async function fetchAllExcerpts() {
   try {
     const data = await sql<Excerpt>`
