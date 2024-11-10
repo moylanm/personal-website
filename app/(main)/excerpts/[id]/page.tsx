@@ -3,17 +3,20 @@ import { excerptById } from '@/lib/data';
 import { Card, CardContent, Container, Typography } from '@mui/material';
 import Markdown from 'react-markdown';
 
+async function getExcerpt(id: string) {
+	return excerptById(id)
+}
+
 export async function generateMetadata({
 	params
 }: {
 	params: Promise<{ id: string }>
 }): Promise<Metadata> {
 	const id = (await params).id;
-
-	const { author } = await excerptById(id);
+	const excerpt = await getExcerpt(id);
 
 	return {
-		title: author
+		title: excerpt.author
 	};
 }
 
@@ -27,7 +30,7 @@ export default async function Page({
     author,
     work,
     body
-  } = await excerptById(id);
+  } = await getExcerpt(id);
 
   return (
 		<Container maxWidth='md'>
