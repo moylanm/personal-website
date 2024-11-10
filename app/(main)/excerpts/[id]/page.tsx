@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import { excerptById } from '@/lib/data';
 import { Card, CardContent, Container, Typography } from '@mui/material';
 import Markdown from 'react-markdown';
-import { Suspense } from 'react';
-import BodySkeleton from '@/app/ui/excerpts/BodySkeleton';
 
 export async function generateMetadata({
 	params
@@ -28,6 +26,7 @@ export default async function Page({
   const {
     author,
     work,
+    body
   } = await excerptById(id);
 
   return (
@@ -46,21 +45,11 @@ export default async function Page({
 						<br />
 						{work}
 					</Typography>
-					<Suspense fallback={<BodySkeleton />}>
-						<ExcerptBody id={id} />
-					</Suspense>
+					<Markdown>
+						{body}
+					</Markdown>
 				</CardContent>
 			</Card>
 		</Container>
-	);
-}
-
-async function ExcerptBody({ id }: { id: string }) {
-	const { body } = await excerptById(id);
-
-	return (
-		<Markdown>
-			{body}
-		</Markdown>
 	);
 }
