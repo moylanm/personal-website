@@ -75,6 +75,5 @@ export async function deleteExcerpt({
 }
 
 function revalidateExcerptTags() {
-  revalidateTag('latest');
   revalidateTag('excerpts');
 }
