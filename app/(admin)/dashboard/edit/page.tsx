@@ -8,7 +8,6 @@ import { APIStatus, type Excerpt } from '@/lib/definitions';
 import {
   deleteExcerpt,
   updateExcerpt,
-  selectExcerptById,
   resetState,
   selectAllExcerpts,
 } from '@/lib/dashboard/features/excerpts/excerptSlice';
