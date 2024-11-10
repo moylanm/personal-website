@@ -46,11 +46,11 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     {
-      source: '/((?!about|excerpts$|login|$).*)',
+      source: '/((?!excerpts$|about|login|$).*)',
       missing: [
         { type: 'header', key: 'next-router-prefetch' },
         { type: 'header', key: 'purpose', value: 'prefetch' },
       ],
     },
   ],
-}
+};
