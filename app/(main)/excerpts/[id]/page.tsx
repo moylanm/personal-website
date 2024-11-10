@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { excerptById } from '@/lib/data';
 import { Card, CardContent, Container, Typography } from '@mui/material';
 import Markdown from 'react-markdown';
-import { Suspense } from 'react';
 
 export async function generateMetadata({
 	params
@@ -24,6 +23,11 @@ export default async function Page({
   params: Promise<{ id: string }>
 }) {
   const id = (await params).id;
+  const {
+    author,
+    work,
+    body
+  } = await excerptById(id);
 
   return (
 		<Container maxWidth='md'>
@@ -35,27 +39,17 @@ export default async function Page({
 				display: 'flex',
 				justifyContent: 'center',
 			}}>
-				<Suspense fallback={<div>Loading excerpt...</div>}>
-					<ExcerptContent id={id} />
-				</Suspense>
+				<CardContent>
+					<Typography sx={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
+						{author}
+						<br />
+						{work}
+					</Typography>
+					<Markdown>
+						{body}
+					</Markdown>
+				</CardContent>
 			</Card>
 		</Container>
 	);
-}
-
-async function ExcerptContent({ id }: { id: string }) {
-  const { author, work, body } = await excerptById(id);
-
-  return (
-    <CardContent>
-      <Typography sx={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
-        {author}
-        <br />
-        {work}
-      </Typography>
-      <Markdown>
-        {body}
-      </Markdown>
-    </CardContent>
-  );
 }
