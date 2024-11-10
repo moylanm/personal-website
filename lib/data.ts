@@ -25,24 +25,12 @@ export const latestExcerpts = unstable_cache(
 );
 
 export const excerptById = cache(async (id: string) => {
-  try {
-    const allCachedExcerpts = await allExcerpts();
-    const excerpt = allCachedExcerpts.find(e => e.id === id);
+  const excerpt = await fetchExcerptById(id);
 
-    if (excerpt) {
-      return excerpt;
-    }
+  if (!excerpt) notFound();
 
-    const dbExcerpt = await fetchExcerptById(id);
-    if (!dbExcerpt) notFound();
-
-    return dbExcerpt;
-  } catch (error) {
-    console.error('Error fetching excerpt by id:', error);
-    throw new Error('Failed to fetch excerpt by id.');
-  }
+  return excerpt;
 });
-
 
 async function fetchAllExcerpts() {
   try {
