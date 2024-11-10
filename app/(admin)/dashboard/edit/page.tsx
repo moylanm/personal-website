@@ -3,16 +3,17 @@
 import React, { useRef, useState, useEffect, useCallback, Suspense } from 'react';
 import { DashboardFormButton, EditorAccordionSummary } from '@/app/ui/style';
 import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
-import { Accordion, AccordionActions, AccordionDetails, LinearProgress, TextField, Typography } from '@mui/material';
+import { Accordion, AccordionActions, AccordionDetails, Box, InputAdornment, LinearProgress, TextField, Typography } from '@mui/material';
 import { APIStatus, type Excerpt } from '@/lib/definitions';
 import {
   deleteExcerpt,
   updateExcerpt,
   selectExcerptById,
-  selectExcerptIds,
   resetState,
+  selectAllExcerpts,
 } from '@/lib/dashboard/features/excerpts/excerptSlice';
 import MessageSnackbar from '@/app/ui/dashboard/MessageSnackbar';
+import { SearchOutlined } from '@mui/icons-material';
 
 const DeleteDialog = React.lazy(() => import('@/app/ui/dashboard/DeleteDialog'));
 
@@ -24,9 +25,22 @@ export default function Page() {
   const error = useAppSelector(state => state.excerpts.error);
   const statusMessage = useAppSelector(state => state.excerpts.statusMessage);
 
-  const excerptIds = useAppSelector(selectExcerptIds);
+  const excerpts = useAppSelector(selectAllExcerpts);
   const [displayCount, setDisplayCount] = useState(CHUNK_SIZE);
   const loadMoreRef = useRef(null);
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredExcerpts = useCallback(() => {
+    if (!searchTerm) return excerpts;
+
+    const searchLower = searchTerm.toLowerCase();
+    return excerpts.filter(excerpt =>
+      excerpt.id.toLowerCase().includes(searchLower) ||
+      excerpt.author.toLowerCase().includes(searchLower) ||
+      excerpt.work.toLowerCase().includes(searchLower)
+    );
+  }, [excerpts, searchTerm]);
 
   const handleSnackbarClose = useCallback(() => {
     dispatch(resetState());
@@ -35,7 +49,7 @@ export default function Page() {
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        setDisplayCount(prevCount => Math.min(prevCount + CHUNK_SIZE, excerptIds.length));
+        setDisplayCount(prevCount => Math.min(prevCount + CHUNK_SIZE, filteredExcerpts().length));
       }
     }, {
       rootMargin: '500px'
@@ -53,12 +67,34 @@ export default function Page() {
 				observer.unobserve(observerRefValue);
 			}
 		}
-  }, [excerptIds]);
+  }, [filteredExcerpts]);
+
+  useEffect(() => {
+    setDisplayCount(CHUNK_SIZE);
+  }, [searchTerm]);
 
   return (
     <>
-      {excerptIds.slice(0, displayCount).map((excerptId) => <Item key={excerptId} excerptId={excerptId} />)}
-			{displayCount < excerptIds.length && <LinearProgress ref={loadMoreRef} />}
+      <Box sx={{ mb: 3 }}>
+        <TextField
+          fullWidth
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder='Search...'
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <SearchOutlined />
+                </InputAdornment>
+              )
+            }
+          }}
+        />
+      </Box>
+
+      {filteredExcerpts().slice(0, displayCount).map((excerpt) => <Item key={excerpt.id} excerpt={excerpt} />)}
+			{displayCount < filteredExcerpts().length && <LinearProgress ref={loadMoreRef} />}
 
       {(status === APIStatus.Fulfilled && statusMessage) &&
         <MessageSnackbar severity='success' response={statusMessage} handleClose={handleSnackbarClose} />}
@@ -68,9 +104,8 @@ export default function Page() {
   );
 }
 
-const Item: React.FC<{ excerptId: string }> = ({ excerptId }) => {
+const Item: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
   const dispatch = useAppDispatch();
-  const excerpt = useAppSelector(state => selectExcerptById(state, excerptId));
   const status = useAppSelector(state => state.excerpts.status);
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -89,17 +124,17 @@ const Item: React.FC<{ excerptId: string }> = ({ excerptId }) => {
 
   const handleDelete = useCallback(() => {
     handleCloseDialog();
-    dispatch(deleteExcerpt(excerptId));
-  }, [dispatch, excerptId, handleCloseDialog]);
+    dispatch(deleteExcerpt(excerpt.id));
+  }, [dispatch, excerpt, handleCloseDialog]);
 
   const handleUpdate = useCallback(() => {
     dispatch(updateExcerpt({
-      id: excerptId,
+      id: excerpt.id,
       author: authorRef.current?.value ?? '',
       work: workRef.current?.value ?? '',
       body: bodyRef.current?.value ?? ''
     } as Excerpt));
-  }, [dispatch, excerptId]);
+  }, [dispatch, excerpt]);
 
   return (
     <>
