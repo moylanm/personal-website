@@ -54,7 +54,7 @@ export const AboutGrid2 = styled(Grid2)<Grid2Props>({
 export const AboutCard = styled(Card)({
 	maxWidth: '750px',
 	padding: '30px'
-})
+});
 
 export const FilterFormContainer = styled(Container)(({theme}) => ({
 	position: 'relative',
