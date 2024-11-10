@@ -13,11 +13,6 @@ export type Excerpt = {
 	createdAt: string;
 }
 
-export type SessionPayload = {
-	userId: string;
-	expiresAt: Date;
-}
-
 export enum APIStatus {
 	Idle = 'IDLE',
 	Pending = 'PENDING',
