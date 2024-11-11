@@ -15,10 +15,14 @@ async function getUser(email: string): Promise<User | undefined> {
       WHERE email=${email}
     `;
 
-    return <User>{
+    if (!user.rows[0]) return undefined;
+
+    const passwordHash = Buffer.from(user.rows[0].password_hash).toString();
+
+    return {
       ...user.rows[0],
-      passwordHash: user.rows[0].password_hash,
-    };
+      passwordHash,
+    } as User;
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
@@ -54,7 +58,7 @@ export const {
 
           if (!user) return null;
 
-          const passwordsMatch = await compare(password, user.passwordHash.toString());
+          const passwordsMatch = await compare(password, user.passwordHash);
 
           if (passwordsMatch) return user;
         }

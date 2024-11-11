@@ -2,7 +2,7 @@ export type User = {
 	id: string;
 	name: string;
 	email: string;
-	passwordHash: Buffer;
+	passwordHash: string;
 }
 
 export type Excerpt = {
