@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useState, useEffect, useCallback, Suspense } from 'react';
+import React, { useRef, useState, useEffect, useCallback, Suspense, useMemo } from 'react';
 import { DashboardFormButton, EditorAccordionSummary } from '@/app/ui/style';
 import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
 import { Accordion, AccordionActions, AccordionDetails, Box, InputAdornment, LinearProgress, TextField, Typography } from '@mui/material';
@@ -13,10 +13,9 @@ import {
 } from '@/lib/dashboard/features/excerpts/excerptSlice';
 import MessageSnackbar from '@/app/ui/dashboard/MessageSnackbar';
 import { SearchOutlined } from '@mui/icons-material';
+import useInfiniteScroll, { CHUNK_SIZE } from '@/app/_components/useInfiniteScroll';
 
 const DeleteDialog = React.lazy(() => import('@/app/ui/dashboard/DeleteDialog'));
-
-const CHUNK_SIZE = 15;
 
 export default function Page() {
   const dispatch = useAppDispatch();
@@ -26,11 +25,10 @@ export default function Page() {
 
   const excerpts = useAppSelector(selectAllExcerpts);
   const [displayCount, setDisplayCount] = useState(CHUNK_SIZE);
-  const loadMoreRef = useRef(null);
 
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredExcerpts = useCallback(() => {
+  const filteredExcerpts = useMemo(() => {
     if (!searchTerm) return excerpts;
 
     const searchLower = searchTerm.toLowerCase();
@@ -45,28 +43,7 @@ export default function Page() {
     dispatch(resetState());
   }, [dispatch]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        setDisplayCount(prevCount => Math.min(prevCount + CHUNK_SIZE, filteredExcerpts().length));
-      }
-    }, {
-      rootMargin: '500px'
-    });
-
-		let observerRefValue = null;
-
-		if (loadMoreRef.current) {
-			observer.observe(loadMoreRef.current);
-			observerRefValue = loadMoreRef.current;
-		}
-
-		return () => {
-			if (observerRefValue) {
-				observer.unobserve(observerRefValue);
-			}
-		}
-  }, [filteredExcerpts]);
+  const loadMoreRef = useInfiniteScroll(setDisplayCount, filteredExcerpts);
 
   useEffect(() => {
     setDisplayCount(CHUNK_SIZE);
@@ -92,8 +69,8 @@ export default function Page() {
         />
       </Box>
 
-      {filteredExcerpts().slice(0, displayCount).map((excerpt) => <Item key={excerpt.id} excerpt={excerpt} />)}
-			{displayCount < filteredExcerpts().length && <LinearProgress ref={loadMoreRef} />}
+      {filteredExcerpts.slice(0, displayCount).map((excerpt) => <Item key={excerpt.id} excerpt={excerpt} />)}
+			{displayCount < filteredExcerpts.length && <LinearProgress ref={loadMoreRef} />}
 
       {(status === APIStatus.Fulfilled && statusMessage) &&
         <MessageSnackbar severity='success' response={statusMessage} handleClose={handleSnackbarClose} />}

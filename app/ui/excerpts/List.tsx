@@ -3,17 +3,16 @@
 import {
   Card,
   CardContent,
-  CircularProgress,
   Grid2,
+  LinearProgress,
   Typography
 } from "@mui/material";
 import type { Excerpt } from "@/lib/definitions";
 import { ExcerptLink } from "@/app/ui/style";
 import { Container } from "@mui/system";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Markdown from "react-markdown";
-
-const CHUNK_SIZE = 12;
+import useInfiniteScroll, { CHUNK_SIZE } from "@/app/_components/useInfiniteScroll";
 
 const List = ({
   excerpts
@@ -21,30 +20,8 @@ const List = ({
   excerpts: Excerpt[]
 }) => {
 	const [displayCount, setDisplayCount] = useState(CHUNK_SIZE);
-	const loadMoreRef = useRef(null);
 
-	useEffect(() => {
-		const observer = new IntersectionObserver((entries) => {
-			if (entries[0].isIntersecting) {
-				setDisplayCount(prevCount => Math.min(prevCount + CHUNK_SIZE, excerpts.length));
-			}
-		}, {
-				rootMargin: '500px'
-		});
-
-		let observerRefValue = null;
-
-		if (loadMoreRef.current) {
-			observer.observe(loadMoreRef.current);
-			observerRefValue = loadMoreRef.current;
-		}
-
-		return () => {
-			if (observerRefValue) {
-				observer.unobserve(observerRefValue);
-			}
-		}
-	}, [excerpts]);
+	const loadMoreRef = useInfiniteScroll(setDisplayCount, excerpts);
 
 	return (
 		<>
@@ -56,7 +33,7 @@ const List = ({
 						</Grid2>
 					);
 				})}
-				{displayCount < excerpts.length && <CircularProgress ref={loadMoreRef} />}
+				{displayCount < excerpts.length && <LinearProgress ref={loadMoreRef} />}
 			</Grid2>
 		</>
 	);
