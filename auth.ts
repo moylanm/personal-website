@@ -4,7 +4,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
-import bcrypt from 'bcryptjs';
+import { compare } from 'bcryptjs';
 import type { User } from '@/lib/definitions';
 
 async function getUser(email: string): Promise<User | undefined> {
@@ -54,7 +54,7 @@ export const {
 
           if (!user) return null;
 
-          const passwordsMatch = await bcrypt.compare(password, user.passwordHash.toString());
+          const passwordsMatch = await compare(password, user.passwordHash.toString());
 
           if (passwordsMatch) return user;
         }
@@ -63,4 +63,4 @@ export const {
       }
     })
   ]
-})
+});
