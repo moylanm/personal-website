@@ -10,6 +10,7 @@ import {
   setWorkField,
   resetState
 } from '@/lib/dashboard/features/excerpts/excerptSlice';
+import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '@/lib/dashboard/store';
 import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
 import { Autocomplete, Box, TextField, Typography } from '@mui/material';
@@ -17,14 +18,17 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { APIStatus, type Excerpt } from '@/lib/definitions';
 import MessageSnackbar from '@/app/ui/dashboard/MessageSnackbar';
 
-const selectFormState = (state: RootState) => ({
-  status: state.excerpts.status,
-  error: state.excerpts.error,
-  statusMessage: state.excerpts.statusMessage,
-  authorField: state.excerpts.authorField,
-  workField: state.excerpts.workField,
-  bodyField: state.excerpts.bodyField
-});
+const selectFormState = createSelector(
+  (state: RootState) => state.excerpts,
+  (excerpts) => ({
+    status: excerpts.status,
+    error: excerpts.error,
+    statusMessage: excerpts.statusMessage,
+    authorField: excerpts.authorField,
+    workField: excerpts.workField,
+    bodyField: excerpts.bodyField
+  })
+);
 
 export default function Page() {
   const dispatch = useAppDispatch();
