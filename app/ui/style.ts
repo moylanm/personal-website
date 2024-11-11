@@ -73,11 +73,18 @@ export const FilterFormControl = styled(FormControl)(({theme}) => ({
 	},
 }));
 
+export const SkeletonContainer = styled(Container)(({theme}) => ({
+	minWidth: '400px',
+	[theme.breakpoints.up('md')]: {
+		minWidth: '800px'
+	}
+}));
+
 export const ExcerptCard = styled(Card)({
 	p: 2,
+	mx: 3,
 	marginTop: '180px',
 	marginBottom: '110px',
-	mx: 3,
 	display: 'flex',
 	justifyContent: 'center'
 });
