@@ -73,6 +73,15 @@ export const FilterFormControl = styled(FormControl)(({theme}) => ({
 	},
 }));
 
+export const ExcerptCard = styled(Card)({
+	p: 2,
+	marginTop: '180px',
+	marginBottom: '110px',
+	mx: 3,
+	display: 'flex',
+	justifyContent: 'center'
+});
+
 export const LoginFormContainer = styled(Container)({
 	marginTop: '180px',
 	display: 'flex',
