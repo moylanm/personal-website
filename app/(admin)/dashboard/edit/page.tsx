@@ -13,7 +13,7 @@ import {
 } from '@/lib/dashboard/features/excerpts/excerptSlice';
 import MessageSnackbar from '@/app/ui/dashboard/MessageSnackbar';
 import { SearchOutlined } from '@mui/icons-material';
-import useInfiniteScroll, { CHUNK_SIZE } from '@/app/_components/useInfiniteScroll';
+import useInfiniteScroll, { CHUNK_SIZE } from '@/lib/useInfiniteScroll';
 
 const DeleteDialog = React.lazy(() => import('@/app/ui/dashboard/DeleteDialog'));
 
