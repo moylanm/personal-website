@@ -22,7 +22,6 @@ const selectFormState = createSelector(
   (state: RootState) => state.excerpts,
   (excerpts) => ({
     status: excerpts.status,
-    error: excerpts.error,
     statusMessage: excerpts.statusMessage,
     authorField: excerpts.authorField,
     workField: excerpts.workField,
@@ -35,7 +34,6 @@ export default function Page() {
   const excerpts = useAppSelector(selectAllExcerpts);
   const {
     status,
-    error,
     statusMessage,
     authorField,
     workField,
@@ -168,8 +166,8 @@ export default function Page() {
     
       {(status === APIStatus.Fulfilled && statusMessage) &&
         <MessageSnackbar severity='success' response={statusMessage} handleClose={handleSnackbarClose} />}
-      {(status === APIStatus.Rejected && error?.message) &&
-        <MessageSnackbar severity='error' response={error.message} handleClose={handleSnackbarClose} />}
+      {(status === APIStatus.Rejected && statusMessage) &&
+        <MessageSnackbar severity='error' response={statusMessage} handleClose={handleSnackbarClose} />}
     </>
   );
 }

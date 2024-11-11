@@ -1,11 +1,14 @@
 import {
   createAsyncThunk,
 	createEntityAdapter,
-	createSlice,
-	type SerializedError}
-from '@reduxjs/toolkit';
+	createSlice
+} from '@reduxjs/toolkit';
 import type { RootState } from '@/lib/dashboard/store';
 import { APIStatus, type Excerpt } from '@/lib/definitions';
+
+type ThunkConfig = {
+	rejectValue: string;
+};
 
 const excerptAdapter = createEntityAdapter({
 	sortComparer: (a: Excerpt, b: Excerpt) => Number(b.id) - Number(a.id)
@@ -14,7 +17,6 @@ const excerptAdapter = createEntityAdapter({
 interface ExcerptState {
 	status: APIStatus;
 	statusMessage: string;
-	error: SerializedError | null;
 	authorField: string;
 	workField: string;
 	bodyField: string;
@@ -23,13 +25,16 @@ interface ExcerptState {
 const initialState = excerptAdapter.getInitialState<ExcerptState>({
 	status: APIStatus.Idle,
 	statusMessage: '',
-	error: null,
 	authorField: '',
 	workField: '',
 	bodyField: '',
 });
 
-export const fetchAllExcerpts = createAsyncThunk(
+export const fetchAllExcerpts = createAsyncThunk<
+	Excerpt[],
+	void,
+	ThunkConfig
+>(
 	'excerpts/fetchAll',
 	async (_, { rejectWithValue }) => {
 		try {
@@ -46,7 +51,11 @@ export const fetchAllExcerpts = createAsyncThunk(
 	}
 );
 
-export const createExcerpt = createAsyncThunk(
+export const createExcerpt = createAsyncThunk<
+	Excerpt,
+	Omit<Excerpt, 'id'>,
+	ThunkConfig
+>(
 	'excerpts/create',
 	async (excerpt: Omit<Excerpt, 'id'>, { rejectWithValue }) => {
 		try {
@@ -80,7 +89,11 @@ export const createExcerpt = createAsyncThunk(
 	}
 );
 
-export const updateExcerpt = createAsyncThunk(
+export const updateExcerpt = createAsyncThunk<
+	Excerpt,
+	Excerpt,
+	ThunkConfig
+>(
 	'excerpts/update',
 	async (excerpt: Excerpt, { rejectWithValue }) => {
 		try {
@@ -105,7 +118,11 @@ export const updateExcerpt = createAsyncThunk(
 	}
 );
 
-export const deleteExcerpt = createAsyncThunk(
+export const deleteExcerpt = createAsyncThunk<
+	string,
+	string,
+	ThunkConfig
+>(
 	'excerpts/delete',
 	async (id: string, { rejectWithValue }) => {
 		try {
@@ -149,7 +166,6 @@ export const excerptSlice = createSlice({
 		resetState: (state) => {
 			state.status = APIStatus.Idle;
 			state.statusMessage = '';
-			state.error = null;
 		}
 	},
 	extraReducers(builder) {
@@ -157,10 +173,11 @@ export const excerptSlice = createSlice({
 			// Fetch all
 			.addCase(fetchAllExcerpts.pending, (state) => {
 				state.status = APIStatus.Pending;
+				state.statusMessage = '';
 			})
-			.addCase(fetchAllExcerpts.rejected, (state, { error }) => {
+			.addCase(fetchAllExcerpts.rejected, (state, { payload }) => {
 				state.status = APIStatus.Rejected;
-				state.error = error;
+				state.statusMessage = payload ?? 'Failed to fetch excerpts';
 			})
 			.addCase(fetchAllExcerpts.fulfilled, (state, { payload }) => {
 				state.status = APIStatus.Fulfilled;
@@ -170,13 +187,14 @@ export const excerptSlice = createSlice({
 			// Create
 			.addCase(createExcerpt.pending, (state) => {
 				state.status = APIStatus.Pending;
+				state.statusMessage = '';
 			})
-			.addCase(createExcerpt.rejected, (state, { error }) => {
-				state.status = APIStatus.Rejected
-				state.error = error;
+			.addCase(createExcerpt.rejected, (state, { payload }) => {
+				state.status = APIStatus.Rejected;
+				state.statusMessage = payload ?? 'Failed to create excerpt';
 			})
 			.addCase(createExcerpt.fulfilled, (state, { payload }) => {
-				state.status = APIStatus.Fulfilled
+				state.status = APIStatus.Fulfilled;
 				state.statusMessage = 'Excerpt successfully created';
 				excerptAdapter.addOne(state, payload);
 			})
@@ -184,10 +202,11 @@ export const excerptSlice = createSlice({
 			// Update
 			.addCase(updateExcerpt.pending, (state) => {
 				state.status = APIStatus.Pending;
+				state.statusMessage = '';
 			})
-			.addCase(updateExcerpt.rejected, (state, { error }) => {
+			.addCase(updateExcerpt.rejected, (state, { payload }) => {
 				state.status = APIStatus.Rejected;
-				state.error = error;
+				state.statusMessage = payload ?? 'Failed to update excerpt';
 			})
 			.addCase(updateExcerpt.fulfilled, (state, { payload }) => {
 				state.status = APIStatus.Fulfilled;
@@ -198,10 +217,11 @@ export const excerptSlice = createSlice({
 			// Delete
 			.addCase(deleteExcerpt.pending, (state) => {
 				state.status = APIStatus.Pending;
+				state.statusMessage = '';
 			})
-			.addCase(deleteExcerpt.rejected, (state, { error }) => {
+			.addCase(deleteExcerpt.rejected, (state, { payload }) => {
 				state.status = APIStatus.Rejected;
-				state.error = error;
+				state.statusMessage = payload ?? 'Failed to delete excerpt';
 			})
 			.addCase(deleteExcerpt.fulfilled, (state, { payload }) => {
 				state.status = APIStatus.Fulfilled;

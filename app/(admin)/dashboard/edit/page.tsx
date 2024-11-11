@@ -7,15 +7,15 @@ import { Accordion, AccordionActions, AccordionDetails, Box, InputAdornment, Lin
 import { APIStatus, type Excerpt } from '@/lib/definitions';
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '@/lib/dashboard/store';
+import MessageSnackbar from '@/app/ui/dashboard/MessageSnackbar';
+import { SearchOutlined } from '@mui/icons-material';
+import useInfiniteScroll, { CHUNK_SIZE } from '@/lib/useInfiniteScroll';
 import {
   deleteExcerpt,
   updateExcerpt,
   resetState,
   selectAllExcerpts,
 } from '@/lib/dashboard/features/excerpts/excerptSlice';
-import MessageSnackbar from '@/app/ui/dashboard/MessageSnackbar';
-import { SearchOutlined } from '@mui/icons-material';
-import useInfiniteScroll, { CHUNK_SIZE } from '@/lib/useInfiniteScroll';
 
 const DeleteDialog = React.lazy(() => import('@/app/ui/dashboard/DeleteDialog'));
 
@@ -23,14 +23,13 @@ const selectStatusState = createSelector(
   (state: RootState) => state.excerpts,
   (excerpts) => ({
     status: excerpts.status,
-    error: excerpts.error,
     statusMessage: excerpts.statusMessage
   })
 );
 
 export default function Page() {
   const dispatch = useAppDispatch();
-  const { status, error, statusMessage } = useAppSelector(selectStatusState); 
+  const { status, statusMessage } = useAppSelector(selectStatusState); 
   const excerpts = useAppSelector(selectAllExcerpts);
   const [displayCount, setDisplayCount] = useState(CHUNK_SIZE);
   const [searchTerm, setSearchTerm] = useState('');
@@ -39,10 +38,11 @@ export default function Page() {
     if (!searchTerm) return excerpts;
 
     const searchLower = searchTerm.toLowerCase();
-    return excerpts.filter(excerpt =>
-      excerpt.id.toLowerCase().includes(searchLower) ||
-      excerpt.author.toLowerCase().includes(searchLower) ||
-      excerpt.work.toLowerCase().includes(searchLower)
+    return excerpts.filter(excerpt => {
+      const { id, author, work } = excerpt;
+      const searchableText = `${id} ${author} ${work}`.toLowerCase();
+      return searchableText.includes(searchLower);
+    }
     );
   }, [excerpts, searchTerm]);
 
@@ -81,8 +81,8 @@ export default function Page() {
 
       {(status === APIStatus.Fulfilled && statusMessage) &&
         <MessageSnackbar severity='success' response={statusMessage} handleClose={handleSnackbarClose} />}
-      {(status === APIStatus.Rejected && error?.message) &&
-        <MessageSnackbar severity='error' response={error.message} handleClose={handleSnackbarClose} />}
+      {(status === APIStatus.Rejected && statusMessage) &&
+        <MessageSnackbar severity='error' response={statusMessage} handleClose={handleSnackbarClose} />}
     </>
   );
 }
@@ -97,9 +97,9 @@ const Item: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
   const { status } = useAppSelector(selectStatusState);
   const [openDialog, setOpenDialog] = useState(false);
 
-  const authorRef = useRef<HTMLInputElement>();
-  const workRef = useRef<HTMLInputElement>();
-  const bodyRef = useRef<HTMLInputElement>();
+  const authorRef = useRef<HTMLInputElement>(null);
+  const workRef = useRef<HTMLInputElement>(null);
+  const bodyRef = useRef<HTMLInputElement>(null);
 
   const handleOpenDialog = useCallback(() => setOpenDialog(true), []);
   const handleCloseDialog = useCallback(() => setOpenDialog(false), []);
