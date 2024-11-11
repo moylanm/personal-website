@@ -10,27 +10,33 @@ import {
   setWorkField,
   resetState
 } from '@/lib/dashboard/features/excerpts/excerptSlice';
+import { RootState } from '@/lib/dashboard/store';
 import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
 import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 import { useCallback, useEffect, useMemo } from 'react';
 import { APIStatus, type Excerpt } from '@/lib/definitions';
 import MessageSnackbar from '@/app/ui/dashboard/MessageSnackbar';
 
-interface WorksOption {
-  author: string;
-  work: string;
-}
+const selectFormState = (state: RootState) => ({
+  status: state.excerpts.status,
+  error: state.excerpts.error,
+  statusMessage: state.excerpts.statusMessage,
+  authorField: state.excerpts.authorField,
+  workField: state.excerpts.workField,
+  bodyField: state.excerpts.bodyField
+});
 
 export default function Page() {
   const dispatch = useAppDispatch();
   const excerpts = useAppSelector(selectAllExcerpts);
-  const status = useAppSelector(state => state.excerpts.status);
-  const error = useAppSelector(state => state.excerpts.error);
-  const statusMessage = useAppSelector(state => state.excerpts.statusMessage);
-
-  const authorField = useAppSelector(state => state.excerpts.authorField);
-  const workField = useAppSelector(state => state.excerpts.workField);
-  const bodyField = useAppSelector(state => state.excerpts.bodyField);
+  const {
+    status,
+    error,
+    statusMessage,
+    authorField,
+    workField,
+    bodyField
+  } = useAppSelector(selectFormState);
 
   const handleSnackbarClose = useCallback(() => {
     dispatch(resetState());
@@ -66,35 +72,27 @@ export default function Page() {
     }
   }, [status, clearForm])
 
-  const authors = useMemo<string[]>(() => {
-    return [...new Set(excerpts.map(excerpt => excerpt.author))].sort();
-  }, [excerpts]);
-
-  const works = useMemo<{ [author: string]: string[] }>(() => {
-    return excerpts.reduce<{ [author: string]: string[] }>((acc, excerpt) => {
+  const { authors, worksByAuthor } = useMemo(() => {
+    const uniqueAuthors = Array.from(new Set(excerpts.map(excerpt => excerpt.author))).sort();
+    const workMap = excerpts.reduce<{ [author: string]: string[] }>((acc, excerpt) => {
       if (!acc[excerpt.author]) {
         acc[excerpt.author] = [];
       }
-
       if (!acc[excerpt.author].includes(excerpt.work)) {
         acc[excerpt.author].push(excerpt.work);
       }
-
       return acc;
     }, {});
+    return { authors: uniqueAuthors, worksByAuthor: workMap };
   }, [excerpts]);
 
-  const sortedWorksOptions = useMemo(() => {
-    const worksOptions = authors.reduce<WorksOption[]>((acc, author) => {
-      for (const work of works[author]) {
-        acc.push({ author: author, work: work });
-      }
+  const sortedWorksOptions = useMemo(() => 
+    authors.flatMap(author => 
+      worksByAuthor[author].map(work => ({ author, work }))
+    ).sort((a, b) => a.author.localeCompare(b.author) || a.work.localeCompare(b.work)),
+  [authors, worksByAuthor]);
 
-      return acc;
-    }, []);
-
-    return worksOptions.sort((a, b) => -b.author.localeCompare(a.author));
-  }, [authors, works]);
+  const isSubmitDisabled = status === APIStatus.Pending;
 
   return (
     <>
@@ -150,14 +148,18 @@ export default function Page() {
           rows={10}
         />
         <DashboardFormButton
-          disabled={status === APIStatus.Pending}
+          disabled={isSubmitDisabled}
           variant='contained'
-          type='submit'>Publish</DashboardFormButton>
-        <Box sx={{ boxSizing: 'border-box', width: '5px', height: 'auto', display: 'inline-block' }} />
+          type='submit'>
+            Publish
+          </DashboardFormButton>
+        <Box sx={{ width: '5px', display: 'inline-block' }} />
         <DashboardFormButton
-          disabled={status === APIStatus.Pending}
+          disabled={isSubmitDisabled}
           variant='contained'
-          onClick={clearForm}>Clear</DashboardFormButton>
+          onClick={clearForm}>
+            Clear
+          </DashboardFormButton>
       </form>
     
       {(status === APIStatus.Fulfilled && statusMessage) &&
