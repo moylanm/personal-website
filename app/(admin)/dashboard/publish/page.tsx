@@ -46,7 +46,7 @@ export default function Page() {
     dispatch(setAuthorField(value));
   }, [dispatch]);
 
-  const handlWorkFieldChange = useCallback((_: React.SyntheticEvent, value: string) => {
+  const handleWorkFieldChange = useCallback((_: React.SyntheticEvent, value: string) => {
     dispatch(setWorkField(value));
   }, [dispatch]);
 
@@ -119,7 +119,7 @@ export default function Page() {
         <Autocomplete
           freeSolo
           inputValue={workField}
-          onInputChange={handlWorkFieldChange}
+          onInputChange={handleWorkFieldChange}
           options={sortedWorksOptions}
           groupBy={(option) => option.author}
           getOptionLabel={(option) => typeof option === 'string' ? option : option.work}
