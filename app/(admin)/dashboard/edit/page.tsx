@@ -5,6 +5,8 @@ import { DashboardFormButton, EditorAccordionSummary } from '@/app/ui/style';
 import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
 import { Accordion, AccordionActions, AccordionDetails, Box, InputAdornment, LinearProgress, TextField, Typography } from '@mui/material';
 import { APIStatus, type Excerpt } from '@/lib/definitions';
+import { createSelector } from '@reduxjs/toolkit';
+import { RootState } from '@/lib/dashboard/store';
 import {
   deleteExcerpt,
   updateExcerpt,
@@ -17,15 +19,20 @@ import useInfiniteScroll, { CHUNK_SIZE } from '@/lib/useInfiniteScroll';
 
 const DeleteDialog = React.lazy(() => import('@/app/ui/dashboard/DeleteDialog'));
 
+const selectStatusState = createSelector(
+  (state: RootState) => state.excerpts,
+  (excerpts) => ({
+    status: excerpts.status,
+    error: excerpts.error,
+    statusMessage: excerpts.statusMessage
+  })
+);
+
 export default function Page() {
   const dispatch = useAppDispatch();
-  const status = useAppSelector(state => state.excerpts.status);
-  const error = useAppSelector(state => state.excerpts.error);
-  const statusMessage = useAppSelector(state => state.excerpts.statusMessage);
-
+  const { status, error, statusMessage } = useAppSelector(selectStatusState); 
   const excerpts = useAppSelector(selectAllExcerpts);
   const [displayCount, setDisplayCount] = useState(CHUNK_SIZE);
-
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredExcerpts = useMemo(() => {
@@ -69,7 +76,7 @@ export default function Page() {
         />
       </Box>
 
-      {filteredExcerpts.slice(0, displayCount).map((excerpt) => <Item key={excerpt.id} excerpt={excerpt} />)}
+      {filteredExcerpts.slice(0, displayCount).map((excerpt) => <MemoizedItem key={excerpt.id} excerpt={excerpt} />)}
 			{displayCount < filteredExcerpts.length && <LinearProgress ref={loadMoreRef} />}
 
       {(status === APIStatus.Fulfilled && statusMessage) &&
@@ -80,23 +87,22 @@ export default function Page() {
   );
 }
 
+const baseTextFieldProps = {
+  fullWidth: true,
+  margin: 'normal' as const,
+};
+
 const Item: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
   const dispatch = useAppDispatch();
-  const status = useAppSelector(state => state.excerpts.status);
-
+  const { status } = useAppSelector(selectStatusState);
   const [openDialog, setOpenDialog] = useState(false);
 
   const authorRef = useRef<HTMLInputElement>();
   const workRef = useRef<HTMLInputElement>();
   const bodyRef = useRef<HTMLInputElement>();
 
-  const handleOpenDialog = useCallback(() => {
-    setOpenDialog(true);
-  }, []);
-
-  const handleCloseDialog = useCallback(() => {
-    setOpenDialog(false);
-  }, []);
+  const handleOpenDialog = useCallback(() => setOpenDialog(true), []);
+  const handleCloseDialog = useCallback(() => setOpenDialog(false), []);
 
   const handleDelete = useCallback(() => {
     handleCloseDialog();
@@ -112,6 +118,12 @@ const Item: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
     } as Excerpt));
   }, [dispatch, excerpt]);
 
+  const fields = useMemo(() => [
+    { id: 'author', label: 'Author', defaultValue: excerpt.author, ref: authorRef },
+    { id: 'work', label: 'Work', defaultValue: excerpt.work, ref: workRef },
+    { id: 'body', label: 'Body', defaultValue: excerpt.body, ref: bodyRef, multiline: true, rows: 10 }
+  ], [excerpt]);
+
   return (
     <>
       <Accordion>
@@ -121,32 +133,18 @@ const Item: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
           </Typography>
         </EditorAccordionSummary>
         <AccordionDetails>
-          <TextField
-            fullWidth
-            id={`author-${excerpt.id}`}
-            label='Author'
-            margin='normal'
-            defaultValue={excerpt.author}
-            inputRef={authorRef}
-          />
-          <TextField
-            fullWidth
-            id={`work-${excerpt.id}`}
-            label='Work'
-            margin='normal'
-            defaultValue={excerpt.work}
-            inputRef={workRef}
-          />
-          <TextField
-            fullWidth
-            multiline
-            rows={10}
-            id={`body-${excerpt.id}`}
-            label='Body'
-            margin='normal'
-            defaultValue={excerpt.body}
-            inputRef={bodyRef}
-          />
+          {fields.map(field => (
+            <TextField
+              key={field.id}
+              {...baseTextFieldProps}
+              id={`${field.id}-${excerpt.id}`}
+              label={field.label}
+              defaultValue={field.defaultValue}
+              inputRef={field.ref}
+              multiline={field.multiline}
+              rows={field.rows}
+            />
+          ))}
         </AccordionDetails>
         <AccordionActions>
           <DashboardFormButton
@@ -168,3 +166,5 @@ const Item: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
     </>
   );
 }
+
+const MemoizedItem = React.memo(Item);
