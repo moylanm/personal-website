@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -24,7 +25,19 @@ const PAGES = [
 
 const Navbar = () => {
   const pathname = usePathname();
+  const { data: session, status } = useSession();
+  const [navPages, setNavPages] = useState(PAGES);
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+
+  const sessionKey = status + (session?.user?.email || '');
+
+  useEffect(() => {
+    const updatedPages = status === 'authenticated' && session
+      ? [...PAGES, { url: '/dashboard', value: 'dashboard' }]
+      : PAGES;
+
+    setNavPages(updatedPages);
+  }, [status, session]);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -35,16 +48,16 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="fixed">
-      <Container maxWidth="xl">
+    <AppBar key={sessionKey} position='fixed'>
+      <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
-              size="large"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
+              size='large'
+              aria-controls='menu-appbar'
+              aria-haspopup='true'
               onClick={handleOpenNavMenu}
-              color="inherit"
+              color='inherit'
             >
               <MenuIcon />
             </IconButton>
@@ -63,7 +76,7 @@ const Navbar = () => {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
-              {PAGES.map((page) => (
+              {navPages.map((page) => (
                  <MenuItem
                   key={page.value}
 									component={Link}
@@ -86,7 +99,7 @@ const Navbar = () => {
             }}
           />
           <Box sx={{ marginLeft: 2, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {PAGES.map((page) => (
+            {navPages.map((page) => (
                <NavbarButton
                 key={page.value}
 								component={Link}

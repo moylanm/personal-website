@@ -5,6 +5,7 @@ import { merriweather } from './ui/fonts';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
+import { SessionProvider } from 'next-auth/react';
 import theme from './ui/theme';
 import Navbar from './ui/main/Navbar';
 import Footer from './ui/main/Footer';
@@ -36,16 +37,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${merriweather.className} antialiased`} >
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Navbar />
-            <main>
-              {children}
-            </main>
-            <Footer />
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+          <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <SessionProvider>
+                <Navbar />
+                <main>
+                  {children}
+                </main>
+              </SessionProvider>
+              <Footer />
+            </ThemeProvider>
+          </AppRouterCacheProvider>
         <Analytics />
         <SpeedInsights />
       </body>

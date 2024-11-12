@@ -4,7 +4,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
-import { compare } from 'bcrypt';
+import { compare } from 'bcryptjs';
 import type { User } from '@/lib/definitions';
 
 async function getUser(email: string): Promise<User | undefined> {
@@ -36,7 +36,26 @@ export const {
   signOut
 } = NextAuth({
   session: {
-    strategy: 'jwt'
+    strategy: 'jwt',
+    maxAge: 1 * 24 * 60 * 60,
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.email = user.email;
+        token.name = user.name;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token && session.user) {
+        session.user.id = token.id as string;
+        session.user.email = token.email as string;
+        session.user.name = token.name as string;
+      }
+      return session;
+    }
   },
   providers: [
     CredentialsProvider({
@@ -60,7 +79,13 @@ export const {
 
           const passwordsMatch = await compare(password, user.passwordHash);
 
-          if (passwordsMatch) return user;
+          if (passwordsMatch) {
+            return {
+              id: user.id,
+              email: user.email,
+              name: user.name
+            };
+          }
         }
 
         return null;

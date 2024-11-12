@@ -1,3 +1,5 @@
+'use client'
+
 import {
 	SideNavOuterBox,
 	SideNavButton,
@@ -5,25 +7,27 @@ import {
 	SideNavSpacer,
 	SignOutBox
 } from '../style';
-import { signOut } from '@/auth';
+import { signOut } from 'next-auth/react';
 import { PowerSettingsNewOutlined } from '@mui/icons-material'
 import NavLinks from './NavLinks';
 
 export default function SideNav() {
+
+	const handleSignOut = async () => {
+		await signOut({
+			redirectTo: '/'
+		});
+	};
+
 	return (
 		<SideNavOuterBox>
 			<SideNavInnerBox>
 				<NavLinks />
 				<SideNavSpacer />
-				<form action={async () => {
-					'use server';
-					await signOut();
-				}}>
-					<SideNavButton type='submit'>
+					<SideNavButton onClick={handleSignOut}>
 						<PowerSettingsNewOutlined className='w-6' />
 						<SignOutBox>Sign Out</SignOutBox>
 					</SideNavButton>
-				</form>
 			</SideNavInnerBox>
 		</SideNavOuterBox>
 	);
