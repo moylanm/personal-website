@@ -241,6 +241,7 @@ export const CloseDialogTitle = styled(DialogTitle)({
 
 export const ScrollToTopButton = styled(Button)(({theme}) => ({
 	position: 'fixed',
+	minWidth: '24px',
 	bottom: 100,
 	right: 15,
 	[theme.breakpoints.up('md')]: {

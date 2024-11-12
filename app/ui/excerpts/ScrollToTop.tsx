@@ -4,11 +4,13 @@ import { useCallback, useState, useEffect } from 'react';
 import { ScrollToTopButton } from '../style';
 import Image from 'next/image';
 
+const THRESHOLD = 800;
+
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = useCallback(() => {
-    if (window.scrollY > 800) {
+    if (window.scrollY > THRESHOLD) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
