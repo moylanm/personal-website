@@ -1,113 +1,102 @@
+// app/api/excerpts/route.ts
 import { NextResponse } from 'next/server';
-import { auth } from '@/auth';
 import {
-	allExcerpts,
-	latestExcerpts,
-	excerptById,
-	publishExcerptToDb,
-	updateExcerptInDb,
-	deleteExcerptFromDb
+  allExcerpts,
+  latestExcerpts,
+  excerptById,
+  publishExcerpt,
+  updateExcerpt,
+  deleteExcerpt
 } from '@/lib/data';
+import { withAuth, withValidation, withQueryValidation } from './middleware';
+import { excerptInputSchema, excerptUpdateSchema } from './validators';
 
-async function checkAuth() {
-	const session = await auth();
+export const GET = async (request: Request) => {
+  const { searchParams } = new URL(request.url);
+  const validatedParams = withQueryValidation(searchParams);
+  if (validatedParams instanceof NextResponse) return validatedParams;
 
-	if (!session) {
-		return NextResponse.json(
-			{ error: 'Unauthorized' },
-			{ status: 401 }
-		);
-	}
+  try {
+    const { id, count } = validatedParams;
 
-	return session;
-}
+    if (id) {
+      const data = await excerptById(id);
+      if (!data) {
+        return NextResponse.json(
+          { error: 'Excerpt not found' },
+          { status: 404 }
+        );
+      }
+      return NextResponse.json(data);
+    }
 
-export async function GET(request: Request) {
-	const { searchParams } = new URL(request.url);
-	const id = searchParams.get('id');
-	const count = searchParams.get('count');
+    if (count) {
+      const data = await latestExcerpts(count);
+      return NextResponse.json(data);
+    }
 
-	try {
-		if (id) {
-			const data = await excerptById(id);
-			return NextResponse.json(data);
-		}
+    const data = await allExcerpts();
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error('GET error:', error);
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
+  }
+};
 
-		if (count) {
-			const data = await latestExcerpts(Number(count));
-			return NextResponse.json(data);
-		}
+export const POST = withAuth(async (request: Request) => {
+  const validatedData = await withValidation(excerptInputSchema)(request);
+  if (validatedData instanceof NextResponse) return validatedData;
 
-		const data = await allExcerpts();
-		return NextResponse.json(data);
-	} catch {
-		return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
-	}
-}
+  try {
+    const data = await publishExcerpt(validatedData);
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error('POST error:', error);
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
+  }
+});
 
-export async function POST(request: Request) {
-	const session = await checkAuth();
-	if (session instanceof NextResponse) return session;
+export const PUT = withAuth(async (request: Request) => {
+  const validatedData = await withValidation(excerptUpdateSchema)(request);
+  if (validatedData instanceof NextResponse) return validatedData;
 
-	try {
-		const {
-			author,
-			work,
-			body
-		} = await request.json();
+  try {
+    await updateExcerpt(validatedData);
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('PUT error:', error);
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
+  }
+});
 
-		const data = await publishExcerptToDb({
-			author,
-			work,
-			body
-		});
+export const DELETE = withAuth(async (request: Request) => {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
 
-		return NextResponse.json(data);
-	} catch {
-		return NextResponse.json({ error: 'Internal Server Error '}, { status: 500 });
-	}
-}
+  try {
+    if (!id) {
+      return NextResponse.json(
+        { error: 'Missing id parameter' },
+        { status: 400 }
+      );
+    }
 
-export async function PUT(request: Request) {
-	const session = await checkAuth();
-	if (session instanceof NextResponse) return session;
-
-	try {
-		const {
-			id,
-			author,
-			work,
-			body
-		} = await request.json();
-		
-		await updateExcerptInDb({
-			id,
-			author,
-			work,
-			body
-		});
-		
-		return NextResponse.json({ success: true });
-	} catch {
-		return NextResponse.json({ error: 'Internal Server Error '}, { status: 500 });
-	}
-}
-
-export async function DELETE(request: Request) {
-	const session = await checkAuth();
-	if (session instanceof NextResponse) return session;
-
-	const { searchParams } = new URL(request.url);
-	const id = searchParams.get('id');
-	
-	try {
-		if (id) {
-			await deleteExcerptFromDb({ id });
-			return NextResponse.json({ success: true });
-		}
-
-		return NextResponse.json({ success: false });
-	} catch {
-		return NextResponse.json({ error: 'Internal Server Error '}, { status: 500 });
-	}
-}
+    await deleteExcerpt({ id });
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('DELETE error:', error);
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
+  }
+});
