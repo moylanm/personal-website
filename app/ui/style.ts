@@ -19,6 +19,13 @@ import {
 	type ButtonProps,
 } from '@mui/material';
 
+export const NavbarButton = styled(Button)<ButtonProps>({
+	textAlign: 'center',
+	textTransform: 'capitalize',
+	color: '#62CB21',
+	display: 'block'
+});
+
 export const HomeTableContainer = styled(TableContainer)<TableContainerProps>(({theme }) => ({
 	marginTop: '180px',
 	marginBottom: '180px',

@@ -10,11 +10,11 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Link from 'next/link';
 import NavbarLogo from './NavbarLogo';
 import Image from 'next/image';
+import { NavbarButton } from '../style';
 
 const PAGES = [
   { url: '/', value: 'home'},
@@ -71,8 +71,8 @@ const Navbar = () => {
                   onClick={handleCloseNavMenu}
                   style={ pathname === page.url ? { backgroundColor: '#303539' } : {} }
                 >
-                  <Typography sx={{ color: '#62CB21', textAlign: 'center' }}>
-                    {page.value.toUpperCase()}
+                  <Typography sx={{ textTransform: 'capitalize', color: '#62CB21', textAlign: 'center' }}>
+                    {page.value}
                   </Typography>
                  </MenuItem>
               ))}
@@ -87,15 +87,14 @@ const Navbar = () => {
           />
           <Box sx={{ marginLeft: 2, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {PAGES.map((page) => (
-               <Button
+               <NavbarButton
                 key={page.value}
 								component={Link}
 								href={page.url}
-                sx={{ my: 2, color: '#62CB21', display: 'block' }}
                 style={ pathname === page.url ? { backgroundColor: '#303539' } : {} }
                >
                   {page.value}
-              </Button>
+              </NavbarButton>
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
