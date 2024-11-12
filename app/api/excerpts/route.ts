@@ -8,10 +8,11 @@ import {
   updateExcerpt,
   deleteExcerpt
 } from '@/lib/data';
-import { withAuth, withValidation, withQueryValidation } from './middleware';
+import { withValidation, withQueryValidation } from './middleware';
 import { excerptInputSchema, excerptUpdateSchema } from './validators';
+import { auth } from '@/auth';
 
-export const GET = async (request: Request) => {
+export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const validatedParams = withQueryValidation(searchParams);
   if (validatedParams instanceof NextResponse) return validatedParams;
@@ -44,9 +45,17 @@ export const GET = async (request: Request) => {
       { status: 500 }
     );
   }
-};
+}
 
-export const POST = withAuth(async (request: Request) => {
+export async function POST(request: Request) {
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json(
+      { error: 'Unauthorized' },
+      { status: 401 }
+    );
+  }
+
   const validatedData = await withValidation(excerptInputSchema)(request);
   if (validatedData instanceof NextResponse) return validatedData;
 
@@ -60,9 +69,17 @@ export const POST = withAuth(async (request: Request) => {
       { status: 500 }
     );
   }
-});
+}
 
-export const PUT = withAuth(async (request: Request) => {
+export async function PUT(request: Request) {
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json(
+      { error: 'Unauthorized' },
+      { status: 401 }
+    );
+  }
+
   const validatedData = await withValidation(excerptUpdateSchema)(request);
   if (validatedData instanceof NextResponse) return validatedData;
 
@@ -76,9 +93,17 @@ export const PUT = withAuth(async (request: Request) => {
       { status: 500 }
     );
   }
-});
+}
 
-export const DELETE = withAuth(async (request: Request) => {
+export async function DELETE(request: Request) {
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json(
+      { error: 'Unauthorized' },
+      { status: 401 }
+    );
+  }
+
   const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');
 
@@ -99,4 +124,4 @@ export const DELETE = withAuth(async (request: Request) => {
       { status: 500 }
     );
   }
-});
+}

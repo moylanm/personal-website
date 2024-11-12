@@ -1,21 +1,5 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@/auth';
 import { type ZodSchema } from 'zod';
-
-export async function withAuth(handler: (request: Request) => Promise<Response>) {
-  return async (request: Request) => {
-    const session = await auth();
-
-    if (!session) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    return handler(request);
-  };
-}
 
 export function withValidation(schema: ZodSchema) {
   return async (request: Request) => {
