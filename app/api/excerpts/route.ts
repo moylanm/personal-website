@@ -1,4 +1,3 @@
-// app/api/excerpts/route.ts
 import { NextResponse } from 'next/server';
 import {
   allExcerpts,
@@ -11,6 +10,19 @@ import {
 import { withValidation, withQueryValidation } from './middleware';
 import { excerptInputSchema, excerptUpdateSchema } from './validators';
 import { auth } from '@/auth';
+
+async function checkAuth() {
+	const session = await auth();
+
+	if (!session) {
+		return NextResponse.json(
+			{ error: 'Unauthorized' },
+			{ status: 401 }
+		);
+	}
+
+	return session;
+}
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -48,13 +60,8 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const session = await auth();
-  if (!session) {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
+	const session = await checkAuth();
+	if (session instanceof NextResponse) return session;
 
   const validatedData = await withValidation(excerptInputSchema)(request);
   if (validatedData instanceof NextResponse) return validatedData;
@@ -72,13 +79,8 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  const session = await auth();
-  if (!session) {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
+	const session = await checkAuth();
+	if (session instanceof NextResponse) return session;
 
   const validatedData = await withValidation(excerptUpdateSchema)(request);
   if (validatedData instanceof NextResponse) return validatedData;
@@ -96,13 +98,8 @@ export async function PUT(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-  const session = await auth();
-  if (!session) {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
+	const session = await checkAuth();
+	if (session instanceof NextResponse) return session;
 
   const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');
