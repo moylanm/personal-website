@@ -78,7 +78,7 @@ async function fetchExcerptById(id: string) {
   }
 }
 
-export async function publishExcerptToDb({
+export async function publishExcerpt({
   author,
   work,
   body
@@ -103,7 +103,7 @@ export async function publishExcerptToDb({
   }
 }
 
-export async function updateExcerptInDb(data: {
+export async function updateExcerpt(data: {
   id: string,
   author: string,
   work: string,
@@ -122,7 +122,7 @@ export async function updateExcerptInDb(data: {
   }
 }
 
-export async function deleteExcerptFromDb({ id }: { id: string }) {
+export async function deleteExcerpt({ id }: { id: string }) {
   try {
     await sql`
       DELETE FROM excerpts
