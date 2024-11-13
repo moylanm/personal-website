@@ -4,28 +4,29 @@ import { useActionState } from 'react';
 import { Box, Button, TextField } from '@mui/material';
 import { LoginFormContainer, LoginFormCard } from '../style';
 import { signIn } from 'next-auth/react';
-import { AuthError } from 'next-auth';
+import { useRouter } from 'next/navigation';
 
 export default function LoginForm() {
+  const router = useRouter();
+
   const [errorMessage, formAction, isPending] = useActionState(
     async (_: unknown, formData: FormData) => {
-      try {
-        await signIn('credentials', {
-          email: formData.get('email'),
-          password: formData.get('password'),
-          redirectTo: '/dashboard',
-        });
-      } catch (error) {
-        if (error instanceof AuthError) {
-          switch (error.type) {
-            case 'CredentialsSignin':
-              return 'Invalid credentials.';
-            default:
-              return 'Something went wrong.';
-          }
-        }
-        throw error;
+      const result = await signIn('credentials', {
+        email: formData.get('email'),
+        password: formData.get('password'),
+        redirect: false,
+      });
+
+      if (result?.error) {
+        return 'Invalid credentials.';
       }
+
+      if (result?.ok) {
+        router.push('/dashboard');
+        return null;
+      }
+
+      return 'Something went wrong.';
     },
     undefined
   );
