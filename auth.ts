@@ -10,14 +10,12 @@ import type { User } from '@/lib/definitions';
 declare module 'next-auth' {
   interface Session {
     user: {
-      id: string
       name: string
       email: string
     } & DefaultSession['user']
   }
 
   interface JWT {
-    id: string
     email: string
     name: string
   }
@@ -26,7 +24,7 @@ declare module 'next-auth' {
 async function getUser(email: string): Promise<User | undefined> {
   try {
     const user = await sql`
-      SELECT id, name, email, password_hash
+      SELECT name, password_hash
       FROM users
       WHERE email=${email}
     `;
@@ -37,6 +35,7 @@ async function getUser(email: string): Promise<User | undefined> {
 
     return {
       ...user.rows[0],
+      email,
       passwordHash,
     } as User;
   } catch (error) {
@@ -56,12 +55,11 @@ export const {
   },
   session: {
     strategy: 'jwt',
-    maxAge: 1 * 24 * 60 * 60,
+    maxAge: 24 * 60 * 60,
   },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
         token.email = user.email;
         token.name = user.name;
       }
@@ -69,7 +67,6 @@ export const {
     },
     async session({ session, token }) {
       if (token && session.user) {
-        session.user.id = token.id as string;
         session.user.email = token.email as string;
         session.user.name = token.name as string;
       }
@@ -100,7 +97,6 @@ export const {
 
           if (passwordsMatch) {
             return {
-              id: user.id,
               email: user.email,
               name: user.name
             };
