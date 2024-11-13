@@ -29,12 +29,12 @@ const Navbar = () => {
   const [navPages, setNavPages] = useState(PAGES);
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
-  const sessionKey = status + (session?.user?.email || '');
-
   useEffect(() => {
-    const updatedPages = status === 'authenticated' && session
+    if (status === 'loading') return;
+
+    const updatedPages = status === 'authenticated' && session?.user
       ? [...PAGES, { url: '/dashboard', value: 'dashboard' }]
-      : PAGES;
+      : [...PAGES];
 
     setNavPages(updatedPages);
   }, [status, session]);
@@ -48,7 +48,7 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar key={sessionKey} position='fixed'>
+    <AppBar position='fixed'>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
