@@ -1,11 +1,27 @@
 'user server'
 
-import NextAuth from 'next-auth';
+import NextAuth, { type DefaultSession } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { compare } from 'bcryptjs';
 import type { User } from '@/lib/definitions';
+
+declare module 'next-auth' {
+  interface Session {
+    user: {
+      id: string
+      name: string
+      email: string
+    } & DefaultSession['user']
+  }
+
+  interface JWT {
+    id: string
+    email: string
+    name: string
+  }
+}
 
 async function getUser(email: string): Promise<User | undefined> {
   try {
@@ -30,11 +46,14 @@ async function getUser(email: string): Promise<User | undefined> {
 }
 
 export const {
-  handlers: { GET, POST },
+  handlers,
   auth,
   signIn,
   signOut
 } = NextAuth({
+  pages: {
+    signIn: '/login'
+  },
   session: {
     strategy: 'jwt',
     maxAge: 1 * 24 * 60 * 60,
