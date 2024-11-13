@@ -44,7 +44,11 @@ export default function LoginForm() {
               Login
             </Button>
           </form>
-          {errorMessage && <Box sx={{ textAlign: 'center' }}>{errorMessage}</Box>}
+          {errorMessage && (
+            <Box sx={{ textAlign: 'center', color: 'error.main', mt: 2 }}>
+              {errorMessage}
+            </Box>
+          )}
         </LoginFormCard>
       </LoginFormContainer>
     </>
