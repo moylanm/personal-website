@@ -213,7 +213,7 @@ const Excerpts = ({
       <SortControls value={state.sortDirection} onChange={handleSortChange} />
       <FilterButtons onRandom={handleRandomClick} onReset={handleReset} />
   
-      <FormLabel component="legend" sx={{ mb: 1 }}>Authors</FormLabel>
+      <FormLabel component="legend" sx={{ my: 1 }}>Authors</FormLabel>
       <ScrollableSection>
         <FormControl component="fieldset" sx={{ width: '100%' }}>
           {state.authors.map((author) => (
