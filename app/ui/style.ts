@@ -8,7 +8,6 @@ import {
 	Box,
 	Button,
 	Card,
-	FormControl,
 	Grid2,
 	Paper,
 	TableContainer,
@@ -63,21 +62,39 @@ export const AboutCard = styled(Card)({
 	padding: '30px'
 });
 
-export const FilterFormContainer = styled(Container)(({theme}) => ({
-	position: 'relative',
-	alignItems: 'center',
+export const FilterFormPaper = styled(Paper)(({theme}) => ({
+	position: 'fixed',
+	top: theme.spacing(11),
+	height: `calc(100vh - ${theme.spacing(4)} - 140px)`,
+	padding: theme.spacing(2),
 	display: 'flex',
 	flexDirection: 'column',
-	[theme.breakpoints.up('sm')]: {
-		flexDirection: 'row'
-	},
+	width: '300px',
+	overflow: 'hidden'
 }));
 
-export const FilterFormControl = styled(FormControl)(({theme}) => ({
-	marginRight: '0px',
-	[theme.breakpoints.up('sm')]: {
-		marginRight: '25px'
-	},
+export const ScrollableSection = styled(Box)({
+	overflowY: 'auto',
+	overflowX: 'hidden',
+	flex: 1,
+	width: '100%'
+});
+
+export const WorksList = styled(Box)(({theme}) => ({
+	marginLeft: theme.spacing(3),
+	display: 'flex',
+	flexDirection: 'column',
+	'& .MuiFormControlLabel-root': {
+		margin: 0,
+		width: '100%',
+		'& .MuiFormControlLabel-label': {
+			width: '100%',
+			wordBreak: 'break-word',
+			whitespace: 'normal',
+			overflow: 'hidden',
+			textOverflow: 'ellipsis'
+		}
+	}
 }));
 
 export const SkeletonContainer = styled(Container)(({theme}) => ({

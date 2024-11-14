@@ -25,7 +25,7 @@ const List = ({
 
 	return (
 		<>
-			<Grid2 container sx={{ my: 10, justifyContent: 'center' }} rowSpacing={3}>
+			<Grid2 container sx={{ justifyContent: 'center' }} rowSpacing={3}>
 				{excerpts.slice(0, displayCount).map((excerpt) => {
 					return (
 						<Grid2 key={excerpt.id}>
@@ -43,8 +43,6 @@ const Item: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
 	return (
 		<Container maxWidth='md'>
 			<Card sx={{
-				p: 2,
-				mx: 3,
 				display: 'flex',
 				justifyContent: 'center',
 			}}>

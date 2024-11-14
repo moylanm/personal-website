@@ -6,8 +6,8 @@ export const initialState: AppState = {
   authors: [],
   works: {},
   sortDirection: SortDirection.Newest,
-  selectedAuthor: '',
-  selectedWork: '',
+  selectedAuthors: [],
+  selectedWorks: {},
   randomExcerpt: null,
   resetKey: 0,
 };
@@ -20,33 +20,49 @@ export const reducer = (state: AppState, action: Action): AppState => {
         sortDirection: action.payload as SortDirection,
         randomExcerpt: null
       };
-    case ActionType.SetSelectedAuthor:
+    case ActionType.SetSelectedAuthors: {
+      const { author, checked } = action.payload;
+      const selectedAuthors = checked
+        ? [...state.selectedAuthors, author]
+        : state.selectedAuthors.filter(a => a !== author);
       return {
         ...state,
-        selectedAuthor: action.payload,
-        selectedWork: '',
+        selectedAuthors,
+        selectedWorks: checked
+          ? { ...state.selectedWorks }
+          : { ...state.selectedWorks, [author]: [] },
         randomExcerpt: null
       };
-    case ActionType.SetSelectedWork:
+    }
+    case ActionType.SetSelectedWorks: {
+      const { author, work, checked } = action.payload;
+      const authorWorks = state.selectedWorks[author] || [];
+      const newWorks = checked
+        ? [...authorWorks, work]
+        : authorWorks.filter(w => w !== work);
       return {
         ...state,
-        selectedWork: action.payload
+        selectedWorks: {
+          ...state.selectedWorks,
+          [author]: newWorks
+        }
       };
+    }
     case ActionType.SetRandomExcerpt:
       return {
         ...state,
         randomExcerpt: action.payload,
+        selectedAuthors: [],
+        selectedWorks: {},
         sortDirection: SortDirection.Newest,
-        selectedAuthor: '',
-        selectedWork: ''
       };
     case ActionType.Reset:
       return {
         ...state,
         resetKey: action.payload,
         sortDirection: SortDirection.Newest,
-        selectedAuthor: '',
-        selectedWork: '',
+        selectedAuthors: [],
+        selectedWorks: {},
         randomExcerpt: null
       };
     default:
