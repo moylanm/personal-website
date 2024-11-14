@@ -7,8 +7,15 @@ import { ActionType, SortDirection, type AppState } from '@/lib/excerpts/types';
 import { FilterFormPaper, ScrollableSection, WorksList } from '@/app/ui/style';
 import List from './List';
 import ScrollToTop from './ScrollToTop';
-import { AppBar, Drawer, Grid2, IconButton, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { FilterListOutlined } from '@mui/icons-material';
 import {
+  AppBar,
+  Drawer,
+  IconButton,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+  useTheme,
   FormControl,
   RadioGroup,
   FormLabel,
@@ -17,10 +24,8 @@ import {
   Checkbox,
   Button,
   Container,
-  Paper,
   Box
 } from '@mui/material';
-import { FilterListOutlined } from '@mui/icons-material';
 
 const createInitialState = (excerpts: Excerpt[]): AppState => {
   const authors = [...new Set(excerpts.map((excerpt) => excerpt.author))].sort();
