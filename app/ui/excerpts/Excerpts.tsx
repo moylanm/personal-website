@@ -130,16 +130,18 @@ const Excerpts = ({
     return state.sortDirection === SortDirection.Oldest ? filteredExcerpts.reverse() : filteredExcerpts;
   }, [state.excerpts, state.randomExcerpt, state.selectedAuthors, state.selectedWorks, state.sortDirection]);
 
-  const filterContent = (
-    <Box sx={{ width: DRAWER_WIDTH }}>
-      <FilterFormPaper elevation={2}>
-        <Container sx={{ marginBottom: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Button type='button' onClick={handleRandomClick} aria-label='Select a random excerpt'>Random Excerpt</Button>
-          <Button type='button' onClick={handleReset} aria-label='Reset filter'>Reset</Button>
-        </Container>
-        <FormLabel id='sort-by'>Sort by:</FormLabel>
+  const MobileFilterContent = (
+    <Box sx={{ 
+      width: DRAWER_WIDTH,
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column'
+    }}>
+      {/* Your existing mobile filter content */}
+      <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
+        {/* Radio buttons and action buttons */}
+        <FormLabel component="legend" sx={{ mb: 1 }}>Sort by:</FormLabel>
         <RadioGroup
-          sx={{ display: 'flex', justifyContent: 'center', my: 1 }}
           aria-labelledby='sort-by'
           name='sort-by'
           value={state.sortDirection}
@@ -149,10 +151,34 @@ const Excerpts = ({
           <FormControlLabel value={SortDirection.Newest} control={<Radio />} label='Newest' />
           <FormControlLabel value={SortDirection.Oldest} control={<Radio />} label='Oldest' />
         </RadioGroup>
-        <FormLabel component='legend' sx={{ mb: 1 }}>Authors</FormLabel>
-        <ScrollableSection>
-          <FormControl component='fieldset' sx={{ width: '100%' }}>
-            {state.authors.map((author) => (
+  
+        <Box sx={{ 
+          display: 'flex', 
+          gap: 1, 
+          mt: 2,
+          '& .MuiButton-root': { flex: 1 }
+        }}>
+          <Button variant="outlined" size="small" onClick={handleRandomClick}>
+            Random
+          </Button>
+          <Button variant="outlined" size="small" onClick={handleReset}>
+            Reset
+          </Button>
+        </Box>
+      </Box>
+  
+      {/* Scrollable authors section */}
+      <Box sx={{ 
+        flex: 1,
+        overflowY: 'auto',
+        overflowX: 'hidden',
+        p: 2
+      }}>
+        {/* Authors list content */}
+        <FormLabel component="legend" sx={{ mb: 1 }}>Authors</FormLabel>
+        <FormControl component="fieldset" sx={{ width: '100%' }}>
+          {/* Your existing authors and works list */}
+          {state.authors.map((author) => (
               <Box key={author}>
                 <FormControlLabel
                   sx={{
@@ -190,10 +216,84 @@ const Excerpts = ({
                 )}
               </Box>
             ))}
-          </FormControl>
-        </ScrollableSection>
-      </FilterFormPaper>
+        </FormControl>
+      </Box>
     </Box>
+  );
+
+  const DesktopFilterContent = (
+    <FilterFormPaper elevation={2}>
+      <FormLabel component="legend">Sort by:</FormLabel>
+      <RadioGroup
+        sx={{ my: 1 }}
+        aria-labelledby='sort-by'
+        name='sort-by'
+        value={state.sortDirection}
+        onChange={handleSortChange}
+        row
+      >
+        <FormControlLabel value={SortDirection.Newest} control={<Radio />} label='Newest' />
+        <FormControlLabel value={SortDirection.Oldest} control={<Radio />} label='Oldest' />
+      </RadioGroup>
+  
+      <Box sx={{ 
+        display: 'flex', 
+        gap: 1, 
+        mb: 2,
+        '& .MuiButton-root': { flex: 1 }
+      }}>
+        <Button variant="outlined" size="small" onClick={handleRandomClick}>
+          Random
+        </Button>
+        <Button variant="outlined" size="small" onClick={handleReset}>
+          Reset
+        </Button>
+      </Box>
+  
+      <FormLabel component="legend" sx={{ mb: 1 }}>Authors</FormLabel>
+      <ScrollableSection>
+        <FormControl component="fieldset" sx={{ width: '100%' }}>
+          {state.authors.map((author) => (
+            <Box key={author}>
+              <FormControlLabel
+                sx={{
+                  width: '100%',
+                  margin: 0,
+                  '& .MuiFormControlLabel-label': {
+                    width: '100%',
+                    wordBreak: 'break-word'
+                  }
+                }}
+                control={
+                  <Checkbox
+                    checked={state.selectedAuthors.includes(author)}
+                    onChange={(e) => handleAuthorChange(author, e.target.checked)}
+                  />
+                }
+                label={author}
+              />
+              {state.selectedAuthors.includes(author) && (
+                <WorksList>
+                  {state.works[author].map((work) => (
+                    <FormControlLabel
+                      key={work}
+                      control={
+                        <Checkbox
+                          checked={state.selectedWorks[author]?.includes(work) || false}
+                          onChange={(e) => handleWorkChange(author, work, e.target.checked)}
+                          size="small"
+                        />
+                      }
+                      label={work}
+                    />
+                  ))}
+                </WorksList>
+              )}
+            </Box>
+          ))}
+        </FormControl>
+      </ScrollableSection>
+    </FilterFormPaper>
   );
 
   return (
@@ -256,7 +356,7 @@ const Excerpts = ({
             },
           }}
         >
-          {filterContent}
+          {MobileFilterContent}
         </Drawer>
 
         {/* Desktop Drawer */}
@@ -266,7 +366,7 @@ const Excerpts = ({
             width: DRAWER_WIDTH,
           }}
         >
-          {filterContent}
+          {DesktopFilterContent}
         </Box>
       </Box>
 
