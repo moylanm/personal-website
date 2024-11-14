@@ -1,13 +1,17 @@
 'use client'
 
 import type { Excerpt } from '@/lib/definitions';
-import React, { memo, useCallback, useMemo, useReducer, useState } from 'react';
+import React, { useCallback, useMemo, useReducer, useState } from 'react';
 import { initialState, reducer } from '@/lib/excerpts/reducer';
 import { ActionType, SortDirection, type AppState } from '@/lib/excerpts/types';
-import { FilterFormPaper, ScrollableSection, WorksList } from '@/app/ui/style';
+import { FilterFormPaper, ScrollableSection } from '@/app/ui/style';
+import { FilterListOutlined } from '@mui/icons-material';
+import { DRAWER_WIDTH, MAIN_APPBAR_HEIGHT, DRAWER_STYLES } from './components/constants/styles';
+import SortControls from './components/SortControls';
+import FilterButtons from './components/FilterButtons';
+import AuthorItem from './components/AuthorItem';
 import List from './List';
 import ScrollToTop from './ScrollToTop';
-import { FilterListOutlined } from '@mui/icons-material';
 import {
   AppBar,
   Drawer,
@@ -17,12 +21,7 @@ import {
   useMediaQuery,
   useTheme,
   FormControl,
-  RadioGroup,
   FormLabel,
-  FormControlLabel,
-  Radio,
-  Checkbox,
-  Button,
   Box
 } from '@mui/material';
 
@@ -50,33 +49,6 @@ const createInitialState = (excerpts: Excerpt[]): AppState => {
     )
   };
 };
-
-const DRAWER_WIDTH = 300;
-const MAIN_APPBAR_HEIGHT = 64;
-
-const COMMON_FORM_STYLES = {
-  width: '100%',
-  margin: 0,
-  '& .MuiFormControlLabel-label': {
-    width: '100%',
-    wordBreak: 'break-word'
-  }
-} as const;
-
-const DRAWER_STYLES = {
-  display: { xs: 'block', md: 'none' },
-  '& .MuiDrawer-paper': { 
-    boxSizing: 'border-box', 
-    width: DRAWER_WIDTH,
-    top: `${MAIN_APPBAR_HEIGHT + 48}px`,
-    height: `calc(100% - ${MAIN_APPBAR_HEIGHT + 48}px)`,
-    '& .MuiPaper-root': {
-      position: 'static',
-      height: '100%',
-      top: 0
-    }
-  },
-} as const;
 
 const Excerpts = ({
   excerpts
@@ -163,12 +135,9 @@ const Excerpts = ({
       display: 'flex',
       flexDirection: 'column'
     }}>
-      {/* Your existing mobile filter content */}
       <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
-        {/* Radio buttons and action buttons */}
         <SortControls value={state.sortDirection} onChange={handleSortChange} />
         <FilterButtons onRandom={handleRandomClick} onReset={handleReset} />
-  
       </Box>
       {/* Scrollable authors section */}
       <Box sx={{ 
@@ -177,10 +146,8 @@ const Excerpts = ({
         overflowX: 'hidden',
         p: 2
       }}>
-        {/* Authors list content */}
         <FormLabel component="legend" sx={{ mb: 1 }}>Authors</FormLabel>
         <FormControl component="fieldset" sx={{ width: '100%' }}>
-          {/* Your existing authors and works list */}
           {state.authors.map((author) => (
             <AuthorItem
               key={author}
@@ -212,7 +179,6 @@ const Excerpts = ({
     <FilterFormPaper elevation={2}>
       <SortControls value={state.sortDirection} onChange={handleSortChange} />
       <FilterButtons onRandom={handleRandomClick} onReset={handleReset} />
-  
       <FormLabel component="legend" sx={{ my: 1 }}>Authors</FormLabel>
       <ScrollableSection>
         <FormControl component="fieldset" sx={{ width: '100%' }}>
@@ -258,7 +224,7 @@ const Excerpts = ({
             borderColor: 'divider'
           }}
         >
-          <Toolbar variant='dense'> {/* Use dense Toolbar for smaller height */}
+          <Toolbar variant='dense'>
             <IconButton
               color='inherit'
               aria-label='open filters'
@@ -321,107 +287,5 @@ const Excerpts = ({
     </Box>
   );
 };
-
-interface SortControlsProps {
-  value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-const SortControls = memo<SortControlsProps>(function SortControls({ 
-  value, 
-  onChange 
-}) {
-  return (
-    <>
-      <FormLabel component="legend">Sort by:</FormLabel>
-      <RadioGroup
-        sx={{ my: 1 }}
-        aria-labelledby='sort-by'
-        name='sort-by'
-        value={value}
-        onChange={onChange}
-        row
-      >
-        <FormControlLabel value={SortDirection.Newest} control={<Radio />} label='Newest' />
-        <FormControlLabel value={SortDirection.Oldest} control={<Radio />} label='Oldest' />
-      </RadioGroup>
-    </>
-  );
-});
-
-interface ButtonsProps {
-  onRandom: () => void;
-  onReset: () => void;
-}
-
-const FilterButtons = memo<ButtonsProps>(function FilterButtons({ 
-  onRandom, 
-  onReset
-}) {
-  return (
-    <Box sx={{ 
-      display: 'flex', 
-      gap: 1, 
-      '& .MuiButton-root': { flex: 1 }
-    }}>
-      <Button variant="outlined" size="small" onClick={onRandom}>
-        Random
-      </Button>
-      <Button variant="outlined" size="small" onClick={onReset}>
-        Reset
-      </Button>
-    </Box>
-  );
-});
-
-interface AuthorItemProps {
-  author: string;
-  works: string[];
-  isSelected: boolean;
-  selectedWorks: string[];
-  onAuthorChange: (author: string, checked: boolean) => void;
-  onWorkChange: (author: string, work: string, checked: boolean) => void;
-}
-
-const AuthorItem = memo<AuthorItemProps>(function AuthorItems({ 
-  author, 
-  works, 
-  isSelected, 
-  selectedWorks, 
-  onAuthorChange, 
-  onWorkChange 
-}) {
-  return (
-    <Box key={author}>
-      <FormControlLabel
-        sx={COMMON_FORM_STYLES}
-        control={
-          <Checkbox
-            checked={isSelected}
-            onChange={(e) => onAuthorChange(author, e.target.checked)}
-          />
-        }
-        label={author}
-      />
-      {isSelected && (
-        <WorksList>
-          {works.map((work) => (
-            <FormControlLabel
-              key={work}
-              control={
-                <Checkbox
-                  checked={selectedWorks?.includes(work) || false}
-                  onChange={(e) => onWorkChange(author, work, e.target.checked)}
-                  size="small"
-                />
-              }
-              label={work}
-            />
-          ))}
-        </WorksList>
-      )}
-    </Box>
-  );
-});
 
 export default Excerpts;
