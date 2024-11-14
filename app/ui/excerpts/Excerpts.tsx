@@ -275,7 +275,8 @@ const Excerpts = ({
         component='main'
         sx={{ 
           flexGrow: 1, 
-          p: 3,
+          py: '18px',
+          mb: 4,
           width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
           mt: { xs: `${MAIN_APPBAR_HEIGHT + 48}px`, md: 0 } // Account for both AppBars on mobile
         }}
