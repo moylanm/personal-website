@@ -15,7 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Link from 'next/link';
 import NavbarLogo from './NavbarLogo';
 import Image from 'next/image';
-import { NavbarButton } from '../style';
+import { MAIN_COLOR, NavbarButton } from '../style';
 
 const PAGES = [
   { url: '/', value: 'home'},
@@ -84,7 +84,7 @@ const Navbar = () => {
                   onClick={handleCloseNavMenu}
                   style={ pathname === page.url ? { backgroundColor: '#303539' } : {} }
                 >
-                  <Typography sx={{ textTransform: 'capitalize', color: '#62CB21', textAlign: 'center' }}>
+                  <Typography sx={{ textTransform: 'capitalize', color: MAIN_COLOR, textAlign: 'center' }}>
                     {page.value}
                   </Typography>
                  </MenuItem>

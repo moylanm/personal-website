@@ -18,7 +18,7 @@ import {
 	type ButtonProps,
 } from '@mui/material';
 
-const MAIN_COLOR = '#90CAF9';
+export const MAIN_COLOR = '#90CAF9';
 
 export const NavbarButton = styled(Button)<ButtonProps>({
 	textAlign: 'center',
