@@ -3,8 +3,41 @@ import { Grid2 } from '@mui/material';
 import { AboutCard, AboutContainer, AboutGrid2 } from '@/app/ui/style';
 
 export const metadata: Metadata = {
-	title: 'About'
+  title: 'About',
+  description: 'From Navy veteran to computer scientist - Personal journey and philosophy of Myles Moylan',
+  openGraph: {
+    title: 'About Myles Moylan',
+    description: 'From Navy veteran to computer scientist - Personal journey and philosophy of Myles Moylan',
+    type: 'profile',
+    images: [
+      {
+        url: '/og-image-about.png',
+        width: 1200,
+        height: 630,
+        alt: 'About Myles Moylan'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About Myles Moylan',
+    description: 'From Navy veteran to computer scientist - Personal journey and philosophy of Myles Moylan',
+    images: ['/og-image-about.png']
+  },
+  alternates: {
+    canonical: 'https://mylesmoylan.net/about'
+  },
+  keywords: [
+    'Navy veteran',
+    'computer science',
+    'software developer',
+    'existentialism',
+    'personal journey',
+    'philosophy',
+    'self-taught programmer'
+  ]
 };
+
 
 export default function Page() {
 	return (
