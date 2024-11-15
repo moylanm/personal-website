@@ -44,5 +44,4 @@ const Excerpts = ({ excerpts }: { excerpts: Excerpt[] }) => {
   );
 };
 
-
 export default Excerpts;

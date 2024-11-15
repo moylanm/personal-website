@@ -15,7 +15,7 @@ const MobileAppBar = memo<MobileAppBarProps>(function MobileAppBar({ onDrawerTog
         display: { md: 'none' },
         backgroundColor: 'background.paper',
         color: 'text.primary',
-        top: MAIN_APPBAR_HEIGHT,
+        top: { xs: MAIN_APPBAR_HEIGHT.xs, sm: MAIN_APPBAR_HEIGHT.sm },
         borderTop: 1,
         borderColor: 'divider'
       }}
