@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/og-image.png',
+        url: '/og-image-excerpts.png',
         width: 1200,
         height: 630,
         alt: 'Literary Excerpts Collection'
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Literary Excerpts',
     description: 'Browse a curated collection of literary excerpts from various authors and works.',
-    images: ['/og-image.png'],
+    images: ['/og-image-excerpts.png'],
   },
   keywords: ['literature', 'excerpts', 'quotes', 'authors', 'books', 'reading'],
   alternates: {
