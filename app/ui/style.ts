@@ -201,7 +201,7 @@ export const NavLink = styled(Link)<LinkProps>(({theme}) => ({
 	lineHeight: '20px',
 	fontWeight: 500,
 	textDecoration: 'none',
-	color: '#62CB31',
+	color: '#90CAF9',
 	[theme.breakpoints.up('md')]: {
 		flex: 'none',
 		WebkitJustifyContent: 'flex-start',
@@ -224,7 +224,7 @@ export const SideNavButton = styled(Button)(({theme}) => ({
 	fontSize: '14px',
 	lineHeight: '20px',
 	fontWeight: 500,
-	color: '#62CB31',
+	color: '#90CAF9',
 	[theme.breakpoints.up('md')]: {
 		flex: 'none',
 		WebkitJustifyContent: 'flex-start',
@@ -242,7 +242,7 @@ export const SignOutBox = styled(Box)(({theme}) => ({
 }));
 
 export const DashboardFormButton = styled(Button)<ButtonProps>({
-	backgroundColor: '#62CB31',
+	backgroundColor: '#90CAF9',
 	color: '#0D1A07'
 });
 
