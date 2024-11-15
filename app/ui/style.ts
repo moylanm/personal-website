@@ -21,7 +21,7 @@ import {
 export const NavbarButton = styled(Button)<ButtonProps>({
 	textAlign: 'center',
 	textTransform: 'capitalize',
-	color: '#62CB21',
+	color: '#90CAF9',
 	display: 'block'
 });
 
@@ -41,7 +41,7 @@ export const ExcerptLink = styled(NextLink)<NextLinkProps>({
 		textDecoration: 'underline'
 	},
 	textDecoration: 'none',
-	color: '#62CB31'
+	color: '#90CAF9'
 });
 
 export const AboutContainer = styled(Container)({
