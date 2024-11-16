@@ -85,6 +85,7 @@ export const FilterFormButton = styled(Button)<ButtonProps>({
 	borderColor: FILTER_FORM_COLOR,
 	'&:hover': {
 		borderColor: FILTER_FORM_COLOR,
+		backgroundColor: 'rgba(128, 128, 128, 0.15)'
 	}
 });
 
