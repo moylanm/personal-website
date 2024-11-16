@@ -23,7 +23,7 @@ import {
 } from '@mui/material';
 
 export const MAIN_COLOR = '#62CB21';
-export const FILTER_FORM_COLOR = '#666666';
+export const FILTER_FORM_COLOR = '#808080';
 
 export const NavbarButton = styled(Button)<ButtonProps>({
 	textAlign: 'center',
