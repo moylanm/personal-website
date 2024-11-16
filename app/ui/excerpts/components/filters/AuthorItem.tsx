@@ -1,7 +1,7 @@
 import { Box, Checkbox, FormControlLabel } from '@mui/material';
 import { memo } from 'react';
 import { WorksList } from '@/app/ui/style';
-import { COMMON_FORM_STYLES } from './constants/styles';
+import { COMMON_FORM_STYLES } from '../constants/styles';
 
 interface AuthorItemProps {
   author: string;

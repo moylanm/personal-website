@@ -2,7 +2,7 @@ import { AppState } from '@/lib/excerpts/types';
 import { Box, FormControl, FormLabel } from '@mui/material';
 import { memo } from 'react';
 import AuthorItem from './AuthorItem';
-import { DRAWER_WIDTH } from './constants/styles';
+import { DRAWER_WIDTH } from '../constants/styles';
 import SortControls from './SortControls';
 import FilterButtons from './FilterButtons';
 import { FilterFormPaper, ScrollableSection } from '@/app/ui/style';

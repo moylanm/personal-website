@@ -2,7 +2,7 @@
 
 import type { Excerpt } from '@/lib/definitions';
 import useExcerptsFilter from './hooks/useExcerptsFilter';
-import FilterContent from './components/FilterContent';
+import FilterContent from './components/filters/FilterContent';
 import MobileAppBar from './components/MobileAppBar';
 import Navigation from './components/Navigation';
 import MainContent from './components/MainContent';
