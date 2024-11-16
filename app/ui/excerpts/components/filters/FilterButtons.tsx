@@ -1,4 +1,5 @@
-import { Box, Button } from '@mui/material';
+import { FilterFormButton } from '@/app/ui/style';
+import { Box } from '@mui/material';
 import { memo } from 'react';
 
 interface FilterButtonsProps {
@@ -16,12 +17,12 @@ export const FilterButtons = memo<FilterButtonsProps>(function FilterButtons({
       gap: 1, 
       '& .MuiButton-root': { flex: 1 }
     }}>
-      <Button variant="outlined" size="small" onClick={onRandom}>
+      <FilterFormButton variant="outlined" size="small" onClick={onRandom}>
         Random
-      </Button>
-      <Button variant="outlined" size="small" onClick={onReset}>
+      </FilterFormButton>
+      <FilterFormButton variant="outlined" size="small" onClick={onReset}>
         Reset
-      </Button>
+      </FilterFormButton>
     </Box>
   );
 });

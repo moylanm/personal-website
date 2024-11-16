@@ -1,6 +1,7 @@
-import { FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { FormLabel, RadioGroup, FormControlLabel } from '@mui/material';
 import { memo } from 'react';
 import { SortDirection } from '@/lib/excerpts/types';
+import { FilterFormRadio } from '@/app/ui/style';
 
 interface SortControlsProps {
   value: string;
@@ -22,8 +23,8 @@ const SortControls = memo<SortControlsProps>(function SortControls({
         onChange={onChange}
         row
       >
-        <FormControlLabel value={SortDirection.Newest} control={<Radio />} label='Newest' />
-        <FormControlLabel value={SortDirection.Oldest} control={<Radio />} label='Oldest' />
+        <FormControlLabel value={SortDirection.Newest} control={<FilterFormRadio />} label='Newest' />
+        <FormControlLabel value={SortDirection.Oldest} control={<FilterFormRadio />} label='Oldest' />
       </RadioGroup>
     </>
   );

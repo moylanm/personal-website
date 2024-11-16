@@ -1,6 +1,6 @@
-import { Box, Checkbox, FormControlLabel } from '@mui/material';
 import { memo } from 'react';
-import { WorksList } from '@/app/ui/style';
+import { Box, FormControlLabel } from '@mui/material';
+import { FilterFormCheckbox, WorksList } from '@/app/ui/style';
 import { COMMON_FORM_STYLES } from '../constants/styles';
 
 interface AuthorItemProps {
@@ -25,7 +25,7 @@ const AuthorItem = memo<AuthorItemProps>(function AuthorItem({
       <FormControlLabel
         sx={COMMON_FORM_STYLES}
         control={
-          <Checkbox
+          <FilterFormCheckbox
             checked={isSelected}
             onChange={(e) => onAuthorChange(author, e.target.checked)}
           />
@@ -38,7 +38,7 @@ const AuthorItem = memo<AuthorItemProps>(function AuthorItem({
             <FormControlLabel
               key={work}
               control={
-                <Checkbox
+                <FilterFormCheckbox
                   checked={selectedWorks?.includes(work) || false}
                   onChange={(e) => onWorkChange(author, work, e.target.checked)}
                   size="small"

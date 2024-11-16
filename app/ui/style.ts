@@ -1,7 +1,6 @@
 'use client'
 
 import { styled } from '@mui/system';
-import type { TableContainerProps, Grid2Props } from '@mui/material';
 import NextLink, { type LinkProps as NextLinkProps } from 'next/link';
 import {
 	Container,
@@ -14,11 +13,17 @@ import {
 	Link,
 	DialogTitle,
 	AccordionSummary,
+	Radio,
+	Checkbox,
+	type TableContainerProps,
+	type Grid2Props,
 	type LinkProps,
 	type ButtonProps,
+	type CheckboxProps
 } from '@mui/material';
 
-export const MAIN_COLOR = '#90CAF9';
+export const MAIN_COLOR = '#62CB21';
+export const FILTER_FORM_COLOR = '#666666';
 
 export const NavbarButton = styled(Button)<ButtonProps>({
 	textAlign: 'center',
@@ -74,6 +79,27 @@ export const FilterFormPaper = styled(Paper)(({theme}) => ({
 	width: '300px',
 	overflow: 'hidden'
 }));
+
+export const FilterFormButton = styled(Button)<ButtonProps>({
+	color: 'white',
+	borderColor: FILTER_FORM_COLOR,
+	'&:hover': {
+		borderColor: FILTER_FORM_COLOR,
+	}
+});
+
+export const FilterFormRadio = styled(Radio)({
+	color: FILTER_FORM_COLOR,
+	'&.Mui-checked': {
+		color: FILTER_FORM_COLOR,
+	}
+});
+
+export const FilterFormCheckbox = styled(Checkbox)<CheckboxProps>({
+  '&.Mui-checked': {
+    color: FILTER_FORM_COLOR,
+  }
+});
 
 export const ScrollableSection = styled(Box)({
 	overflowY: 'auto',
