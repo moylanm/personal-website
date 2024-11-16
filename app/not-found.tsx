@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { Box, Typography, Button } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 import Link from 'next/link';
 import { NotFoundBox } from './ui/style';
 
