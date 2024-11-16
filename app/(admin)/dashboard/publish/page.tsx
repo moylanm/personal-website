@@ -94,6 +94,13 @@ export default function Page() {
     ).sort((a, b) => a.author.localeCompare(b.author) || a.work.localeCompare(b.work)),
   [authors, worksByAuthor]);
 
+  const filteredWorkOptions = useMemo(() => {
+    if (!authorField) {
+      return sortedWorksOptions;
+    }
+    return worksByAuthor[authorField]?.map(work => ({ author: authorField, work })) || [];
+  }, [authorField, worksByAuthor, sortedWorksOptions]);
+
   const isSubmitDisabled = status === APIStatus.Pending;
 
   return (
@@ -122,7 +129,7 @@ export default function Page() {
           freeSolo
           inputValue={workField}
           onInputChange={handleWorkFieldChange}
-          options={sortedWorksOptions}
+          options={filteredWorkOptions}
           groupBy={(option) => option.author}
           getOptionLabel={(option) => typeof option === 'string' ? option : option.work}
           renderOption={(props, option) => (
