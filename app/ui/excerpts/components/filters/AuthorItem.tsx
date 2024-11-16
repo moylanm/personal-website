@@ -24,6 +24,7 @@ const AuthorItem = memo<AuthorItemProps>(function AuthorItem({
     <Box>
       <FormControlLabel
         sx={COMMON_FORM_STYLES}
+        label={author}
         control={
           <FilterFormCheckbox
             id={author}
@@ -31,13 +32,13 @@ const AuthorItem = memo<AuthorItemProps>(function AuthorItem({
             onChange={(e) => onAuthorChange(author, e.target.checked)}
           />
         }
-        label={author}
       />
       {isSelected && (
         <WorksList>
           {works.map((work) => (
             <FormControlLabel
               key={work}
+              label={work}
               control={
                 <FilterFormCheckbox
                   id={work}
@@ -46,7 +47,6 @@ const AuthorItem = memo<AuthorItemProps>(function AuthorItem({
                   size='small'
                 />
               }
-              label={work}
             />
           ))}
         </WorksList>
