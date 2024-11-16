@@ -32,7 +32,7 @@ export const NavbarButton = styled(Button)<ButtonProps>({
 	display: 'block'
 });
 
-export const HomeTableContainer = styled(TableContainer)<TableContainerProps>(({theme }) => ({
+export const HomeTableContainer = styled(TableContainer)<TableContainerProps>(({theme}) => ({
 	marginTop: '180px',
 	marginBottom: '180px',
 	marginLeft: 'auto',
