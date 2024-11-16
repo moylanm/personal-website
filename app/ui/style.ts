@@ -25,6 +25,16 @@ import {
 export const MAIN_COLOR = '#62CB21';
 export const FILTER_FORM_COLOR = '#808080';
 
+export const NotFoundBox = styled(Box)({
+	display: 'flex',
+	flexDirection: 'column',
+	alignItems: 'center',
+	justifyContent: 'center',
+	minHeight: '50vh',
+	textAlign: 'center',
+	px: 4
+});
+
 export const NavbarButton = styled(Button)<ButtonProps>({
 	textAlign: 'center',
 	textTransform: 'capitalize',
