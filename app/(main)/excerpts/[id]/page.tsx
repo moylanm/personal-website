@@ -37,7 +37,7 @@ export default async function ExcerptPage({ params }: PageProps) {
     const { author, work, body } = await excerptById(id);
 
     return (
-      <Container maxWidth="md" sx={{ mt: 4, mb: 6 }}>
+      <Container maxWidth='md' sx={{ mt: 4, mb: 6 }}>
         <Paper 
           elevation={2} 
           sx={{ 
@@ -46,7 +46,7 @@ export default async function ExcerptPage({ params }: PageProps) {
           }}
         >
           <Box 
-            component="header" 
+            component='header' 
             sx={{ 
               mb: 4,
               textAlign: 'center',
@@ -56,8 +56,8 @@ export default async function ExcerptPage({ params }: PageProps) {
             }}
           >
             <Typography 
-              variant="h5" 
-              component="h1" 
+              variant='h5' 
+              component='h1' 
               gutterBottom
               sx={{ 
                 fontWeight: 'bold',
@@ -67,8 +67,8 @@ export default async function ExcerptPage({ params }: PageProps) {
               {author}
             </Typography>
             <Typography 
-              variant="subtitle1" 
-              component="h2"
+              variant='subtitle1' 
+              component='h2'
               sx={{ 
                 fontStyle: 'italic',
                 color: 'text.secondary' 
@@ -79,7 +79,7 @@ export default async function ExcerptPage({ params }: PageProps) {
           </Box>
 
           <Box 
-            component="article"
+            component='article'
             sx={{ 
               '& p': { 
                 mb: 2,
