@@ -9,14 +9,14 @@ export default function ExcerptLayout({
   children: React.ReactNode
 }>) {
   return (
-      <Container maxWidth='md'>
-        <ExcerptCard>
-          <CardContent>
-            <Suspense fallback={<Loading />}>
-              {children}
-            </Suspense>
-          </CardContent>
-        </ExcerptCard>
-      </Container>
+    <Container maxWidth='md'>
+      <ExcerptCard>
+        <CardContent>
+          <Suspense fallback={<Loading />}>
+            {children}
+          </Suspense>
+        </CardContent>
+      </ExcerptCard>
+    </Container>
   );
 }
