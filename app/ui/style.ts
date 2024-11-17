@@ -185,10 +185,8 @@ export const DashboardLayoutSideNavBox = styled(Box)(({theme}) => ({
 export const DashboardLayoutChildrenBox = styled(Box)(({theme}) => ({
 	flexGrow: 1,
 	padding: '24px',
-	marginTop: '80px',
-	[theme.breakpoints.up('md')]: {
-		overflowY: 'auto',
-		padding: '48px',
+	[theme.breakpoints.down('md')]: {
+		marginTop: '60px'
 	},
 }));
 
