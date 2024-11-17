@@ -38,7 +38,6 @@ export function middleware(request: NextRequest) {
     ...commonCsp,
     'script-src': scriptSrc,
     'script-src-elem': scriptSrc,
-    'block-all-mixed-content': '',
     'upgrade-insecure-requests': '',
   })
     .map(([key, value]) => `${key} ${value}`.trim())
