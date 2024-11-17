@@ -16,7 +16,6 @@ export function middleware(request: NextRequest) {
     block-all-mixed-content;
     upgrade-insecure-requests;
     connect-src 'self';
-    media-src 'none';
     worker-src 'self';
   `.replace(/\s{2,}/g, ' ').trim();
 
@@ -36,7 +35,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/dashboard/:path*',
-    '/api/:path*',
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.png$).*)',
   ],
 };
