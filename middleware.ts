@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const STATIC_PAGES = [
-  '',
+  '/',
   '/excerpts',
   '/about',
   '/login'
