@@ -1,5 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+const STATIC_PAGES = [
+  '',
+  '/excerpts',
+  '/about',
+  '/login'
+];
+
 export function middleware(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
 
@@ -17,7 +24,7 @@ export function middleware(request: NextRequest) {
   };
 
   const isProd = process.env.NODE_ENV === 'production';
-  const staticPages = new Set(['/excerpts', '/about', '/login', '']);
+  const staticPages = new Set(STATIC_PAGES);
   const isStaticPage = staticPages.has(request.nextUrl.pathname);
 
   // Static pages use simpler CSP without nonce
