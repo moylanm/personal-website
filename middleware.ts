@@ -18,7 +18,7 @@ export function middleware(request: NextRequest) {
   };
 
   // Production script sources
-  const productionScriptSrc = `'self' 'nonce-${nonce}'`;
+  const productionScriptSrc = `'self' 'nonce-${nonce}' 'strict-dynamic'`;
   // Development script sources
   const developmentScriptSrc = `'self' 'nonce-${nonce}' 'unsafe-eval'`;
 
