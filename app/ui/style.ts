@@ -48,7 +48,7 @@ export const HomeTableContainer = styled(TableContainer)<TableContainerProps>(({
 	marginLeft: 'auto',
 	marginRight: 'auto',
 	maxWidth: '400px',
-	[theme.breakpoints.up('md')]: {
+	[theme.breakpoints.up('sm')]: {
 		maxWidth: '800px',
 	}
 }));
