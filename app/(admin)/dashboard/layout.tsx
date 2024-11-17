@@ -15,23 +15,21 @@ export default async function Layout({ children }: { children: React.ReactNode }
   if (!session?.user) redirect('/');
 
   return (
-    <>
-      <Grid2 container spacing={4}>
-        <Grid2 size={2}>
-          <DashboardLayoutBox>
-            <DashboardLayoutSideNavBox>
-              <SideNav />
-            </DashboardLayoutSideNavBox>
-          </DashboardLayoutBox>
-        </Grid2>
-        <Grid2 size={8}>
-          <DashboardLayoutChildrenBox>
-            <StoreProvider>
-              {children}
-            </StoreProvider>
-          </DashboardLayoutChildrenBox>
-        </Grid2>
+    <Grid2 container spacing={4}>
+      <Grid2 size={2}>
+        <DashboardLayoutBox>
+          <DashboardLayoutSideNavBox>
+            <SideNav />
+          </DashboardLayoutSideNavBox>
+        </DashboardLayoutBox>
       </Grid2>
-    </>
+      <Grid2 size={10}>
+        <DashboardLayoutChildrenBox>
+          <StoreProvider>
+            {children}
+          </StoreProvider>
+        </DashboardLayoutChildrenBox>
+      </Grid2>
+    </Grid2>
   );
 }
