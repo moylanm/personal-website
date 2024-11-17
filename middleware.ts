@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 export function middleware(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
 
-  // Common CSP directives shared between both policies
   const commonCsp = {
     'default-src': "'self'",
     'style-src': "'self' 'unsafe-inline'",
@@ -17,37 +16,26 @@ export function middleware(request: NextRequest) {
     'worker-src': "'self'",
   };
 
-  // Production script sources
-  const productionScriptSrc = `'self' 'nonce-${nonce}' 'strict-dynamic'`;
-  // Development script sources
-  const developmentScriptSrc = `'self' 'nonce-${nonce}' 'unsafe-eval'`;
+  const isProd = process.env.NODE_ENV === 'production';
 
-  // Build CSP string based on page type and environment
-  const buildCsp = (isStatic: boolean) => {
-    const isProd = process.env.NODE_ENV === 'production';
+  // In production, we use nonce + strict-dynamic
+  // In development, we need unsafe-eval for hot reloading
+  const scriptSrc = isProd
+    ? `'nonce-${nonce}' 'strict-dynamic'`
+    : `'self' 'unsafe-eval' 'unsafe-inline'`;
 
-    const scriptSrc = isStatic
-      ? `${isProd ? productionScriptSrc : developmentScriptSrc} 'unsafe-inline'`
-      : isProd ? productionScriptSrc : developmentScriptSrc;
-
-    return Object.entries({
-      ...commonCsp,
-      'script-src': scriptSrc,
-      'script-src-elem': scriptSrc,
-      'block-all-mixed-content': '',
-      'upgrade-insecure-requests': '',
-    })
-      .map(([key, value]) => `${key} ${value}`.trim())
-      .join('; ');
-  };
+  const cspHeader = Object.entries({
+    ...commonCsp,
+    'script-src': scriptSrc,
+    'script-src-elem': scriptSrc,
+    'block-all-mixed-content': '',
+    'upgrade-insecure-requests': '',
+  })
+    .map(([key, value]) => `${key} ${value}`.trim())
+    .join('; ');
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-nonce', nonce);
-
-  const staticPages = new Set(['/excerpts', '/about', '/login', '']);
-  const isStaticPage = staticPages.has(request.nextUrl.pathname);
-
-  const cspHeader = buildCsp(isStaticPage);
   requestHeaders.set('Content-Security-Policy', cspHeader);
 
   const response = NextResponse.next({
