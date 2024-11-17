@@ -35,7 +35,12 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/dashboard/:path*',
-    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.png$|$|excerpts$|about).*)',
+    {
+      source: '/((?!api|_next/static|_next/image|favicon.ico|.*\\.png|.*\\.php|excerpts$|about|login|$).*)',
+      missing: [
+        { type: 'header', key: 'next-router-prefetch' },
+        { type: 'header', key: 'purpose', value: 'prefetch' },
+      ],
+    },
   ],
 };
