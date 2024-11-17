@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
       fullUrl: true,
     }
   },
+  reactStrictMode: true,
   poweredByHeader: false,
   async headers() {
     return [
