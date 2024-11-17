@@ -193,7 +193,7 @@ export const DashboardLayoutChildrenBox = styled(Box)(({theme}) => ({
 export const SideNavOuterBox = styled(Box)(({theme}) => ({
 	position: 'fixed',
 	display: 'flex',
-	height: '80%',
+	height: '85%',
 	flex: 'column',
 	padding: '16px 12px',
 	[theme.breakpoints.up('md')]: {
