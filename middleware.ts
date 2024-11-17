@@ -18,9 +18,9 @@ export function middleware(request: NextRequest) {
   };
 
   // Production script sources
-  const productionScriptSrc = "'self' 'nonce-${nonce}' 'strict-dynamic'";
+  const productionScriptSrc = `'self' 'nonce-${nonce}' 'strict-dynamic'`;
   // Development script sources
-  const developmentScriptSrc = "'self' 'nonce-${nonce}' 'unsafe-eval'";
+  const developmentScriptSrc = `'self' 'nonce-${nonce}' 'unsafe-eval'`;
 
   // Build CSP string based on page type and environment
   const buildCsp = (isStatic: boolean) => {
