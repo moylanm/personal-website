@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
+// import { Analytics } from '@vercel/analytics/react';
+// import { SpeedInsights } from '@vercel/speed-insights/react';
 import { merriweather } from './ui/fonts';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
@@ -58,8 +58,6 @@ export default function RootLayout({
               <Footer />
             </ThemeProvider>
           </AppRouterCacheProvider>
-        <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );
