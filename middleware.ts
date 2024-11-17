@@ -17,20 +17,22 @@ export function middleware(request: NextRequest) {
     'worker-src': "'self'",
   };
 
+  // Production script sources
+  const productionScriptSrc = `'self' 'nonce-${nonce}' 'strict-dynamic'`;
+  // Development script sources
+  const developmentScriptSrc = `'self' 'nonce-${nonce}' 'unsafe-eval'`;
+
   // Build CSP string based on page type and environment
   const buildCsp = (isStatic: boolean) => {
-    const scriptDirectives = process.env.NODE_ENV === 'production'
-      ? `'self' 'nonce-${nonce}'`
-      : `'self' 'nonce-${nonce}' 'unsafe-eval'`;
+    const isProd = process.env.NODE_ENV === 'production';
 
-    const finalScriptSrc = isStatic 
-      ? `${scriptDirectives} 'unsafe-inline'`
-      : scriptDirectives;
+    const scriptSrc = isStatic
+      ? `${isProd ? productionScriptSrc : developmentScriptSrc} 'unsafe-inline'`
+      : isProd ? productionScriptSrc : developmentScriptSrc;
 
     return Object.entries({
       ...commonCsp,
-      'script-src': finalScriptSrc,
-      'script-src-elem': finalScriptSrc,
+      'script-src': scriptSrc,
       'block-all-mixed-content': '',
       'upgrade-insecure-requests': '',
     })
