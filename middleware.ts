@@ -27,7 +27,6 @@ export function middleware(request: NextRequest) {
   const staticPages = new Set(STATIC_PAGES);
   const isStaticPage = staticPages.has(request.nextUrl.pathname);
 
-  // Static pages use simpler CSP without nonce
   const scriptSrc = isStaticPage
     ? "'self' 'unsafe-inline'"
     : isProd
