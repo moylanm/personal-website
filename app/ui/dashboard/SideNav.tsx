@@ -24,10 +24,10 @@ export default function SideNav() {
 			<SideNavInnerBox>
 				<NavLinks />
 				<SideNavSpacer />
-					<SideNavButton onClick={handleSignOut}>
-						<PowerSettingsNewOutlined className='w-6' />
-						<SignOutBox>Sign Out</SignOutBox>
-					</SideNavButton>
+				<SideNavButton onClick={handleSignOut}>
+					<PowerSettingsNewOutlined className='w-6' />
+					<SignOutBox>Sign Out</SignOutBox>
+				</SideNavButton>
 			</SideNavInnerBox>
 		</SideNavOuterBox>
 	);
