@@ -18,7 +18,7 @@ export function middleware(request: NextRequest) {
   };
 
   // Production script sources
-  const productionScriptSrc = `'self' 'nonce-${nonce}' 'strict-dynamic'`;
+  const productionScriptSrc = `'self' 'nonce-${nonce}'`;
   // Development script sources
   const developmentScriptSrc = `'self' 'nonce-${nonce}' 'unsafe-eval'`;
 
@@ -44,7 +44,7 @@ export function middleware(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-nonce', nonce);
 
-  const staticPages = new Set(['/excerpts', '/about', '']);
+  const staticPages = new Set(['/excerpts', '/about', '/login', '']);
   const isStaticPage = staticPages.has(request.nextUrl.pathname);
 
   const cspHeader = buildCsp(isStaticPage);
