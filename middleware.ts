@@ -17,16 +17,20 @@ export function middleware(request: NextRequest) {
   };
 
   const isProd = process.env.NODE_ENV === 'production';
+  const staticPages = new Set(['/excerpts', '/about', '/login', '']);
+  const isStaticPage = staticPages.has(request.nextUrl.pathname);
 
-  // In production, we use nonce + strict-dynamic
-  // In development, we need unsafe-eval for hot reloading
-  const scriptSrc = isProd
+  // Static pages use simpler CSP without nonce
+  const scriptSrc = isStaticPage
+    ? "'self' 'unsafe-inline'"
+    : isProd
     ? `'nonce-${nonce}' 'strict-dynamic'`
-    : `'self' 'unsafe-eval' 'unsafe-inline'`;
+    : "'self' 'unsafe-eval' 'unsafe-inline'";
 
   const cspHeader = Object.entries({
     ...commonCsp,
     'script-src': scriptSrc,
+    'script-src-elem': scriptSrc,
     'block-all-mixed-content': '',
     'upgrade-insecure-requests': '',
   })
@@ -34,7 +38,9 @@ export function middleware(request: NextRequest) {
     .join('; ');
 
   const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('x-nonce', nonce);
+  if (!isStaticPage) {
+    requestHeaders.set('x-nonce', nonce);
+  }
   requestHeaders.set('Content-Security-Policy', cspHeader);
 
   const response = NextResponse.next({
