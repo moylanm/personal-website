@@ -33,6 +33,7 @@ export function middleware(request: NextRequest) {
     return Object.entries({
       ...commonCsp,
       'script-src': scriptSrc,
+      'script-src-elem': scriptSrc,
       'block-all-mixed-content': '',
       'upgrade-insecure-requests': '',
     })
