@@ -28,7 +28,7 @@ export function middleware(request: NextRequest) {
   const isStaticPage = staticPages.has(request.nextUrl.pathname);
 
   const scriptSrc = isStaticPage
-    ? "'self' 'unsafe-inline'"
+    ? "'self'"
     : isProd
     ? `'nonce-${nonce}' 'strict-dynamic'`
     : "'self' 'unsafe-eval' 'unsafe-inline'";
