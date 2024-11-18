@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
     'font-src': "'self'",
     'object-src': "'none'",
     'base-uri': "'self'",
-    'form-action': "'self'",
+    'form-action': "'self",
     'frame-ancestors': "'none'",
     'connect-src': "'self'",
     'worker-src': "'self'",
@@ -28,7 +28,7 @@ export function middleware(request: NextRequest) {
   const isStaticPage = staticPages.has(request.nextUrl.pathname);
 
   const scriptSrc = isStaticPage
-    ? "'self'"
+    ? "'self' 'unsafe-inline'"
     : isProd
     ? `'nonce-${nonce}' 'strict-dynamic'`
     : "'self' 'unsafe-eval' 'unsafe-inline'";
