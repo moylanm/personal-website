@@ -60,15 +60,14 @@ export const ExcerptLink = styled(NextLink)<NextLinkProps>({
 	color: MAIN_COLOR
 });
 
-export const AboutContainer = styled(Container)(({theme}) => ({
-	marginTop: theme.spacing(12),
-	marginBottom: theme.spacing(10),
+export const AboutContainer = styled(Container)({
 	marginLeft: 'auto',
 	marginRight: 'auto',
 	maxWidth: '800px'
-}));
+});
 
 export const AboutGrid2 = styled(Grid2)<Grid2Props>({
+	minHeight: '75vh',
 	alignItems: 'center',
 	justifyContent: 'center',
 });
