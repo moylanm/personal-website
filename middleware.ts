@@ -36,7 +36,6 @@ export function middleware(request: NextRequest) {
   const cspHeader = Object.entries({
     ...commonCsp,
     'script-src': scriptSrc,
-    'script-src-elem': scriptSrc,
     'upgrade-insecure-requests': '',
   })
     .map(([key, value]) => `${key} ${value}`.trim())
