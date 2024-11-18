@@ -1,12 +1,12 @@
 import { type DefaultSession } from 'next-auth';
 
-export type User = {
+export interface User {
 	name: string;
 	email: string;
 	passwordHash: string;
 }
 
-export type Excerpt = {
+export interface Excerpt {
 	id: string;
 	author: string;
 	work: string;
