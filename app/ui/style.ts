@@ -31,11 +31,12 @@ export const NotFoundBox = styled(Box)({
 	alignItems: 'center',
 	justifyContent: 'center',
 	minHeight: '50vh',
-	textAlign: 'center',
-	px: 4
+	textAlign: 'center'
 });
 
 export const NavbarButton = styled(Button)<ButtonProps>({
+	marginLeft: 4,
+	marginRight: 4,
 	textAlign: 'center',
 	textTransform: 'capitalize',
 	color: MAIN_COLOR,
@@ -144,8 +145,6 @@ export const SkeletonContainer = styled(Container)(({theme}) => ({
 }));
 
 export const ExcerptCard = styled(Card)({
-	p: 2,
-	mx: 3,
 	marginTop: '180px',
 	marginBottom: '110px',
 	display: 'flex',
