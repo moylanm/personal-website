@@ -12,6 +12,7 @@ export const DesktopNav = ({ pages, pathname }: DesktopNavProps) => (
   <Box sx={{ marginLeft: 2, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
     {pages.map((page) => (
       <NavbarButton
+        sx={{ mx: 1 }}
         key={page.value}
         component={Link}
         href={page.url}

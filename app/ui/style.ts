@@ -34,14 +34,12 @@ export const NotFoundBox = styled(Box)({
 	textAlign: 'center'
 });
 
-export const NavbarButton = styled(Button)<ButtonProps>(({theme}) => ({
-	marginLeft: theme.spacing(1),
-	marginRight: theme.spacing(1),
+export const NavbarButton = styled(Button)<ButtonProps>({
 	textAlign: 'center',
 	textTransform: 'capitalize',
 	color: MAIN_COLOR,
 	display: 'block'
-}));
+});
 
 export const HomeTableContainer = styled(TableContainer)<TableContainerProps>(({theme}) => ({
 	marginTop: '180px',
