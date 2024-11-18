@@ -1,4 +1,4 @@
-'user server'
+'use server'
 
 import NextAuth, { type DefaultSession } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -21,9 +21,19 @@ declare module 'next-auth' {
   }
 }
 
+const credentialsSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6)
+});
+
 async function getUser(email: string): Promise<User | undefined> {
   try {
-    const user = await sql`
+    type UserRow = {
+      name: string;
+      password_hash: Buffer;
+    }
+
+    const user = await sql<UserRow>`
       SELECT name, password_hash
       FROM users
       WHERE email=${email}
@@ -39,7 +49,9 @@ async function getUser(email: string): Promise<User | undefined> {
       passwordHash,
     } as User;
   } catch (error) {
-    console.error('Failed to fetch user:', error);
+    if (error instanceof Error) {
+      console.error('Database error:', error.message);
+    }
     throw new Error('Failed to fetch user.');
   }
 }
@@ -66,9 +78,9 @@ export const {
       return token;
     },
     async session({ session, token }) {
-      if (token && session.user) {
-        session.user.email = token.email as string;
-        session.user.name = token.name as string;
+      if (token && session.user && typeof token.email === 'string' && typeof token.name === 'string') {
+        session.user.email = token.email;
+        session.user.name = token.name;
       }
       return session;
     }
@@ -82,13 +94,8 @@ export const {
       async authorize(credentials) {
         if (credentials === null) return null;
 
-        const parsedCredentials = z.object({
-          email: z.string().email(),
-          password: z.string().min(6)
-        }).safeParse(credentials);
-
-        if (parsedCredentials.success) {
-          const { email, password } = parsedCredentials.data;
+        try {
+          const { email, password } = credentialsSchema.parse(credentials);
           const user = await getUser(email);
 
           if (!user) return null;
@@ -101,6 +108,8 @@ export const {
               name: user.name
             };
           }
+        } catch (error) {
+          console.error('Authorization error:', error);
         }
 
         return null;
