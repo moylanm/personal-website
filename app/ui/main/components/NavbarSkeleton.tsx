@@ -8,7 +8,7 @@ const NavbarSkeleton = () => {
           {/* Mobile Menu Icon Skeleton */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <Skeleton 
-              variant="circular" 
+              variant='circular' 
               width={40} 
               height={40} 
               sx={{ bgcolor: 'rgba(255, 255, 255, 0.1)' }} 
@@ -17,7 +17,7 @@ const NavbarSkeleton = () => {
 
           {/* Logo Skeleton */}
           <Skeleton 
-            variant="circular" 
+            variant='circular' 
             width={40} 
             height={40} 
             sx={{ 
@@ -38,7 +38,7 @@ const NavbarSkeleton = () => {
             {[1, 2, 3].map((item) => (
               <Skeleton 
                 key={item}
-                variant="rectangular" 
+                variant='rectangular' 
                 width={70} 
                 height={36} 
                 sx={{ bgcolor: 'rgba(255, 255, 255, 0.1)' }} 
@@ -53,7 +53,7 @@ const NavbarSkeleton = () => {
               {[1, 2, 3].map((item) => (
                 <Skeleton 
                   key={item}
-                  variant="circular" 
+                  variant='circular' 
                   width={24} 
                   height={24} 
                   sx={{ bgcolor: 'rgba(255, 255, 255, 0.1)' }} 
@@ -64,7 +64,7 @@ const NavbarSkeleton = () => {
             {/* Mobile Social Menu Icon */}
             <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
               <Skeleton 
-                variant="circular" 
+                variant='circular' 
                 width={40} 
                 height={40} 
                 sx={{ bgcolor: 'rgba(255, 255, 255, 0.1)' }} 
