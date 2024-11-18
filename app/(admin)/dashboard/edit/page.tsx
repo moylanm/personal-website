@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect, useCallback, Suspense, useMemo } fr
 import { DashboardFormButton, EditorAccordionSummary } from '@/app/ui/style';
 import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
 import { Accordion, AccordionActions, AccordionDetails, Box, InputAdornment, LinearProgress, TextField, Typography } from '@mui/material';
-import { APIStatus, type Excerpt } from '@/lib/definitions';
+import { APIStatus, type Excerpt } from '@/lib/constants/definitions';
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '@/lib/dashboard/store';
 import MessageSnackbar from '@/app/ui/dashboard/MessageSnackbar';

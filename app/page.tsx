@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { ExcerptLink, HomeTableContainer } from './ui/style';
 import { latestExcerpts } from '@/lib/data';
-import type { Excerpt } from '@/lib/definitions';
+import type { Excerpt } from '@/lib/constants/definitions';
 
 export const metadata: Metadata = {
   description: 'The personal website of Myles Moylan - Exploring philosophy, psychology, religion, and literature',

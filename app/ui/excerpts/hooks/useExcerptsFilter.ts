@@ -1,4 +1,4 @@
-import type { Excerpt } from '@/lib/definitions';
+import type { Excerpt } from '@/lib/constants/definitions';
 import { AppState, ActionType, SortDirection } from '@/lib/excerpts/types';
 import { initialState, reducer } from '@/lib/excerpts/reducer';
 import { useReducer, useState, useCallback, useMemo } from 'react';

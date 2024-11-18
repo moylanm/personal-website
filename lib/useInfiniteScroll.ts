@@ -1,4 +1,4 @@
-import { Excerpt } from '@/lib/definitions';
+import { Excerpt } from '@/lib/constants/definitions';
 import { useEffect, useRef, RefObject } from 'react';
 
 export const CHUNK_SIZE = 15;

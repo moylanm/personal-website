@@ -15,7 +15,7 @@ import { RootState } from '@/lib/dashboard/store';
 import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
 import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 import { useCallback, useEffect, useMemo } from 'react';
-import { APIStatus, type Excerpt } from '@/lib/definitions';
+import { APIStatus, type Excerpt } from '@/lib/constants/definitions';
 import MessageSnackbar from '@/app/ui/dashboard/MessageSnackbar';
 
 const selectFormState = createSelector(

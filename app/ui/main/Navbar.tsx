@@ -91,7 +91,9 @@ const Navbar = () => {
               ))}
             </Menu>
           </Box>
+          
           <NavbarLogo />
+          
           <Box
             sx={{
               display: { xs: 'flex', md: 'none' },

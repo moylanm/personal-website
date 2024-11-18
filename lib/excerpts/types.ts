@@ -1,4 +1,4 @@
-import type { Excerpt } from '@/lib/definitions';
+import type { Excerpt } from '@/lib/constants/definitions';
 
 export enum SortDirection {
 	Newest = 'NEWEST',

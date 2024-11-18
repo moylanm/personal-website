@@ -1,6 +1,6 @@
 'use client'
 
-import type { Excerpt } from '@/lib/definitions';
+import type { Excerpt } from '@/lib/constants/definitions';
 import useExcerptsFilter from './hooks/useExcerptsFilter';
 import FilterContent from './components/filters/FilterContent';
 import MobileAppBar from './components/MobileAppBar';

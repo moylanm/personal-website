@@ -1,7 +1,7 @@
 'use server'
 
 import { sql } from '@vercel/postgres';
-import type { Excerpt } from './definitions';
+import type { Excerpt } from './constants/definitions';
 import { unstable_cache } from 'next/cache';
 import { revalidateTag } from 'next/cache';
 import { cache } from 'react';

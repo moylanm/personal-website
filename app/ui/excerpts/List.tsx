@@ -7,7 +7,7 @@ import {
   LinearProgress,
   Typography
 } from "@mui/material";
-import type { Excerpt } from "@/lib/definitions";
+import type { Excerpt } from "@/lib/constants/definitions";
 import { ExcerptLink } from "@/app/ui/style";
 import { Container } from "@mui/system";
 import { useState } from "react";

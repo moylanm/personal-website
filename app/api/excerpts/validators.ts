@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Excerpt } from '@/lib/definitions';
+import type { Excerpt } from '@/lib/constants/definitions';
 
 export const excerptInputSchema = z.object({
   author: z.string().min(1),

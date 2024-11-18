@@ -4,7 +4,7 @@ import {
 	createSlice
 } from '@reduxjs/toolkit';
 import type { RootState } from '@/lib/dashboard/store';
-import { APIStatus, type Excerpt } from '@/lib/definitions';
+import { APIStatus, type Excerpt } from '@/lib/constants/definitions';
 
 type ThunkConfig = {
 	rejectValue: string;

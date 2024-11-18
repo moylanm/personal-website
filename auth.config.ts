@@ -3,7 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { compare } from 'bcryptjs';
-import type { User } from '@/lib/definitions';
+import type { User } from '@/lib/constants/definitions';
 
 const credentialsSchema = z.object({
   email: z.string().email(),
