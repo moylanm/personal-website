@@ -9,7 +9,7 @@ interface UseInfiniteScrollOptions {
 
 function useInfiniteScroll(
   setDisplayCount: React.Dispatch<React.SetStateAction<number>>,
-  dependency: Excerpt[],
+  excerpts: Excerpt[],
   options: UseInfiniteScrollOptions = { rootMargin: '500px' }
 ): RefObject<HTMLDivElement> {
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -17,7 +17,7 @@ function useInfiniteScroll(
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        setDisplayCount(prevCount => Math.min(prevCount + CHUNK_SIZE, dependency.length));
+        setDisplayCount(prevCount => Math.min(prevCount + CHUNK_SIZE, excerpts.length));
       }
     }, options);
 
@@ -33,7 +33,7 @@ function useInfiniteScroll(
         observer.unobserve(observerRefValue);
       }
     };
-  }, [setDisplayCount, options, dependency]);
+  }, [setDisplayCount, options, excerpts]);
 
   return loadMoreRef;
 }
