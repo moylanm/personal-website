@@ -28,7 +28,7 @@ export function middleware(request: NextRequest) {
   const isStaticPage = staticPages.has(request.nextUrl.pathname);
 
   const scriptSrc = isStaticPage
-    ? `'self' 'nonce-${nonce}'`
+    ? "'self' 'unsafe-inline'"
     : isProd
     ? `'nonce-${nonce}' 'strict-dynamic'`
     : "'self' 'unsafe-eval' 'unsafe-inline'";
@@ -36,6 +36,7 @@ export function middleware(request: NextRequest) {
   const cspHeader = Object.entries({
     ...commonCsp,
     'script-src': scriptSrc,
+    'script-src-elem': scriptSrc,
     'upgrade-insecure-requests': '',
   })
     .map(([key, value]) => `${key} ${value}`.trim())
