@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
     'font-src': "'self'",
     'object-src': "'none'",
     'base-uri': "'self'",
-    'form-action': "'self",
+    'form-action': "'self'",
     'frame-ancestors': "'none'",
     'connect-src': "'self'",
     'worker-src': "'self'",
