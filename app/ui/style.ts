@@ -34,14 +34,14 @@ export const NotFoundBox = styled(Box)({
 	textAlign: 'center'
 });
 
-export const NavbarButton = styled(Button)<ButtonProps>({
-	marginLeft: 4,
-	marginRight: 4,
+export const NavbarButton = styled(Button)<ButtonProps>(({theme}) => ({
+	marginLeft: theme.spacing(1),
+	marginRight: theme.spacing(1),
 	textAlign: 'center',
 	textTransform: 'capitalize',
 	color: MAIN_COLOR,
 	display: 'block'
-});
+}));
 
 export const HomeTableContainer = styled(TableContainer)<TableContainerProps>(({theme}) => ({
 	marginTop: '180px',
@@ -62,13 +62,13 @@ export const ExcerptLink = styled(NextLink)<NextLinkProps>({
 	color: MAIN_COLOR
 });
 
-export const AboutContainer = styled(Container)({
-	marginTop: '150px',
-	marginBottom: '150px',
+export const AboutContainer = styled(Container)(({theme}) => ({
+	marginTop: theme.spacing(12),
+	marginBottom: theme.spacing(10),
 	marginLeft: 'auto',
 	marginRight: 'auto',
 	maxWidth: '800px'
-});
+}));
 
 export const AboutGrid2 = styled(Grid2)<Grid2Props>({
 	alignItems: 'center',
