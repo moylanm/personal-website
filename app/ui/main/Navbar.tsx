@@ -10,12 +10,14 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
 import Link from 'next/link';
 import NavbarLogo from './NavbarLogo';
 import Image from 'next/image';
 import { MAIN_COLOR, NavbarButton } from '../style';
+import { SOCIAL_LINKS } from '@/lib/constants/social-links';
 
 const PAGES = [
   { url: '/', value: 'home'},
@@ -28,6 +30,7 @@ const Navbar = () => {
   const { data: session, status } = useSession();
   const [navPages, setNavPages] = useState(PAGES);
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElSocial, setAnchorElSocial] = useState<null | HTMLElement>(null);
 
   useEffect(() => {
     if (status === 'loading') return;
@@ -45,6 +48,14 @@ const Navbar = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleOpenSocialMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElSocial(event.currentTarget);
+  };
+
+  const handleCloseSocialMenu = () => {
+    setAnchorElSocial(null);
   };
 
   return (
@@ -77,23 +88,21 @@ const Navbar = () => {
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {navPages.map((page) => (
-                 <MenuItem
+                <MenuItem
                   key={page.value}
-									component={Link}
-									href={page.url}
+                  component={Link}
+                  href={page.url}
                   onClick={handleCloseNavMenu}
                   style={ pathname === page.url ? { backgroundColor: '#303539' } : {} }
                 >
                   <Typography sx={{ textTransform: 'capitalize', color: MAIN_COLOR, textAlign: 'center' }}>
                     {page.value}
                   </Typography>
-                 </MenuItem>
+                </MenuItem>
               ))}
             </Menu>
           </Box>
-          
           <NavbarLogo />
-          
           <Box
             sx={{
               display: { xs: 'flex', md: 'none' },
@@ -102,46 +111,74 @@ const Navbar = () => {
           />
           <Box sx={{ marginLeft: 2, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {navPages.map((page) => (
-               <NavbarButton
+              <NavbarButton
                 key={page.value}
-								component={Link}
-								href={page.url}
+                component={Link}
+                href={page.url}
                 style={ pathname === page.url ? { backgroundColor: '#303539' } : {} }
-               >
-                  {page.value}
+              >
+                {page.value}
               </NavbarButton>
             ))}
           </Box>
+
           <Box sx={{ flexGrow: 0 }}>
-            <Link href='https://bsky.app/profile/moylanm.bsky.social'>
-              <Image
-                style={{ marginRight: '10px' }}
-                width={24}
-                height={24}
-                src='/bluesky.png'
-                alt='Bluesky page'
-                title='Bluesky'
-              />
-            </Link>
-            <Link href='https://github.com/moylanm'>
-              <Image
-                style={{ marginRight: '10px' }}
-                width={24}
-                height={24}
-                src='/github.png'
-                alt='Github page'
-                title='Github'
-              />
-            </Link>
-            <Link href='https://www.linkedin.com/in/myles-moylan/'>
-              <Image
-                width={24}
-                height={24}
-                src='/linkedin.png'
-                alt='LinkedIn page'
-                title='LinkedIn'
-              />
-            </Link>
+            {/* Desktop view */}
+            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              {SOCIAL_LINKS.map((link) => (
+                <Link key={link.title} href={link.url}>
+                  <Image
+                    style={{ marginRight: '10px' }}
+                    width={24}
+                    height={24}
+                    src={link.icon}
+                    alt={link.alt}
+                    title={link.title}
+                  />
+                </Link>
+              ))}
+            </Box>
+
+            {/* Mobile view */}
+            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                onClick={handleOpenSocialMenu}
+                sx={{ color: 'white' }}
+              >
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                anchorEl={anchorElSocial}
+                open={Boolean(anchorElSocial)}
+                onClose={handleCloseSocialMenu}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+              >
+                {SOCIAL_LINKS.map((link) => (
+                  <MenuItem 
+                    key={link.title}
+                    component={Link} 
+                    href={link.url} 
+                    onClick={handleCloseSocialMenu}
+                  >
+                    <Image 
+                      width={24} 
+                      height={24} 
+                      src={link.icon} 
+                      alt={link.alt} 
+                      style={{ marginRight: '10px' }} 
+                    />
+                    <Typography>{link.title}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
           </Box>
         </Toolbar>
       </Container>
