@@ -1,25 +1,12 @@
 'use server'
 
-import NextAuth, { type DefaultSession } from 'next-auth';
+import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { compare } from 'bcryptjs';
 import type { User } from '@/lib/definitions';
-
-declare module 'next-auth' {
-  interface Session {
-    user: {
-      name: string
-      email: string
-    } & DefaultSession['user']
-  }
-
-  interface JWT {
-    email: string
-    name: string
-  }
-}
+import '@/lib/definitions/next-auth';
 
 const credentialsSchema = z.object({
   email: z.string().email(),
