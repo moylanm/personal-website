@@ -6,7 +6,6 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { compare } from 'bcryptjs';
 import type { User } from '@/lib/definitions';
-import '@/lib/definitions/next-auth';
 
 const credentialsSchema = z.object({
   email: z.string().email(),
