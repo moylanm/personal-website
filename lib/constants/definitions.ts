@@ -1,5 +1,3 @@
-import { type DefaultSession } from 'next-auth';
-
 export interface User {
 	name: string;
 	email: string;
@@ -19,18 +17,4 @@ export enum APIStatus {
 	Pending = 'PENDING',
 	Rejected = 'REJECTED',
 	Fulfilled = 'FULFILLED'
-}
-
-declare module 'next-auth' {
-  interface Session {
-    user: {
-      name: string
-      email: string
-    } & DefaultSession['user']
-  }
-
-  interface JWT {
-    email: string
-    name: string
-  }
 }
