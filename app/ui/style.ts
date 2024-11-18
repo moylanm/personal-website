@@ -66,11 +66,14 @@ export const AboutContainer = styled(Container)({
 	maxWidth: '800px'
 });
 
-export const AboutGrid2 = styled(Grid2)<Grid2Props>({
+export const AboutGrid2 = styled(Grid2)<Grid2Props>(({theme}) => ({
 	minHeight: '75vh',
 	alignItems: 'center',
 	justifyContent: 'center',
-});
+	[theme.breakpoints.down('sm')]: {
+		marginBottom: '50px'
+	}
+}));
 
 export const AboutCard = styled(Card)({
 	maxWidth: '750px',
