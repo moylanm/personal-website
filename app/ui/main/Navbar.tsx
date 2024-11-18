@@ -111,6 +111,16 @@ const Navbar = () => {
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
+            <Link href='https://bsky.app/profile/moylanm.bsky.social'>
+              <Image
+                style={{ marginRight: '10px' }}
+                width={24}
+                height={24}
+                src='/bluesky.png'
+                alt='Bluesky page'
+                title='Bluesky'
+              />
+            </Link>
             <Link href='https://github.com/moylanm'>
               <Image
                 style={{ marginRight: '10px' }}
@@ -123,11 +133,11 @@ const Navbar = () => {
             </Link>
             <Link href='https://www.linkedin.com/in/myles-moylan/'>
               <Image
-                  width={24}
-                  height={24}
-                  src='/linkedin.png'
-                  alt='LinkedIn page'
-                  title='LinkedIn'
+                width={24}
+                height={24}
+                src='/linkedin.png'
+                alt='LinkedIn page'
+                title='LinkedIn'
               />
             </Link>
           </Box>
