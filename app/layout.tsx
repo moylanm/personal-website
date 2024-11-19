@@ -1,14 +1,13 @@
 import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
-import { merriweather } from './ui/fonts';
+import { merriweather } from '@/styles/fonts';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { SessionProvider } from 'next-auth/react';
-import theme from './ui/theme';
-import Navbar from './ui/main/Navbar';
-import Footer from './ui/main/Footer';
+import theme from '@/styles/theme';
+import { Navbar, Footer } from '@/components';
 
 export const metadata: Metadata = {
   title: {

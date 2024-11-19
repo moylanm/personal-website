@@ -1,6 +1,6 @@
 'use client'
 
-import { DashboardFormButton } from '@/app/ui/style';
+import { DashboardFormButton } from '@/styles';
 import {
   createExcerpt,
   clearPublishForm,
@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
 import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 import { useCallback, useEffect, useMemo } from 'react';
 import { APIStatus, type Excerpt } from '@/lib/constants/definitions';
-import MessageSnackbar from '@/app/ui/dashboard/MessageSnackbar';
+import { MessageSnackbar } from '@/components';
 
 const selectFormState = createSelector(
   (state: RootState) => state.excerpts,

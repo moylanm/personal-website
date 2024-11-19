@@ -1,13 +1,13 @@
 'use client'
 
 import React, { useRef, useState, useEffect, useCallback, Suspense, useMemo } from 'react';
-import { DashboardFormButton, EditorAccordionSummary } from '@/app/ui/style';
+import { DashboardFormButton, EditorAccordionSummary } from '@/styles';
 import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
 import { Accordion, AccordionActions, AccordionDetails, Box, InputAdornment, LinearProgress, TextField, Typography } from '@mui/material';
 import { APIStatus, type Excerpt } from '@/lib/constants/definitions';
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '@/lib/dashboard/store';
-import MessageSnackbar from '@/app/ui/dashboard/MessageSnackbar';
+import { MessageSnackbar } from '@/components';
 import { SearchOutlined } from '@mui/icons-material';
 import useInfiniteScroll, { CHUNK_SIZE } from '@/lib/useInfiniteScroll';
 import {
@@ -17,7 +17,7 @@ import {
   selectAllExcerpts,
 } from '@/lib/dashboard/features/excerpts/excerptSlice';
 
-const DeleteDialog = React.lazy(() => import('@/app/ui/dashboard/DeleteDialog'));
+const DeleteDialog = React.lazy(() => import('@/components/dashboard/DeleteDialog'));
 
 const selectStatusState = createSelector(
   (state: RootState) => state.excerpts,

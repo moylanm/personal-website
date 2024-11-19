@@ -1,4 +1,4 @@
-import { ExcerptCard } from '@/app/ui/style';
+import { ExcerptCard } from '@/styles';
 import { CardContent, Container } from '@mui/material';
 import { Suspense } from 'react';
 import Loading from './loading';

@@ -1,11 +1,11 @@
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import SideNav from '@/app/ui/dashboard/SideNav';
+import { SideNav } from '@/components';
 import {
   DashboardLayoutBox,
   DashboardLayoutChildrenBox,
   DashboardLayoutSideNavBox,
-} from '@/app/ui/style';
+} from '@/styles';
 import { Grid2 } from '@mui/material';
 import StoreProvider from './StoreProvider';
 

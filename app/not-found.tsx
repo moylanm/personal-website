@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { Typography, Button } from '@mui/material';
 import Link from 'next/link';
-import { NotFoundBox } from './ui/style';
+import { NotFoundBox } from '@/styles';
 
 export const metadata: Metadata = {
   title: '404 - Page Not Found',

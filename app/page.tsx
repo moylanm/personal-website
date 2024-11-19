@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-import { ExcerptLink, HomeTableContainer } from './ui/style';
+import { ExcerptLink, HomeTableContainer } from '@/styles';
 import { latestExcerpts } from '@/lib/data';
 import type { Excerpt } from '@/lib/constants/definitions';
 

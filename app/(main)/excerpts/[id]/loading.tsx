@@ -1,4 +1,4 @@
-import ExcerptSkeleton from '@/app/ui/excerpts/ExcerptSkeleton';
+import { ExcerptSkeleton } from '@/components';
 
 export default function Loading() {
   return <ExcerptSkeleton />;
