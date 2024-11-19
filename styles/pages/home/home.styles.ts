@@ -4,8 +4,8 @@ import { styled } from '@mui/system';
 import { TableContainer, type TableContainerProps } from '@mui/material';
 
 export const HomeTableContainer = styled(TableContainer)<TableContainerProps>(({theme}) => ({
-	marginTop: '100px',
-	marginBottom: '100px',
+	marginTop: '80px',
+	marginBottom: '80px',
 	marginLeft: 'auto',
 	marginRight: 'auto',
 	maxWidth: '400px',
