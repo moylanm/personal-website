@@ -8,6 +8,7 @@ import {
 } from '@/styles';
 import { Grid2 } from '@mui/material';
 import StoreProvider from './StoreProvider';
+import { AuthErrorBoundary } from '@/components';
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
   const session = await auth();
@@ -26,7 +27,9 @@ export default async function Layout({ children }: { children: React.ReactNode }
       <Grid2 size={10}>
         <DashboardLayoutChildrenBox>
           <StoreProvider>
-            {children}
+            <AuthErrorBoundary>
+              {children}
+            </AuthErrorBoundary>
           </StoreProvider>
         </DashboardLayoutChildrenBox>
       </Grid2>

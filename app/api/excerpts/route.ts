@@ -12,16 +12,21 @@ import { excerptInputSchema, excerptUpdateSchema } from './validators';
 import { auth } from '@/auth';
 
 async function checkAuth() {
-	const session = await auth();
+  const session = await auth();
 
-	if (!session) {
-		return NextResponse.json(
-			{ error: 'Unauthorized' },
-			{ status: 401 }
-		);
-	}
+  if (!session) {
+    return NextResponse.json(
+      { error: 'Session expired or unauthorized' },
+      { 
+        status: 401,
+        headers: {
+          'WWW-Authenticate': 'Bearer error="invalid_token"'
+        }
+      }
+    );
+  }
 
-	return session;
+  return session;
 }
 
 export async function GET(request: Request) {

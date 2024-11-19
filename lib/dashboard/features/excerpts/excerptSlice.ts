@@ -30,6 +30,15 @@ const initialState = excerptAdapter.getInitialState<ExcerptState>({
 	bodyField: '',
 });
 
+async function authenticatedFetch(input: RequestInfo | URL, init?: RequestInit) {
+  const response = await fetch(input, init);
+  if (response.status === 401) {
+    window.location.href = '/login';
+    throw new Error('Unauthorized');
+  }
+  return response;
+}
+
 export const fetchAllExcerpts = createAsyncThunk<
 	Excerpt[],
 	void,
@@ -38,7 +47,7 @@ export const fetchAllExcerpts = createAsyncThunk<
 	'excerpts/fetchAll',
 	async (_, { rejectWithValue }) => {
 		try {
-			const response = await fetch('/api/excerpts');
+			const response = await authenticatedFetch('/api/excerpts');
 
 			if (!response.ok) {
 				throw new Error('Failed to fetch excerpts');
@@ -63,15 +72,11 @@ export const createExcerpt = createAsyncThunk<
 				return rejectWithValue('Empty field detected');
 			}
 
-			const response = await fetch('/api/excerpts', {
+			const response = await authenticatedFetch('/api/excerpts', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(excerpt)
 			});
-
-			if (response.status === 401) {
-				return rejectWithValue('Unauthorized');
-			}
 
 			if (!response.ok) {
 				throw new Error('Failed to create excerpt');
@@ -97,15 +102,11 @@ export const updateExcerpt = createAsyncThunk<
 	'excerpts/update',
 	async (excerpt: Excerpt, { rejectWithValue }) => {
 		try {
-			const response = await fetch('/api/excerpts', {
+			const response = await authenticatedFetch('/api/excerpts', {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(excerpt)
 			});
-
-			if (response.status === 401) {
-				return rejectWithValue('Unauthorized');
-			}
 
 			if (!response.ok) {
 				throw new Error('Failed to update excerpt');
@@ -126,13 +127,9 @@ export const deleteExcerpt = createAsyncThunk<
 	'excerpts/delete',
 	async (id: string, { rejectWithValue }) => {
 		try {
-			const response = await fetch(`/api/excerpts?id=${id}`, {
+			const response = await authenticatedFetch(`/api/excerpts?id=${id}`, {
 				method: 'DELETE'
 			});
-
-			if (response.status === 401) {
-				return rejectWithValue('Unauthorized');
-			}
 
 			if (!response.ok) {
 				throw new Error('Failed to delete excerpt');
