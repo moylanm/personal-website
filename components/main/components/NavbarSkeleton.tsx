@@ -8,7 +8,7 @@ const NavbarSkeleton = () => {
           {/* Mobile Menu Icon Skeleton */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <Skeleton 
-              variant='circular' 
+              variant='rectangular' 
               width={40} 
               height={40} 
               sx={{ bgcolor: 'rgba(255, 255, 255, 0.1)' }} 
@@ -64,7 +64,7 @@ const NavbarSkeleton = () => {
             {/* Mobile Social Menu Icon */}
             <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
               <Skeleton 
-                variant='circular' 
+                variant='rectangular' 
                 width={40} 
                 height={40} 
                 sx={{ bgcolor: 'rgba(255, 255, 255, 0.1)' }} 
