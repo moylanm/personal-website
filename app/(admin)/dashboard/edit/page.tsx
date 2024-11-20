@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useState, useCallback, Suspense, useMemo } from 'react';
+import React, { useRef, useState, useCallback, Suspense, useMemo, useEffect } from 'react';
 import { DashboardFormButton, EditorAccordionSummary } from '@/styles';
 import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
 import { APIStatus, type Excerpt } from '@/lib/constants/definitions';
@@ -9,11 +9,14 @@ import { RootState } from '@/lib/dashboard/store';
 import { MessageSnackbar } from '@/components';
 import { SearchOutlined } from '@mui/icons-material';
 import { Virtuoso } from 'react-virtuoso';
+import useDebounceSearch from '@/lib/useDebounceSearch';
+import { Highlight } from '@/components';
 import {
   Accordion,
   AccordionActions,
   AccordionDetails,
   Box,
+  CircularProgress,
   InputAdornment,
   TextField,
   Typography
@@ -39,19 +42,24 @@ export default function Page() {
   const dispatch = useAppDispatch();
   const { status, statusMessage } = useAppSelector(selectStatusState); 
   const excerpts = useAppSelector(selectAllExcerpts);
-  const [searchTerm, setSearchTerm] = useState('');
+  const { searchTerm, debouncedTerm, setSearchTerm } = useDebounceSearch();
+  const [isSearching, setIsSearching] = useState(false);
+
+  useEffect(() => {
+    setIsSearching(searchTerm !== debouncedTerm);
+  }, [searchTerm, debouncedTerm]);
 
   const filteredExcerpts = useMemo(() => {
-    if (!searchTerm) return excerpts;
+    if (!debouncedTerm) return excerpts;
 
-    const searchLower = searchTerm.toLowerCase();
+    const searchLower = debouncedTerm.toLowerCase();
     return excerpts.filter(excerpt => {
       const { id, author, work } = excerpt;
       const searchableText = `${id} ${author} ${work}`.toLowerCase();
       return searchableText.includes(searchLower);
     }
     );
-  }, [excerpts, searchTerm]);
+  }, [excerpts, debouncedTerm]);
 
   const handleSnackbarClose = useCallback(() => {
     dispatch(resetState());
@@ -69,7 +77,11 @@ export default function Page() {
             input: {
               startAdornment: (
                 <InputAdornment position='start'>
-                  <SearchOutlined />
+                  {isSearching ? (
+                    <CircularProgress size={20} />
+                  ) : (
+                    <SearchOutlined />
+                  )}
                 </InputAdornment>
               )
             }
@@ -84,6 +96,7 @@ export default function Page() {
           <MemoizedItem
             key={excerpt.id}
             excerpt={excerpt}
+            searchTerm={debouncedTerm}
             isLast={index === filteredExcerpts.length - 1}
           />
         )}
@@ -99,6 +112,7 @@ export default function Page() {
 
 interface ItemProps {
   excerpt: Excerpt;
+  searchTerm: string;
   isLast: boolean;
 }
 
@@ -107,7 +121,7 @@ const baseTextFieldProps = {
   margin: 'normal' as const,
 };
 
-const Item: React.FC<ItemProps> = ({ excerpt, isLast }) => {
+const Item: React.FC<ItemProps> = ({ excerpt, searchTerm, isLast }) => {
   const dispatch = useAppDispatch();
   const { status } = useAppSelector(selectStatusState);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -159,7 +173,10 @@ const Item: React.FC<ItemProps> = ({ excerpt, isLast }) => {
       >
         <EditorAccordionSummary>
           <Typography>
-            {`${excerpt.id}: ${excerpt.author} - ${excerpt.work}`}
+            <Highlight
+              text={`${excerpt.id}: ${excerpt.author} - ${excerpt.work}`}
+              highlight={searchTerm}
+            />
           </Typography>
         </EditorAccordionSummary>
         <AccordionDetails>
