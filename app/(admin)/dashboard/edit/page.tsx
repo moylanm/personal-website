@@ -57,7 +57,7 @@ export default function Page() {
   }, [searchTerm]);
 
   return (
-    <>
+    <Box sx={{ mb: 5 }}>
       <Box sx={{ mb: 3 }}>
         <TextField
           fullWidth
@@ -83,7 +83,7 @@ export default function Page() {
         <MessageSnackbar severity='success' response={statusMessage} handleClose={handleSnackbarClose} />}
       {(status === APIStatus.Rejected && statusMessage) &&
         <MessageSnackbar severity='error' response={statusMessage} handleClose={handleSnackbarClose} />}
-    </>
+    </Box>
   );
 }
 
