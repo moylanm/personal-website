@@ -1,15 +1,23 @@
 'use client'
 
-import React, { useRef, useState, useEffect, useCallback, Suspense, useMemo } from 'react';
+import React, { useRef, useState, useCallback, Suspense, useMemo } from 'react';
 import { DashboardFormButton, EditorAccordionSummary } from '@/styles';
 import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
-import { Accordion, AccordionActions, AccordionDetails, Box, InputAdornment, LinearProgress, TextField, Typography } from '@mui/material';
 import { APIStatus, type Excerpt } from '@/lib/constants/definitions';
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '@/lib/dashboard/store';
 import { MessageSnackbar } from '@/components';
 import { SearchOutlined } from '@mui/icons-material';
-import useInfiniteScroll, { CHUNK_SIZE } from '@/lib/useInfiniteScroll';
+import { Virtuoso } from 'react-virtuoso';
+import {
+  Accordion,
+  AccordionActions,
+  AccordionDetails,
+  Box,
+  InputAdornment,
+  TextField,
+  Typography
+} from '@mui/material';
 import {
   deleteExcerpt,
   updateExcerpt,
@@ -31,7 +39,6 @@ export default function Page() {
   const dispatch = useAppDispatch();
   const { status, statusMessage } = useAppSelector(selectStatusState); 
   const excerpts = useAppSelector(selectAllExcerpts);
-  const [displayCount, setDisplayCount] = useState(CHUNK_SIZE);
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredExcerpts = useMemo(() => {
@@ -49,12 +56,6 @@ export default function Page() {
   const handleSnackbarClose = useCallback(() => {
     dispatch(resetState());
   }, [dispatch]);
-
-  const loadMoreRef = useInfiniteScroll(setDisplayCount, filteredExcerpts);
-
-  useEffect(() => {
-    setDisplayCount(CHUNK_SIZE);
-  }, [searchTerm]);
 
   return (
     <Box sx={{ mb: 5 }}>
@@ -76,8 +77,17 @@ export default function Page() {
         />
       </Box>
 
-      {filteredExcerpts.slice(0, displayCount).map((excerpt) => <MemoizedItem key={excerpt.id} excerpt={excerpt} />)}
-			{displayCount < filteredExcerpts.length && <LinearProgress ref={loadMoreRef} />}
+      <Virtuoso
+        style={{ height: 'calc(100vh - 200px)' }}
+        data={filteredExcerpts}
+        itemContent={(index, excerpt) => (
+          <MemoizedItem
+            key={excerpt.id}
+            excerpt={excerpt}
+            isLast={index === filteredExcerpts.length - 1}
+          />
+        )}
+      />
 
       {(status === APIStatus.Fulfilled && statusMessage) &&
         <MessageSnackbar severity='success' response={statusMessage} handleClose={handleSnackbarClose} />}
@@ -87,14 +97,21 @@ export default function Page() {
   );
 }
 
+interface ItemProps {
+  excerpt: Excerpt;
+  isLast: boolean;
+}
+
 const baseTextFieldProps = {
   fullWidth: true,
   margin: 'normal' as const,
 };
 
-const Item: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
+const Item: React.FC<ItemProps> = ({ excerpt, isLast }) => {
   const dispatch = useAppDispatch();
   const { status } = useAppSelector(selectStatusState);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
 
   const authorRef = useRef<HTMLInputElement>(null);
@@ -109,14 +126,23 @@ const Item: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
     dispatch(deleteExcerpt(excerpt.id));
   }, [dispatch, excerpt, handleCloseDialog]);
 
-  const handleUpdate = useCallback(() => {
-    dispatch(updateExcerpt({
-      id: excerpt.id,
-      author: authorRef.current?.value ?? '',
-      work: workRef.current?.value ?? '',
-      body: bodyRef.current?.value ?? ''
-    } as Excerpt));
-  }, [dispatch, excerpt]);
+  const handleUpdate = useCallback(async () => {
+    setIsUpdating(true);
+    try {
+      await dispatch(updateExcerpt({
+        id: excerpt.id,
+        author: authorRef.current?.value ?? '',
+        work: workRef.current?.value ?? '',
+        body: bodyRef.current?.value ?? ''
+      } as Excerpt));
+    } finally {
+      setIsUpdating(false);
+    }
+  }, [dispatch, excerpt.id]);
+
+  const handleExpand = useCallback((event: React.SyntheticEvent, isExpanded: boolean) => {
+    setExpanded(isExpanded);
+  }, []);
 
   const fields = useMemo(() => [
     { id: 'author', label: 'Author', defaultValue: excerpt.author, ref: authorRef },
@@ -125,8 +151,12 @@ const Item: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
   ], [excerpt]);
 
   return (
-    <>
-      <Accordion>
+    <Box sx={{ mb: isLast ? 8 : 0 }}>
+      <Accordion 
+        expanded={expanded}
+        onChange={handleExpand}
+        disabled={isUpdating}
+      >
         <EditorAccordionSummary>
           <Typography>
             {`${excerpt.id}: ${excerpt.author} - ${excerpt.work}`}
@@ -143,16 +173,23 @@ const Item: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
               inputRef={field.ref}
               multiline={field.multiline}
               rows={field.rows}
+              disabled={isUpdating}
             />
           ))}
         </AccordionDetails>
         <AccordionActions>
           <DashboardFormButton
-            disabled={status === APIStatus.Pending}
-            onClick={handleOpenDialog}>Delete</DashboardFormButton>
+            disabled={status === APIStatus.Pending || isUpdating}
+            onClick={handleOpenDialog}
+          >
+            Delete
+          </DashboardFormButton>
           <DashboardFormButton
-            disabled={status === APIStatus.Pending}
-            onClick={handleUpdate}>Update</DashboardFormButton>
+            disabled={status === APIStatus.Pending || isUpdating}
+            onClick={handleUpdate}
+          >
+            {isUpdating ? 'Updating...' : 'Update'}
+          </DashboardFormButton>
         </AccordionActions>
       </Accordion>
       <Suspense>
@@ -163,7 +200,7 @@ const Item: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
           handleConfirm={handleDelete}
         />
       </Suspense>
-    </>
+    </Box>
   );
 }
 
