@@ -7,7 +7,7 @@ export interface SocialLink {
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
-    url: 'https://bsky.app/profile/moylanm.bsky.social',
+    url: 'https://bsky.app/profile/mylesmoylan.net',
     icon: '/bluesky.png',
     alt: 'Bluesky page',
     title: 'Bluesky'
