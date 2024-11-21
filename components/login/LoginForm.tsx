@@ -11,22 +11,27 @@ export function LoginForm() {
 
   const [errorMessage, formAction, isPending] = useActionState(
     async (_: unknown, formData: FormData) => {
-      const result = await signIn('credentials', {
-        email: formData.get('email'),
-        password: formData.get('password'),
-        redirect: false,
-      });
+      try {
+        const result = await signIn('credentials', {
+          email: formData.get('email'),
+          password: formData.get('password'),
+          redirect: false,
+        });
 
-      if (result?.error) {
-        return 'Invalid credentials.';
+        if (result?.error) {
+          return 'Invalid credentials.';
+        }
+
+        if (result?.ok) {
+          router.replace('/dashboard');
+          return null;
+        }
+
+        return 'Something went wrong.';
+      } catch (error) {
+        console.error('Sign in error:', error);
+        return 'Authentication failed.';
       }
-
-      if (result?.ok) {
-        router.push('/dashboard');
-        return null;
-      }
-
-      return 'Something went wrong.';
     },
     undefined
   );
