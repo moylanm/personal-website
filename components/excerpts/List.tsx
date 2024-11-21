@@ -12,7 +12,7 @@ import { ExcerptLink } from "@/styles";
 import { Container } from "@mui/system";
 import { useState } from "react";
 import Markdown from "react-markdown";
-import useInfiniteScroll, { CHUNK_SIZE } from "@/lib/useInfiniteScroll";
+import useInfiniteScroll, { CHUNK_SIZE } from "@/lib/hooks/useInfiniteScroll";
 
 const List = ({
   excerpts
