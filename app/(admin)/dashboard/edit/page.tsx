@@ -9,7 +9,7 @@ import { RootState } from '@/lib/dashboard/store';
 import { MessageSnackbar } from '@/components';
 import { SearchOutlined } from '@mui/icons-material';
 import { Virtuoso } from 'react-virtuoso';
-import useDebounceSearch from '@/lib/useDebounceSearch';
+import useDebounceSearch from '@/lib/hooks/useDebounceSearch';
 import { Highlight } from '@/components';
 import {
   Accordion,
