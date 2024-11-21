@@ -7,7 +7,7 @@ import {
   DashboardLayoutSideNavBox,
 } from '@/styles';
 import { Grid2 } from '@mui/material';
-import StoreProvider from './StoreProvider';
+import { StoreProvider } from '@/components';
 import { AuthErrorBoundary } from '@/components';
 
 export default async function Layout({ children }: { children: React.ReactNode }) {

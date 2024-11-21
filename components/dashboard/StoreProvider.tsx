@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { makeStore, type AppStore } from '@/lib/dashboard/store'
 import { fetchAllExcerpts } from '@/lib/dashboard/features/excerpts/excerptSlice'
 
-export default function StoreProvider({
+export function StoreProvider({
   children
 }: {
   children: React.ReactNode
