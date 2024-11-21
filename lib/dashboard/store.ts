@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import excerptsReducer from './features/excerpts/excerptSlice';
+import csrfReducer from './features/csrf/csrfSlice';
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      excerpts: excerptsReducer
+      excerpts: excerptsReducer,
+      csrf: csrfReducer
     }
   });
 };

@@ -7,7 +7,7 @@ import {
   updateExcerpt,
   deleteExcerpt
 } from '@/lib/data';
-import { withValidation, withQueryValidation } from './middleware';
+import { withValidation, withQueryValidation, withCsrf } from './middleware';
 import { excerptInputSchema, excerptUpdateSchema } from './validators';
 import { auth } from '@/auth';
 
@@ -68,6 +68,9 @@ export async function POST(request: Request) {
 	const session = await checkAuth();
 	if (session instanceof NextResponse) return session;
 
+  const csrfCheck = await withCsrf(request);
+  if (csrfCheck instanceof NextResponse) return csrfCheck;
+
   const validatedData = await withValidation(excerptInputSchema)(request);
   if (validatedData instanceof NextResponse) return validatedData;
 
@@ -87,6 +90,9 @@ export async function PUT(request: Request) {
 	const session = await checkAuth();
 	if (session instanceof NextResponse) return session;
 
+  const csrfCheck = await withCsrf(request);
+  if (csrfCheck instanceof NextResponse) return csrfCheck;
+
   const validatedData = await withValidation(excerptUpdateSchema)(request);
   if (validatedData instanceof NextResponse) return validatedData;
 
@@ -105,6 +111,9 @@ export async function PUT(request: Request) {
 export async function DELETE(request: Request) {
 	const session = await checkAuth();
 	if (session instanceof NextResponse) return session;
+
+  const csrfCheck = await withCsrf(request);
+  if (csrfCheck instanceof NextResponse) return csrfCheck;
 
   const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');

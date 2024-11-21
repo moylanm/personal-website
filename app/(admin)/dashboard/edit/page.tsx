@@ -27,6 +27,7 @@ import {
   resetState,
   selectAllExcerpts,
 } from '@/lib/dashboard/features/excerpts/excerptSlice';
+import { fetchCsrfToken } from '@/lib/dashboard/features/csrf/csrfSlice';
 
 const DeleteDialog = React.lazy(() => import('@/components/dashboard/DeleteDialog'));
 
@@ -44,6 +45,10 @@ export default function Page() {
   const excerpts = useAppSelector(selectAllExcerpts);
   const { searchTerm, debouncedTerm, setSearchTerm } = useDebounceSearch();
   const [isSearching, setIsSearching] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchCsrfToken());
+  }, [dispatch]);
 
   useEffect(() => {
     setIsSearching(searchTerm !== debouncedTerm);

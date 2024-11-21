@@ -17,6 +17,7 @@ import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 import { useCallback, useEffect, useMemo } from 'react';
 import { APIStatus, type Excerpt } from '@/lib/constants/definitions';
 import { MessageSnackbar } from '@/components';
+import { fetchCsrfToken } from '@/lib/dashboard/features/csrf/csrfSlice';
 
 const selectFormState = createSelector(
   (state: RootState) => state.excerpts,
@@ -39,6 +40,10 @@ export default function Page() {
     workField,
     bodyField
   } = useAppSelector(selectFormState);
+
+  useEffect(() => {
+    dispatch(fetchCsrfToken());
+  }, [dispatch]);
 
   const handleSnackbarClose = useCallback(() => {
     dispatch(resetState());
