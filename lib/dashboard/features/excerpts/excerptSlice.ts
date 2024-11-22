@@ -5,7 +5,8 @@ import {
 } from '@reduxjs/toolkit';
 import { AppDispatch, type RootState } from '@/lib/dashboard/store';
 import { APIStatus, type Excerpt } from '@/lib/constants/definitions';
-import { clearToken, setToken } from '@/lib/dashboard/features/csrf/csrfSlice';
+import { API_ENDPOINTS } from '@/lib/constants/api';
+import { authenticatedFetch } from '@/lib/utils/auth';
 
 type ThunkConfig = {
 	rejectValue: string;
@@ -33,54 +34,6 @@ const initialState = excerptAdapter.getInitialState<ExcerptState>({
 	bodyField: '',
 });
 
-async function authenticatedFetch(
-  dispatch: AppDispatch,
-  csrfToken: string | null,
-  input: RequestInfo | URL,
-  init?: RequestInit,
-) {
-  if (!csrfToken) {
-    try {
-      const tokenResponse = await fetch('/api/csrf');
-      if (!tokenResponse.ok) {
-        throw new Error('Failed to fetch CSRF token');
-      }
-
-      const { token } = await tokenResponse.json();
-      dispatch(setToken(token));
-
-      const headers = {
-        ...init?.headers,
-        'X-CSRF-Token': token,
-      };
-
-      return fetch(input, { ...init, headers });
-    } catch (error) {
-      console.error('CSRF token fetch failed:', error);
-      throw error;
-    }
-  }
-
-  const headers = {
-    ...init?.headers,
-    'X-CSRF-Token': csrfToken,
-  };
-
-  const response = await fetch(input, { ...init, headers });
-
-  if (response.status === 401) {
-    window.location.href = '/login';
-    throw new Error('Unauthorized');
-  }
-  if (response.status === 403) {
-    dispatch(clearToken());
-    throw new Error('CSRF validation failed');
-  }
-
-  return response;
-}
-
-
 export const fetchAllExcerpts = createAsyncThunk<
 	Excerpt[],
 	void,
@@ -89,12 +42,14 @@ export const fetchAllExcerpts = createAsyncThunk<
 	'excerpts/fetchAll',
 	async (_, { rejectWithValue, getState, dispatch }) => {
 		try {
-			const response = await authenticatedFetch(
+			const response = await authenticatedFetch({
 				dispatch,
-				getState().csrf.token,
-				'/api/excerpts',
-				{ method: 'GET' }
-			);
+				csrfToken: getState().csrf.token,
+				input: API_ENDPOINTS.EXCERPTS,
+				init: {
+					method: 'GET'
+				}
+			});
 
 			if (!response.ok) {
 				throw new Error('Failed to fetch excerpts');
@@ -119,16 +74,16 @@ export const createExcerpt = createAsyncThunk<
 				return rejectWithValue('Empty field detected');
 			}
 
-			const response = await authenticatedFetch(
+			const response = await authenticatedFetch({
 				dispatch,
-				getState().csrf.token,
-				'api/excerpts',
-				{
+				csrfToken: getState().csrf.token,
+				input: API_ENDPOINTS.EXCERPTS,
+				init: {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify(excerpt)
 				}
-			);
+			});
 
 			if (!response.ok) {
 				throw new Error('Failed to create excerpt');
@@ -154,16 +109,16 @@ export const updateExcerpt = createAsyncThunk<
 	'excerpts/update',
 	async (excerpt: Excerpt, { rejectWithValue, getState, dispatch }) => {
 		try {
-			const response = await authenticatedFetch(
+			const response = await authenticatedFetch({
 				dispatch,
-				getState().csrf.token,
-				'/api/excerpts',
-				{
+				csrfToken: getState().csrf.token,
+				input: API_ENDPOINTS.EXCERPTS,
+				init: {
 					method: 'PUT',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify(excerpt)
 				}
-			);
+			});
 
 			if (!response.ok) {
 				throw new Error('Failed to update excerpt');
@@ -184,14 +139,14 @@ export const deleteExcerpt = createAsyncThunk<
 	'excerpts/delete',
 	async (id: string, { rejectWithValue, getState, dispatch }) => {
 		try {
-			const response = await authenticatedFetch(
+			const response = await authenticatedFetch({
 				dispatch,
-				getState().csrf.token,
-				`/api/excerpts?id=${id}`,
-				{
+				csrfToken: getState().csrf.token,
+				input: `${API_ENDPOINTS.EXCERPTS}?id=${id}`,
+				init: {
 					method: 'DELETE'
 				}
-			);
+			});
 
 			if (!response.ok) {
 				throw new Error('Failed to delete excerpt');
