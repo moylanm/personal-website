@@ -9,7 +9,7 @@ import {
   deleteExcerpt
 } from '@/lib/data';
 import { withValidation, withQueryValidation } from '@/lib/utils/middleware';
-import { excerptInputSchema, excerptUpdateSchema } from './validators';
+import { excerptInputSchema, excerptUpdateSchema } from '@/lib/utils/validators';
 import { createProtectedRoute } from '@/lib/utils/routeHandler';
 import { apiResponse } from '@/lib/utils/apiResponses';
 
