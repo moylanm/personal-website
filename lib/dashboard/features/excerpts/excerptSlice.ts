@@ -3,16 +3,93 @@ import {
 	createEntityAdapter,
 	createSlice
 } from '@reduxjs/toolkit';
-import { AppDispatch, type RootState } from '@/lib/dashboard/store';
+import { type RootState } from '@/lib/dashboard/store';
 import { APIStatus, type Excerpt } from '@/lib/constants/definitions';
 import { API_ENDPOINTS } from '@/lib/constants/api';
-import { authenticatedFetch } from '@/lib/utils/auth';
+import { createThunk, type ThunkConfig } from '@/lib/utils/thunkHelpers';
 
-type ThunkConfig = {
-	rejectValue: string;
-	state: RootState;
-	dispatch: AppDispatch;
-};
+export const createExcerpt = createAsyncThunk<
+  Excerpt,
+  Omit<Excerpt, 'id'>,
+  ThunkConfig
+>(
+  'excerpts/create',
+  (excerpt, thunkTools) => createThunk<Excerpt, string>(
+    thunkTools,
+    {
+      input: API_ENDPOINTS.EXCERPTS,
+      init: {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(excerpt)
+      }
+    }
+  )
+    .withValidation(() => {
+      if (!excerpt.author || !excerpt.work || !excerpt.body) {
+        return 'Empty field detected';
+      }
+    })
+    .withTransform((id) => ({
+      ...excerpt,
+      id,
+    }))
+    .execute()
+);
+
+export const updateExcerpt = createAsyncThunk<
+  Excerpt,
+  Excerpt,
+  ThunkConfig
+>(
+  'excerpts/update',
+  (excerpt, thunkTools) => createThunk<Excerpt>(
+    thunkTools,
+    {
+      input: API_ENDPOINTS.EXCERPTS,
+      init: {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(excerpt)
+      }
+    }
+  )
+    .withTransform(() => excerpt)
+    .execute()
+);
+
+export const deleteExcerpt = createAsyncThunk<
+  string,
+  string,
+  ThunkConfig
+>(
+  'excerpts/delete',
+  (id, thunkTools) => createThunk<string>(
+    thunkTools,
+    {
+      input: `${API_ENDPOINTS.EXCERPTS}?id=${id}`,
+      init: { method: 'DELETE' }
+    }
+  )
+    .withTransform(() => id)
+    .execute()
+);
+
+export const fetchAllExcerpts = createAsyncThunk<
+  Excerpt[],
+  void,
+  ThunkConfig
+>(
+  'excerpts/fetchAll',
+  (_, thunkTools) => createThunk<Excerpt[]>(
+    thunkTools,
+    {
+      input: API_ENDPOINTS.EXCERPTS,
+      init: { method: 'GET' }
+    }
+  )
+    .execute()
+);
 
 const excerptAdapter = createEntityAdapter({
 	sortComparer: (a: Excerpt, b: Excerpt) => Number(b.id) - Number(a.id)
@@ -33,131 +110,6 @@ const initialState = excerptAdapter.getInitialState<ExcerptState>({
 	workField: '',
 	bodyField: '',
 });
-
-export const fetchAllExcerpts = createAsyncThunk<
-	Excerpt[],
-	void,
-	ThunkConfig
->(
-	'excerpts/fetchAll',
-	async (_, { rejectWithValue, getState, dispatch }) => {
-		try {
-			const response = await authenticatedFetch({
-				dispatch,
-				csrfToken: getState().csrf.token,
-				input: API_ENDPOINTS.EXCERPTS,
-				init: {
-					method: 'GET'
-				}
-			});
-
-			if (!response.ok) {
-				throw new Error('Failed to fetch excerpts');
-			}
-
-			return response.json() as Promise<Excerpt[]>;
-		} catch (error) {
-			return rejectWithValue(error instanceof Error ? error.message : 'Failed to fetch excerpts');
-		}
-	}
-);
-
-export const createExcerpt = createAsyncThunk<
-	Excerpt,
-	Omit<Excerpt, 'id'>,
-	ThunkConfig
->(
-	'excerpts/create',
-	async (excerpt: Omit<Excerpt, 'id'>, { rejectWithValue, getState, dispatch }) => {
-		try {
-			if (!excerpt.author || !excerpt.work || !excerpt.body) {
-				return rejectWithValue('Empty field detected');
-			}
-
-			const response = await authenticatedFetch({
-				dispatch,
-				csrfToken: getState().csrf.token,
-				input: API_ENDPOINTS.EXCERPTS,
-				init: {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify(excerpt)
-				}
-			});
-
-			if (!response.ok) {
-				throw new Error('Failed to create excerpt');
-			}
-
-			const id = await response.json();
-
-			return {
-				...excerpt,
-				id: id
-			} as Excerpt;
-		} catch (error) {
-			return rejectWithValue(error instanceof Error ? error.message : 'Failed to create excerpt');
-		}
-	}
-);
-
-export const updateExcerpt = createAsyncThunk<
-	Excerpt,
-	Excerpt,
-	ThunkConfig
->(
-	'excerpts/update',
-	async (excerpt: Excerpt, { rejectWithValue, getState, dispatch }) => {
-		try {
-			const response = await authenticatedFetch({
-				dispatch,
-				csrfToken: getState().csrf.token,
-				input: API_ENDPOINTS.EXCERPTS,
-				init: {
-					method: 'PUT',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify(excerpt)
-				}
-			});
-
-			if (!response.ok) {
-				throw new Error('Failed to update excerpt');
-			}
-
-			return excerpt;
-		} catch (error) {
-			return rejectWithValue(error instanceof Error ? error.message : 'Failed to update excerpt');
-		}
-	}
-);
-
-export const deleteExcerpt = createAsyncThunk<
-	string,
-	string,
-	ThunkConfig
->(
-	'excerpts/delete',
-	async (id: string, { rejectWithValue, getState, dispatch }) => {
-		try {
-			const response = await authenticatedFetch({
-				dispatch,
-				csrfToken: getState().csrf.token,
-				input: `${API_ENDPOINTS.EXCERPTS}?id=${id}`,
-				init: {
-					method: 'DELETE'
-				}
-			});
-
-			if (!response.ok) {
-				throw new Error('Failed to delete excerpt');
-			}
-			
-			return id; // Return id for removing from state
-		} catch (error) {
-			return rejectWithValue(error instanceof Error ? error.message : 'Failed to delete excerpt');
-		}
-	}
-);
 
 export const excerptSlice = createSlice({
 	name: 'excerpts',
