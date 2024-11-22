@@ -1,3 +1,4 @@
+// api/excerpts/route.ts
 import { NextResponse } from 'next/server';
 import {
   allExcerpts,
@@ -7,132 +8,60 @@ import {
   updateExcerpt,
   deleteExcerpt
 } from '@/lib/data';
-import { withValidation, withQueryValidation, withCsrf } from './middleware';
+import { withValidation, withQueryValidation } from '@/lib/utils/middleware';
 import { excerptInputSchema, excerptUpdateSchema } from './validators';
-import { auth } from '@/auth';
-
-async function checkAuth() {
-  const session = await auth();
-
-  if (!session) {
-    return NextResponse.json(
-      { error: 'Session expired or unauthorized' },
-      { 
-        status: 401,
-        headers: {
-          'WWW-Authenticate': 'Bearer error="invalid_token"'
-        }
-      }
-    );
-  }
-
-  return session;
-}
+import { createProtectedRoute } from '@/lib/utils/routeHandler';
+import { apiResponse } from '@/lib/utils/apiResponses';
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const validatedParams = withQueryValidation(searchParams);
-  if (validatedParams instanceof NextResponse) return validatedParams;
-
   try {
+    const { searchParams } = new URL(request.url);
+    const validatedParams = withQueryValidation(searchParams);
+    if (validatedParams instanceof NextResponse) return validatedParams;
+
     const { id, count } = validatedParams;
 
     if (id) {
       const data = await excerptById(id);
-      if (!data) {
-        return NextResponse.json(
-          { error: 'Excerpt not found' },
-          { status: 404 }
-        );
-      }
-      return NextResponse.json(data);
+      return data 
+        ? apiResponse.success(data)
+        : apiResponse.notFound('Excerpt not found');
     }
 
-    if (count) {
-      const data = await latestExcerpts(count);
-      return NextResponse.json(data);
-    }
+    const data = count 
+      ? await latestExcerpts(count)
+      : await allExcerpts();
 
-    const data = await allExcerpts();
-    return NextResponse.json(data);
+    return apiResponse.success(data);
   } catch (error) {
-    console.error('GET error:', error);
-    return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    );
+    return apiResponse.serverError(error);
   }
 }
 
-export async function POST(request: Request) {
-	const session = await checkAuth();
-	if (session instanceof NextResponse) return session;
-
-  const csrfCheck = await withCsrf(request);
-  if (csrfCheck instanceof NextResponse) return csrfCheck;
-
+export const POST = createProtectedRoute(async (request) => {
   const validatedData = await withValidation(excerptInputSchema)(request);
   if (validatedData instanceof NextResponse) return validatedData;
 
-  try {
-    const data = await publishExcerpt(validatedData);
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error('POST error:', error);
-    return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    );
-  }
-}
+  const data = await publishExcerpt(validatedData);
+  return apiResponse.success(data);
+});
 
-export async function PUT(request: Request) {
-	const session = await checkAuth();
-	if (session instanceof NextResponse) return session;
-
-  const csrfCheck = await withCsrf(request);
-  if (csrfCheck instanceof NextResponse) return csrfCheck;
-
+export const PUT = createProtectedRoute(async (request) => {
   const validatedData = await withValidation(excerptUpdateSchema)(request);
   if (validatedData instanceof NextResponse) return validatedData;
 
-  try {
-    await updateExcerpt(validatedData);
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('PUT error:', error);
-    return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    );
-  }
-}
+  await updateExcerpt(validatedData);
+  return apiResponse.success({ success: true });
+});
 
-export async function DELETE(request: Request) {
-	const session = await checkAuth();
-	if (session instanceof NextResponse) return session;
-
-  const csrfCheck = await withCsrf(request);
-  if (csrfCheck instanceof NextResponse) return csrfCheck;
-
+export const DELETE = createProtectedRoute(async (request) => {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');
 
-  try {
-    if (!id) {
-      return NextResponse.json(
-        { error: 'Missing id parameter' },
-        { status: 400 }
-      );
-    }
-
-    await deleteExcerpt({ id });
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('DELETE error:', error);
-    return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    );
+  if (!id) {
+    return apiResponse.badRequest('Missing id parameter');
   }
-}
+
+  await deleteExcerpt({ id });
+  return apiResponse.success({ success: true });
+});
