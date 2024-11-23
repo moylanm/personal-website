@@ -1,5 +1,4 @@
-import { ExcerptCard } from '@/styles';
-import { CardContent, Container } from '@mui/material';
+import { ExcerptContainer } from '@/styles';
 import { Suspense } from 'react';
 import Loading from './loading';
 
@@ -9,14 +8,10 @@ export default function ExcerptLayout({
   children: React.ReactNode
 }>) {
   return (
-    <Container maxWidth='md'>
-      <ExcerptCard>
-        <CardContent>
-          <Suspense fallback={<Loading />}>
-            {children}
-          </Suspense>
-        </CardContent>
-      </ExcerptCard>
-    </Container>
+    <ExcerptContainer maxWidth='md'>
+      <Suspense fallback={<Loading />}>
+        {children}
+      </Suspense>
+    </ExcerptContainer>
   );
 }
