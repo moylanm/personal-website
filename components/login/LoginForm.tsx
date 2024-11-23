@@ -2,7 +2,7 @@
 
 import { useActionState } from 'react';
 import { Box, Button, TextField } from '@mui/material';
-import { LoginFormContainer, LoginFormCard } from '@/styles';
+import { LoginFormContainer, LoginFormCard, LoginButton } from '@/styles';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
@@ -44,9 +44,9 @@ export function LoginForm() {
           <br />
           <TextField fullWidth type='password' id='password' name='password' label='Password' margin='normal' />
           <br />
-          <Button type='submit' disabled={isPending}>
+          <LoginButton type='submit' disabled={isPending}>
             Login
-          </Button>
+          </LoginButton>
         </form>
         {errorMessage && (
           <Box sx={{ textAlign: 'center', color: 'error.main', mt: 2 }}>
