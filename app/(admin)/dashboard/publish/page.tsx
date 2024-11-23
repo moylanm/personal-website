@@ -213,7 +213,7 @@ export default function Page() {
             onChange={handleBodyFieldChange}
             value={bodyField}
             multiline
-            rows={10}
+            rows={12}
           />
         </TabPanel>
 

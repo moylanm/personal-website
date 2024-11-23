@@ -58,7 +58,7 @@ export const MarkdownPreviewPaper = styled(Paper)({
   paddingRight: 12,
   marginTop: 15,
   marginBottom: 8,
-  height: '265px',
+  height: '310px',
   overflow: 'auto'
 });
 
