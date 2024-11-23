@@ -9,9 +9,9 @@ export const SideNavOuterBox = styled(Box)(({theme}) => ({
   height: '85%',
 
   [theme.breakpoints.down('md')]: {
-    position: 'static', // Change from fixed to static on mobile
+    position: 'static',
     padding: '16px 12px',
-    minWidth: 'fit-content', // Ensure it takes the width of its content
+    minWidth: 'fit-content',
   },
 
   [theme.breakpoints.up('md')]: {
@@ -27,8 +27,8 @@ export const SideNavInnerBox = styled(Box)(({theme}) => ({
   [theme.breakpoints.down('md')]: {
     flexDirection: 'row',
     marginLeft: '8px',
-    gap: '8px', // Add some spacing between buttons
-    justifyContent: 'flex-start', // Align items to start instead of space-between
+    gap: '8px',
+    justifyContent: 'flex-start',
   },
 
   [theme.breakpoints.up('md')]: {
@@ -65,8 +65,8 @@ export const NavLink = styled(Link)<LinkProps>(({theme}) => ({
   color: MAIN_COLOR,
 
   [theme.breakpoints.down('md')]: {
-    minWidth: '48px', // Set minimum width on mobile
-    flexGrow: 0, // Don't grow on mobile
+    minWidth: '48px',
+    flexGrow: 0,
   },
 
   [theme.breakpoints.up('md')]: {
@@ -90,8 +90,8 @@ export const SideNavButton = styled(Button)(({theme}) => ({
   color: MAIN_COLOR,
 
   [theme.breakpoints.down('md')]: {
-    minWidth: '48px', // Set minimum width on mobile
-    flexGrow: 0, // Don't grow on mobile
+    minWidth: '48px',
+    flexGrow: 0,
   },
 
   [theme.breakpoints.up('md')]: {
