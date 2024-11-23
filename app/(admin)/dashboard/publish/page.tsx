@@ -45,7 +45,7 @@ interface TabPanelProps {
 function TabPanel({ children, value, index, ...other }: TabPanelProps) {
   return (
     <div
-      role="tabpanel"
+      role='tabpanel'
       hidden={value !== index}
       {...other}
     >
@@ -189,7 +189,7 @@ export default function Page() {
           <Tabs 
             value={tabValue} 
             onChange={handleTabChange}
-            aria-label="markdown editor tabs"
+            aria-label='markdown editor tabs'
             TabIndicatorProps={{
               sx: { backgroundColor: MAIN_COLOR }
             }}
@@ -218,7 +218,7 @@ export default function Page() {
         </TabPanel>
 
         <TabPanel value={tabValue} index={1}>
-          <MarkdownPreviewPaper variant="outlined" >
+          <MarkdownPreviewPaper variant='outlined' >
             <Markdown>{bodyField || '*No content to preview*'}</Markdown>
           </MarkdownPreviewPaper>
         </TabPanel>
