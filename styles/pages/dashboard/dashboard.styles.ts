@@ -11,26 +11,47 @@ import {
 import { MAIN_COLOR } from '@/styles/theme/constants';
 
 export const DashboardLayoutBox = styled(Box)(({theme}) => ({
-	display: 'flex',
-	height: '80vh',
-	flexDirection: 'column',
-	[theme.breakpoints.up('md')]: {
-		flexDirection: 'row',
-		overflow: 'hidden',
-	},
+  display: 'flex',
+  width: '100%',
+
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+  },
+
+  [theme.breakpoints.up('md')]: {
+    flexDirection: 'row',
+    overflow: 'hidden',
+  },
 }));
 
 export const DashboardLayoutSideNavBox = styled(Box)(({theme}) => ({
-	width: '100%',
-	flex: 'none',
-	[theme.breakpoints.up('md')]: {
-		width: '64px',
-	},
+  [theme.breakpoints.down('md')]: {
+    width: '100%',
+    overflowX: 'auto',
+    WebkitOverflowScrolling: 'touch',
+    scrollbarWidth: 'none', // Firefox
+    '&::-webkit-scrollbar': { // Webkit browsers
+      display: 'none'
+    },
+    '& > *': { // Target the direct child (SideNav component)
+      display: 'flex',
+      flexDirection: 'row',
+      minWidth: 'min-content',
+      padding: '0 16px',
+    }
+  },
+
+  [theme.breakpoints.up('md')]: {
+    width: '64px',
+    flexShrink: 0,
+  },
 }));
 
 export const DashboardLayoutChildrenBox = styled(Box)(({theme}) => ({
 	flexGrow: 1,
 	padding: '24px',
+	overflow: 'auto',
+
 	[theme.breakpoints.down('md')]: {
 		marginTop: '60px'
 	},
