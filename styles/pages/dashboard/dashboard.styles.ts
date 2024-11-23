@@ -6,7 +6,9 @@ import {
   Button,
   AccordionSummary,
   DialogTitle,
-  type ButtonProps
+  Paper,
+  Tab,
+  type ButtonProps,
 } from '@mui/material';
 import { MAIN_COLOR } from '@/styles/theme/constants';
 
@@ -41,6 +43,24 @@ export const DashboardLayoutChildrenBox = styled(Box)({
 	flexGrow: 1,
 	padding: '24px',
 	overflow: 'auto',
+});
+
+export const PublishFormTab = styled(Tab)({
+  textTransform: 'capitalize',
+  '&:hover': {
+    color: MAIN_COLOR,
+    opacity: 0.7
+  }
+});
+
+export const MarkdownPreviewPaper = styled(Paper)({
+  paddingLeft: 12,
+  paddingRight: 12,
+  marginTop: 15,
+  marginBottom: 8,
+  minHeight: '250px',
+  maxHeight: '500px',
+  overflow: 'auto'
 });
 
 export const DashboardFormButton = styled(Button)<ButtonProps>({

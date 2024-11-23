@@ -1,6 +1,11 @@
 'use client'
 
-import { DashboardFormButton } from '@/styles';
+import {
+  DashboardFormButton,
+  MarkdownPreviewPaper,
+  PublishFormTab,
+  MAIN_COLOR
+} from '@/styles';
 import {
   createExcerpt,
   clearPublishForm,
@@ -13,11 +18,12 @@ import {
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '@/lib/dashboard/store';
 import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
-import { Autocomplete, Box, TextField, Typography } from '@mui/material';
-import { useCallback, useEffect, useMemo } from 'react';
+import { Autocomplete, Box, Tabs, TextField, Typography } from '@mui/material';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { APIStatus, type Excerpt } from '@/lib/constants/definitions';
 import { MessageSnackbar } from '@/components';
 import { fetchCsrfToken } from '@/lib/dashboard/features/csrf/csrfSlice';
+import Markdown from 'react-markdown';
 
 const selectFormState = createSelector(
   (state: RootState) => state.excerpts,
@@ -30,6 +36,28 @@ const selectFormState = createSelector(
   })
 );
 
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel({ children, value, index, ...other }: TabPanelProps) {
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      {...other}
+    >
+      {value === index && (
+        <Box>
+          {children}
+        </Box>
+      )}
+    </div>
+  );
+}
+
 export default function Page() {
   const dispatch = useAppDispatch();
   const excerpts = useAppSelector(selectAllExcerpts);
@@ -40,6 +68,7 @@ export default function Page() {
     workField,
     bodyField
   } = useAppSelector(selectFormState);
+  const [tabValue, setTabValue] = useState<number>(0);
 
   useEffect(() => {
     dispatch(fetchCsrfToken());
@@ -72,6 +101,10 @@ export default function Page() {
         body: bodyField
       } as Excerpt));
   }, [dispatch, authorField, workField, bodyField]);
+
+  const handleTabChange = useCallback((_: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
+  }, []);
 
   useEffect(() => {
     if (status === APIStatus.Fulfilled) {
@@ -151,16 +184,45 @@ export default function Page() {
               margin='normal'
             />}
         />
-        <TextField
-          fullWidth
-          id='body'
-          label='Body'
-          margin='normal'
-          onChange={handleBodyFieldChange}
-          value={bodyField}
-          multiline
-          rows={10}
-        />
+        
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 2 }}>
+          <Tabs 
+            value={tabValue} 
+            onChange={handleTabChange}
+            aria-label="markdown editor tabs"
+            TabIndicatorProps={{
+              sx: { backgroundColor: MAIN_COLOR }
+            }}
+            sx={{
+              '& .Mui-selected': {
+                color: `${MAIN_COLOR} !important`,
+              },
+            }}
+          >
+            <PublishFormTab label='Edit' />
+            <PublishFormTab label='Preview' />
+          </Tabs>
+        </Box>
+
+        <TabPanel value={tabValue} index={0}>
+          <TextField
+            fullWidth
+            id='body'
+            label='Body'
+            margin='normal'
+            onChange={handleBodyFieldChange}
+            value={bodyField}
+            multiline
+            rows={10}
+          />
+        </TabPanel>
+
+        <TabPanel value={tabValue} index={1}>
+          <MarkdownPreviewPaper variant="outlined" >
+            <Markdown>{bodyField || '*No content to preview*'}</Markdown>
+          </MarkdownPreviewPaper>
+        </TabPanel>
+
         <DashboardFormButton
           disabled={isSubmitDisabled}
           variant='contained'
