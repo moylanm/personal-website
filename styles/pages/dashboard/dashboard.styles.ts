@@ -29,16 +29,6 @@ export const DashboardLayoutSideNavBox = styled(Box)(({theme}) => ({
     width: '100%',
     overflowX: 'auto',
     WebkitOverflowScrolling: 'touch',
-    scrollbarWidth: 'none', // Firefox
-    '&::-webkit-scrollbar': { // Webkit browsers
-      display: 'none'
-    },
-    '& > *': { // Target the direct child (SideNav component)
-      display: 'flex',
-      flexDirection: 'row',
-      minWidth: 'min-content',
-      padding: '0 16px',
-    }
   },
 
   [theme.breakpoints.up('md')]: {
@@ -47,15 +37,11 @@ export const DashboardLayoutSideNavBox = styled(Box)(({theme}) => ({
   },
 }));
 
-export const DashboardLayoutChildrenBox = styled(Box)(({theme}) => ({
+export const DashboardLayoutChildrenBox = styled(Box)({
 	flexGrow: 1,
 	padding: '24px',
 	overflow: 'auto',
-
-	[theme.breakpoints.down('md')]: {
-		marginTop: '60px'
-	},
-}));
+});
 
 export const DashboardFormButton = styled(Button)<ButtonProps>({
 	backgroundColor: MAIN_COLOR,
