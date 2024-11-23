@@ -16,15 +16,15 @@ export default async function Layout({ children }: { children: React.ReactNode }
   if (!session?.user) redirect('/');
 
   return (
-    <Grid2 container>
-      <Grid2 size={2}>
+    <Grid2 container direction={{ xs: 'column', md: 'row' }}>
+      <Grid2 size={{ xs: 12, md: 2 }}>
         <DashboardLayoutBox>
           <DashboardLayoutSideNavBox>
             <SideNav />
           </DashboardLayoutSideNavBox>
         </DashboardLayoutBox>
       </Grid2>
-      <Grid2 size={10}>
+      <Grid2 size={{ xs: 12, md: 10 }}>
         <DashboardLayoutChildrenBox>
           <StoreProvider>
             <AuthErrorBoundary>
