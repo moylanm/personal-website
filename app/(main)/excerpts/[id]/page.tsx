@@ -11,96 +11,90 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  try {
-		const id = (await params).id;
-		const excerpt = await excerptById(id);
+  const id = (await params).id;
+  const excerpt = await excerptById(id);
 
-		return {
+  if (!excerpt) return { title: 'Excerpt Not Found' };
+
+  return {
+    title: `${excerpt.author} - ${excerpt.work}`,
+    description: `Excerpt from ${excerpt.work} by ${excerpt.author}`,
+    openGraph: {
       title: `${excerpt.author} - ${excerpt.work}`,
       description: `Excerpt from ${excerpt.work} by ${excerpt.author}`,
-      openGraph: {
-        title: `${excerpt.author} - ${excerpt.work}`,
-        description: `Excerpt from ${excerpt.work} by ${excerpt.author}`,
-        type: 'article',
-      },
-    };
-  } catch {
-    return {
-      title: 'Excerpt Not Found',
-    };
-  }
+      type: 'article',
+    },
+  };
 }
 
 export default async function ExcerptPage({ params }: PageProps) {
-  try {
-		const id = (await params).id;
-    const { author, work, body } = await excerptById(id);
+  const id = (await params).id;
+  const excerpt = await excerptById(id);
 
-    return (
-      <Container maxWidth='md' sx={{ mt: 4, mb: 4 }}>
-        <Paper 
-          elevation={2} 
+  if (!excerpt) notFound();
+
+  return (
+    <Container maxWidth='md' sx={{ mt: 4, mb: 4 }}>
+      <Paper 
+        elevation={2} 
+        sx={{ 
+          p: { xs: 2, sm: 4 },
+          borderRadius: 2,
+        }}
+      >
+        <Box
+          component='header' 
           sx={{ 
-            p: { xs: 2, sm: 4 },
-            borderRadius: 2,
+            mb: 4,
+            textAlign: 'center',
+            borderBottom: 1,
+            borderColor: 'divider',
+            pb: 2
           }}
         >
-          <Box
-            component='header' 
+          <Typography 
+            variant='h5' 
+            component='h1' 
+            gutterBottom
             sx={{ 
-              mb: 4,
-              textAlign: 'center',
-              borderBottom: 1,
-              borderColor: 'divider',
-              pb: 2
+              fontWeight: 'bold',
+              color: 'primary.main' 
             }}
           >
-            <Typography 
-              variant='h5' 
-              component='h1' 
-              gutterBottom
-              sx={{ 
-                fontWeight: 'bold',
-                color: 'primary.main' 
-              }}
-            >
-              {author}
-            </Typography>
-            <Typography 
-              variant='subtitle1' 
-              component='h2'
-              sx={{ 
-                fontStyle: 'italic',
-                color: 'text.secondary' 
-              }}
-            >
-              {work}
-            </Typography>
-          </Box>
+            {excerpt.author}
+          </Typography>
+          <Typography 
+            variant='subtitle1' 
+            component='h2'
+            sx={{ 
+              fontStyle: 'italic',
+              color: 'text.secondary' 
+            }}
+          >
+            {excerpt.work}
+          </Typography>
+        </Box>
 
-          <Box 
-            component='article'
-            sx={{ 
-              '& p': { 
-                mb: 2,
-                lineHeight: 1.7,
-                fontSize: '1.1rem'
-              },
-              '& blockquote': {
-                borderLeft: 4,
-                borderColor: 'primary.main',
-                pl: 2,
-                ml: 0,
-                fontStyle: 'italic'
-              }
-            }}
-          >
-            <Markdown>{body}</Markdown>
-          </Box>
-        </Paper>
-      </Container>
-    );
-  } catch {
-    notFound();
-  }
+        <Box 
+          component='article'
+          sx={{ 
+            '& p': { 
+              mb: 2,
+              lineHeight: 1.7,
+              fontSize: '1.1rem'
+            },
+            '& blockquote': {
+              borderLeft: 4,
+              borderColor: 'primary.main',
+              pl: 2,
+              ml: 0,
+              fontStyle: 'italic'
+            }
+          }}
+        >
+          <Markdown>{excerpt.body}</Markdown>
+        </Box>
+      </Paper>
+    </Container>
+  );
 }
