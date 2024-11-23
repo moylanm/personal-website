@@ -2,7 +2,7 @@
 
 import { styled } from '@mui/system';
 import { Button, type ButtonProps } from '@mui/material';
-import { MAIN_COLOR } from '../../theme/constants';
+import { MAIN_COLOR } from '@/styles/theme/constants';
 
 export const NavbarButton = styled(Button)<ButtonProps>({
 	textAlign: 'center',

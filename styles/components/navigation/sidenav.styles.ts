@@ -2,7 +2,7 @@
 
 import { styled } from '@mui/system';
 import { Box, Button, Link, type LinkProps } from '@mui/material';
-import { MAIN_COLOR } from '../../theme/constants';
+import { MAIN_COLOR } from '@/styles/theme/constants';
 
 export const SideNavOuterBox = styled(Box)(({theme}) => ({
   display: 'flex',
