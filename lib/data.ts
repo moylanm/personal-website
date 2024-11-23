@@ -5,7 +5,6 @@ import type { Excerpt } from './constants/definitions';
 import { unstable_cache } from 'next/cache';
 import { revalidateTag } from 'next/cache';
 import { cache } from 'react';
-import { notFound } from 'next/navigation';
 
 const CACHE_CONFIG = {
   revalidate: 3600,  // 1 hour
@@ -27,7 +26,7 @@ export const latestExcerpts = unstable_cache(
 export const excerptById = cache(async (id: string) => {
   const excerpt = await fetchExcerptById(id);
 
-  if (!excerpt) notFound();
+  if (!excerpt) return undefined;
 
   return excerpt;
 });
