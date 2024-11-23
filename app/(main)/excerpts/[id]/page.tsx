@@ -57,8 +57,7 @@ export default async function ExcerptPage({ params }: PageProps) {
             component='h1' 
             gutterBottom
             sx={{ 
-              fontWeight: 'bold',
-              color: 'primary.main' 
+              fontWeight: 'bold'
             }}
           >
             {excerpt.author}
