@@ -8,7 +8,7 @@ import {
   DialogTitle,
   type ButtonProps
 } from '@mui/material';
-import { MAIN_COLOR } from '../../theme/constants';
+import { MAIN_COLOR } from '@/styles/theme/constants';
 
 export const DashboardLayoutBox = styled(Box)(({theme}) => ({
 	display: 'flex',
