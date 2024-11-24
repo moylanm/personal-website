@@ -6,32 +6,35 @@ import { unstable_cache } from 'next/cache';
 import { revalidateTag } from 'next/cache';
 import { cache } from 'react';
 
+class DatabaseError extends Error {
+  constructor(operation: string, error: unknown) {
+    super(`Database error during ${operation}: ${error instanceof Error ? error.message : String(error)}`);
+    this.name = 'DatabaseError';
+  }
+}
+
 const CACHE_CONFIG = {
   revalidate: 3600,  // 1 hour
   tags: ['excerpts']
 };
 
 export const allExcerpts = unstable_cache(
-  async () => await fetchAllExcerpts(),
+  async (): Promise<Excerpt[]> => await fetchAllExcerpts(),
   ['all-excerpts'],
   CACHE_CONFIG
 );
 
 export const latestExcerpts = unstable_cache(
-  async (count: number) => await fetchLatestExcerpts(count),
+  async (count: number): Promise<Excerpt[]> => await fetchLatestExcerpts(count),
   ['latest-excerpts'],
   CACHE_CONFIG
 );
 
-export const excerptById = cache(async (id: string) => {
-  const excerpt = await fetchExcerptById(id);
-
-  if (!excerpt) return undefined;
-
-  return excerpt;
+export const excerptById = cache(async (id: string): Promise<Excerpt | undefined> => {
+  return await fetchExcerptById(id);
 });
 
-async function fetchAllExcerpts() {
+async function fetchAllExcerpts(): Promise<Excerpt[]> {
   try {
     const data = await sql<Excerpt>`
       SELECT id, author, work, body
@@ -40,12 +43,11 @@ async function fetchAllExcerpts() {
     `;
     return data.rows;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch excerpt data.');
+    throw new DatabaseError('fetchAllExcerpts', error);
   }
 }
 
-async function fetchLatestExcerpts(count: number) {
+async function fetchLatestExcerpts(count: number): Promise<Excerpt[]> {
   try {
     const data = await sql`
       SELECT id, author, work, created_at
@@ -58,12 +60,11 @@ async function fetchLatestExcerpts(count: number) {
       createdAt: row.created_at
     } as Excerpt));
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch latest excerpt data.');
+    throw new DatabaseError('fetchLatestExcerpts', error);
   }
 }
 
-async function fetchExcerptById(id: string) {
+async function fetchExcerptById(id: string): Promise<Excerpt | undefined> {
   try {
     const data = await sql<Excerpt>`
       SELECT author, work, body
@@ -72,42 +73,35 @@ async function fetchExcerptById(id: string) {
     `;
     return data.rows[0];
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch excerpt by id data.');
+    throw new DatabaseError('fetchExcerptById', error);
   }
 }
 
-export async function publishExcerpt({
-  author,
-  work,
-  body
-}: {
-  author: string
-  work: string
-  body: string
-}) {
+type ExcerptInput = {
+  author: string;
+  work: string;
+  body: string;
+};
+
+export async function publishExcerpt(input: ExcerptInput): Promise<string> {
   try {
+    const { author, work, body } = input;
     const data = await sql`
       INSERT INTO excerpts (author, work, body)
       VALUES (${author}, ${work}, ${body})
       RETURNING id
     `;
-    
-    await revalidateExcerptCaches();
 
+    await revalidateExcerptCaches();
     return data.rows[0].id;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to insert excerpt data.');
+    throw new DatabaseError('publishExcerpt', error);
   }
 }
 
-export async function updateExcerpt(data: {
-  id: string,
-  author: string,
-  work: string,
-  body: string
-}) {
+type ExcerptUpdate = ExcerptInput & { id: string };
+
+export async function updateExcerpt(data: ExcerptUpdate): Promise<void> {
   try {
     await sql`
       UPDATE excerpts
@@ -116,24 +110,19 @@ export async function updateExcerpt(data: {
     `;
     await revalidateExcerptCaches();
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to update excerpt data.');
+    throw new DatabaseError('updateExcerpt', error);
   }
 }
 
-export async function deleteExcerpt({ id }: { id: string }) {
+export async function deleteExcerpt({ id }: { id: string }): Promise<void> {
   try {
-    await sql`
-      DELETE FROM excerpts
-      WHERE id = ${id}
-    `;
+    await sql`DELETE FROM excerpts WHERE id = ${id}`;
     await revalidateExcerptCaches();
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to delete excerpt.');
+    throw new DatabaseError('deleteExcerpt', error);
   }
 }
 
-async function revalidateExcerptCaches() {
+async function revalidateExcerptCaches(): Promise<void> {
   revalidateTag('excerpts');
 }
