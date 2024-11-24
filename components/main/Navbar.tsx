@@ -8,7 +8,7 @@ import { useNavPages } from './hooks/useNavPages';
 import { NavMenu } from './components/NavMenu';
 import { DesktopNav } from './components/DesktopNav';
 import { SocialLinks } from './components/SocialLinks';
-import NavbarLogo from './NavbarLogo';
+import NavbarLogo from './components/NavbarLogo';
 import NavbarSkeleton from './components/NavbarSkeleton';
 
 export const Navbar = () => {
