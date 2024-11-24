@@ -20,7 +20,6 @@ export const fetchCsrfToken = createAsyncThunk<
   ThunkConfig
 >('csrf/fetchToken', 
   async (_, { rejectWithValue, getState }) => {
-    // Don't fetch if we already have a token
     const currentState = getState();
     if (currentState.csrf.token) {
       return currentState.csrf.token;
@@ -53,12 +52,13 @@ export const csrfSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchCsrfToken.fulfilled, (state, action) => {
-      state.token = action.payload;
-    })
-    .addCase(fetchCsrfToken.rejected, (state) => {
-      state.token = null;
-    });
+    builder
+      .addCase(fetchCsrfToken.fulfilled, (state, action) => {
+        state.token = action.payload;
+      })
+      .addCase(fetchCsrfToken.rejected, (state) => {
+        state.token = null;
+      });
   },
 });
 
