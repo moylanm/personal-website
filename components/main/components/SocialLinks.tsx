@@ -20,7 +20,7 @@ export const SocialLinks = ({ socialMenu }: SocialLinksProps) => (
       {SOCIAL_LINKS.map((link) => (
         <Link key={link.title} href={link.url}>
           <Image
-            style={{ marginRight: '10px' }}
+            style={{ marginLeft: '10px' }}
             width={24}
             height={24}
             src={link.icon}
@@ -65,7 +65,6 @@ export const SocialLinks = ({ socialMenu }: SocialLinksProps) => (
               height={24} 
               src={link.icon} 
               alt={link.alt} 
-              style={{ marginRight: '10px' }} 
             />
             <Typography>{link.title}</Typography>
           </MenuItem>
