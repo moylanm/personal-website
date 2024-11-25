@@ -1,4 +1,3 @@
-// app/excerpts/[id]/not-found.tsx
 import { NotFoundBox, NotFoundButton } from '@/styles';
 import { Container, Typography } from '@mui/material';
 import Link from 'next/link';
