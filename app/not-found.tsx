@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
-import { Typography, Button } from '@mui/material';
+import { Typography } from '@mui/material';
 import Link from 'next/link';
-import { NotFoundBox } from '@/styles';
+import { NotFoundBox, NotFoundButton } from '@/styles';
 
 export const metadata: Metadata = {
   title: '404 - Page Not Found',
@@ -18,9 +18,9 @@ export default function NotFound() {
         Sorry, the page you are looking for does not exist.
       </Typography>
       <Link href='/' passHref style={{ textDecoration: 'none' }}>
-        <Button variant='contained' color='primary'>
+        <NotFoundButton variant='outlined'>
           Return Home
-        </Button>
+        </NotFoundButton>
       </Link>
     </NotFoundBox>
   );
