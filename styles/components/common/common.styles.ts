@@ -1,7 +1,8 @@
 'use client'
 
 import { styled } from '@mui/system';
-import { Button, Box, Container } from '@mui/material';
+import { Button, Box, Container, type ButtonProps } from '@mui/material';
+import { MAIN_COLOR } from '@/styles/theme/constants';
 
 export const ScrollToTopButton = styled(Button)(({theme}) => ({
 	position: 'fixed',
@@ -20,6 +21,11 @@ export const NotFoundBox = styled(Box)({
 	justifyContent: 'center',
 	minHeight: '50vh',
 	textAlign: 'center'
+});
+
+export const NotFoundButton = styled(Button)<ButtonProps>({
+	color: MAIN_COLOR,
+	borderColor: MAIN_COLOR
 });
 
 export const SkeletonContainer = styled(Container)(({theme}) => ({
