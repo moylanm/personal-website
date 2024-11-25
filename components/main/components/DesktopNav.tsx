@@ -9,7 +9,7 @@ interface DesktopNavProps {
 }
 
 export const DesktopNav = ({ pages, pathname }: DesktopNavProps) => (
-  <Box sx={{ marginLeft: 2, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+  <Box sx={{ marginLeft: 2, flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
     {pages.map((page) => (
       <NavbarButton
         sx={{ mx: 1 }}

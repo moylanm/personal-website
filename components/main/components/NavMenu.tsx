@@ -25,7 +25,7 @@ export const NavMenu = ({ anchorEl, isOpen, onClose, pages, pathname }: NavMenuP
     }}
     open={isOpen}
     onClose={onClose}
-    sx={{ display: { xs: 'block', md: 'none' } }}
+    sx={{ display: { xs: 'block', sm: 'none' } }}
   >
     {pages.map((page) => (
       <MenuItem

@@ -26,7 +26,7 @@ export const Navbar = () => {
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
           {/* Mobile Navigation Menu */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
             <IconButton
               size='large'
               onClick={navMenu.handleOpen}
@@ -47,7 +47,7 @@ export const Navbar = () => {
 
           <Box
             sx={{
-              display: { xs: 'flex', md: 'none' },
+              display: { xs: 'flex', sm: 'none' },
               flexGrow: 1,
             }}
           />

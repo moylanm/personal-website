@@ -16,7 +16,7 @@ interface SocialLinksProps {
 export const SocialLinks = ({ socialMenu }: SocialLinksProps) => (
   <Box sx={{ flexGrow: 0 }}>
     {/* Desktop view */}
-    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+    <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
       {SOCIAL_LINKS.map((link) => (
         <Link key={link.title} href={link.url}>
           <Image
@@ -32,7 +32,7 @@ export const SocialLinks = ({ socialMenu }: SocialLinksProps) => (
     </Box>
 
     {/* Mobile view */}
-    <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+    <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
       <IconButton
         onClick={socialMenu.handleOpen}
         sx={{ color: 'white' }}
