@@ -1,4 +1,3 @@
-# .github/workflows/codeql-analysis.yml
 name: "CodeQL"
 
 on:
