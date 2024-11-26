@@ -4,10 +4,10 @@ import { AboutCard, AboutContainer, AboutGrid2 } from '@/styles';
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'From Navy veteran to computer scientist - Personal journey and philosophy of Myles Moylan',
+  description: 'From Navy veteran to software developer - Personal journey and philosophy of Myles Moylan',
   openGraph: {
     title: 'About Myles Moylan',
-    description: 'From Navy veteran to computer scientist - Personal journey and philosophy of Myles Moylan',
+    description: 'From Navy veteran to software developer - Personal journey and philosophy of Myles Moylan',
     type: 'profile',
     images: [
       {
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'About Myles Moylan',
-    description: 'From Navy veteran to computer scientist - Personal journey and philosophy of Myles Moylan',
+    description: 'From Navy veteran to software developer - Personal journey and philosophy of Myles Moylan',
     images: ['/og-image-about.png']
   },
   alternates: {
