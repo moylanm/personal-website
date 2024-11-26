@@ -14,11 +14,7 @@ import { useState } from "react";
 import Markdown from "react-markdown";
 import useInfiniteScroll, { CHUNK_SIZE } from "@/lib/hooks/useInfiniteScroll";
 
-const List = ({
-  excerpts
-}: {
-  excerpts: Excerpt[]
-}) => {
+const List = ({ excerpts }: { excerpts: Excerpt[] }) => {
 	const [displayCount, setDisplayCount] = useState(CHUNK_SIZE);
 
 	const loadMoreRef = useInfiniteScroll(setDisplayCount, excerpts);
