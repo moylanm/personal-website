@@ -45,18 +45,18 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${merriweather.className} antialiased`} >
-          <AppRouterCacheProvider>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <SessionProvider>
-                <Navbar />
-                <main>
-                  {children}
-                </main>
-              </SessionProvider>
-              <Footer />
-            </ThemeProvider>
-          </AppRouterCacheProvider>
+        <AppRouterCacheProvider>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <SessionProvider>
+              <Navbar />
+              <main>
+                {children}
+              </main>
+            </SessionProvider>
+            <Footer />
+          </ThemeProvider>
+        </AppRouterCacheProvider>
         <Analytics />
         <SpeedInsights />
       </body>
