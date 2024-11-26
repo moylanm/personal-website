@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function ExcerptPage({ params }: PageProps) {
+export default async function Page({ params }: PageProps) {
   const id = (await params).id;
   const excerpt = await excerptById(id);
 

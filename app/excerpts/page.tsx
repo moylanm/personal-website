@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   }
 };
 
-export default async function ExcerptsPage() {
+export default async function Page() {
   const excerpts = await allExcerpts();
   return <Excerpts excerpts={excerpts} />;
 }

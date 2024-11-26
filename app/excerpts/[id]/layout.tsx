@@ -2,7 +2,7 @@ import { ExcerptContainer } from '@/styles';
 import { Suspense } from 'react';
 import Loading from './loading';
 
-export default function ExcerptLayout({
+export default function Layout({
   children
 }: Readonly<{
   children: React.ReactNode

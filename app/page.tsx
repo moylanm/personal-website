@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 
 const LATEST_COUNT = 7;
 
-export default async function Home() {
+export default async function Page() {
   const excerpts = await latestExcerpts(LATEST_COUNT);
 
   return (
