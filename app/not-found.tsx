@@ -17,11 +17,13 @@ export default function NotFound() {
       <Typography variant='h5' gutterBottom sx={{ mb: 4 }}>
         Sorry, the page you are looking for does not exist.
       </Typography>
-      <Link href='/' passHref style={{ textDecoration: 'none' }}>
-        <NotFoundButton variant='outlined'>
-          Return Home
-        </NotFoundButton>
-      </Link>
+      <NotFoundButton
+        component={Link}
+        href='/'
+        variant='outlined'
+      >
+        Return Home
+      </NotFoundButton>
     </NotFoundBox>
   );
 }
