@@ -16,10 +16,23 @@ describe('Footer', () => {
     render(<Footer />);
 
     expect(screen.getByText(/powered by/i)).toBeInTheDocument();
-    expect(screen.getByText(/2024/)).toBeInTheDocument();
+
+    const yearText = screen.getByText(/2024/);
+    expect(yearText).toBeInTheDocument();
 
     const link = screen.getByRole('link', { name: /next\.js/i });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', 'https://nextjs.org/');
+  });
+
+  it('displays the footer text with correct year', () => {
+    render(<Footer />);
+
+    const footerText = screen.getByText((content) => {
+      return content.includes('Powered by') && 
+             content.includes('in') && 
+             content.includes('2024');
+    });
+    expect(footerText).toBeInTheDocument();
   });
 });
