@@ -13,8 +13,8 @@ describe('useMenu', () => {
     const { result } = renderHook(() => useMenu());
     const button = document.createElement('button');
 
-    const mockEvent = { 
-      currentTarget: button 
+    const mockEvent = {
+      currentTarget: button
     } as unknown as React.MouseEvent<HTMLElement>;
 
     act(() => {
@@ -29,8 +29,8 @@ describe('useMenu', () => {
     const { result } = renderHook(() => useMenu());
     const button = document.createElement('button');
 
-    const mockEvent = { 
-      currentTarget: button 
+    const mockEvent = {
+      currentTarget: button
     } as unknown as React.MouseEvent<HTMLElement>;
 
     act(() => {
