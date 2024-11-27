@@ -10,9 +10,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "@emotion/cache": "^11.13.1",
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.5",
     "@mui/material": "^6.1.5",
     "@mui/material-nextjs": "^6.1.5",
@@ -37,6 +34,9 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@emotion/cache": "^11.13.1",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
@@ -51,6 +51,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8.4.47",
     "prettier": "^3.4.1",
+    "stylis": "4.3.4",
     "tailwindcss": "^3.4.14",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"

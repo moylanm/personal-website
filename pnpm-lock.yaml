@@ -8,15 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@emotion/cache':
-        specifier: ^11.13.1
-        version: 11.13.1
-      '@emotion/react':
-        specifier: ^11.13.3
-        version: 11.13.3(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021)
-      '@emotion/styled':
-        specifier: ^11.13.0
-        version: 11.13.0(@emotion/react@11.13.3(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021))(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021)
       '@mui/icons-material':
         specifier: ^6.1.5
         version: 6.1.5(@mui/material@6.1.5(@emotion/react@11.13.3(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021))(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021))(@types/react@18.3.12)(react-dom@19.0.0-rc-69d4b800-20241021(react@19.0.0-rc-69d4b800-20241021))(react@19.0.0-rc-69d4b800-20241021))(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021)
@@ -84,6 +75,15 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
+      '@emotion/cache':
+        specifier: ^11.13.1
+        version: 11.13.1
+      '@emotion/react':
+        specifier: ^11.13.3
+        version: 11.13.3(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021)
+      '@emotion/styled':
+        specifier: ^11.13.0
+        version: 11.13.0(@emotion/react@11.13.3(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021))(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021)
       '@testing-library/dom':
         specifier: ^10.4.0
         version: 10.4.0
@@ -126,6 +126,9 @@ importers:
       prettier:
         specifier: ^3.4.1
         version: 3.4.1
+      stylis:
+        specifier: 4.3.4
+        version: 4.3.4
       tailwindcss:
         specifier: ^3.4.14
         version: 3.4.14(ts-node@10.9.2(@types/node@20.17.1)(typescript@5.6.3))
@@ -3262,6 +3265,9 @@ packages:
 
   stylis@4.2.0:
     resolution: {integrity: sha512-Orov6g6BB1sDfYgzWfTHDOxamtX1bE/zo104Dh9e6fqJ3PooipYyfJ0pUmrZO2wAvO8YbEyeFrkV91XTsGMSrw==}
+
+  stylis@4.3.4:
+    resolution: {integrity: sha512-osIBl6BGUmSfDkyH2mB7EFvCJntXDrLhKjHTRj/rK6xLH0yuPrHULDRQzKokSOD4VoorhtKpfcfW1GAntu8now==}
 
   sucrase@3.35.0:
     resolution: {integrity: sha512-8EbVDiu9iN/nESwxeSxDKe0dunta1GOlHufmSSXxMD2z2/tMZpDMpvXQGsc+ajGo8y2uYUmixaSRUc/QPoQ0GA==}
@@ -7339,6 +7345,8 @@ snapshots:
       babel-plugin-macros: 3.1.0
 
   stylis@4.2.0: {}
+
+  stylis@4.3.4: {}
 
   sucrase@3.35.0:
     dependencies:
