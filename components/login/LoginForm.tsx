@@ -39,7 +39,7 @@ export function LoginForm() {
   return (
     <LoginFormContainer>
       <LoginFormCard>
-        <form action={formAction}>
+        <form action={formAction} role='form'>
           <TextField fullWidth type='email' id='email' name='email' label='Email' margin='normal' />
           <br />
           <TextField fullWidth type='password' id='password' name='password' label='Password' margin='normal' />
