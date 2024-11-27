@@ -53,6 +53,7 @@
     "prettier": "^3.4.1",
     "stylis": "4.3.4",
     "tailwindcss": "^3.4.14",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
   }
