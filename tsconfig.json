@@ -54,6 +54,7 @@
     "styles/**/*.ts",
     "__tests__/**/*.ts",
     "__tests__/**/*.tsx",
+    "babel.config.js",
   ],
   "exclude": ["node_modules"]
 }
