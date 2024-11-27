@@ -50,13 +50,6 @@ export const authConfig = {
     updateAge: 30 * 60
   },
   callbacks: {
-    async jwt({ token, user }) {
-      if (user.email && user.name) {
-        token.email = user.email;
-        token.name = user.name;
-      }
-      return token;
-    },
     async session({ session, token }) {
       if (token && session.user && typeof token.email === 'string' && typeof token.name === 'string') {
         session.user.email = token.email;
