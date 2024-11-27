@@ -32,7 +32,6 @@ describe('LoginForm', () => {
   const mockFormAction = jest.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
     (useRouter as jest.Mock).mockReturnValue(mockRouter);
     (useActionState as jest.Mock).mockReturnValue([null, mockFormAction, false]);
   });
