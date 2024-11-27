@@ -51,7 +51,7 @@ export const authConfig = {
   },
   callbacks: {
     async jwt({ token, user }) {
-      if (user) {
+      if (user.email && user.name) {
         token.email = user.email;
         token.name = user.name;
       }

@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { ExcerptLink, HomeTableContainer } from '@/styles';
 import { latestExcerpts } from '@/lib/data';

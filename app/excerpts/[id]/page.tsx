@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { Box, Container, Typography, Paper } from '@mui/material';
 import { excerptById } from '@/lib/data';
 import Markdown from 'react-markdown';

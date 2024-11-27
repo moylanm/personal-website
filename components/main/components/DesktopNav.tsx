@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import Link from 'next/link';
-import { NavPage } from '@/lib/constants/navigation';
+import type { NavPage } from '@/lib/constants/navigation';
 import { NavbarButton } from '@/styles';
 
 interface DesktopNavProps {

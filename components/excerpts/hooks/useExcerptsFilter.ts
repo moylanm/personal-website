@@ -1,5 +1,5 @@
 import type { Excerpt } from '@/lib/constants/definitions';
-import { AppState, ActionType, SortDirection } from '@/lib/excerpts/types';
+import { ActionType, SortDirection, type AppState } from '@/lib/excerpts/types';
 import { initialState, reducer } from '@/lib/excerpts/reducer';
 import { useReducer, useState, useCallback, useMemo } from 'react';
 
@@ -8,11 +8,10 @@ const createInitialState = (excerpts: Excerpt[]): AppState => {
   const works: { [author: string]: Set<string> } = {};
 
   for (const excerpt of excerpts) {
-    authorsSet.add(excerpt.author);
-    if (!works[excerpt.author]) {
-      works[excerpt.author] = new Set<string>();
-    }
-    works[excerpt.author].add(excerpt.work);
+    const { author, work } = excerpt;
+    authorsSet.add(author);
+    works[author] = works[author] || new Set<string>();
+    works[author].add(work);
   }
 
   return {
@@ -63,7 +62,7 @@ const useExcerptsFilter = (excerpts: Excerpt[]) => {
       const randomIndex = Math.floor(Math.random() * state.excerpts.length);
       dispatch({
         type: ActionType.SetRandomExcerpt,
-        payload: state.excerpts[randomIndex]
+        payload: state.excerpts[randomIndex] ?? null
       });
     }, [state.excerpts]),
 

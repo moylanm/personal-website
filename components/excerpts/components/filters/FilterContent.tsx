@@ -1,4 +1,4 @@
-import { AppState } from '@/lib/excerpts/types';
+import type { AppState } from '@/lib/excerpts/types';
 import { Box, FormControl, FormLabel } from '@mui/material';
 import { memo } from 'react';
 import AuthorItem from './AuthorItem';
@@ -32,9 +32,9 @@ const FilterContent = memo<FilterContentProps>(function FilterContent({
         <AuthorItem
           key={author}
           author={author}
-          works={state.works[author]}
+          works={state.works[author] ?? []}
           isSelected={state.selectedAuthors.includes(author)}
-          selectedWorks={state.selectedWorks[author]}
+          selectedWorks={state.selectedWorks[author] ?? []}
           onAuthorChange={handleAuthorChange}
           onWorkChange={handleWorkChange}
         />

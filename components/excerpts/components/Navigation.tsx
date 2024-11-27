@@ -1,6 +1,6 @@
 import { Box, Drawer } from '@mui/material';
 import { DRAWER_WIDTH, DRAWER_STYLES } from './constants/styles';
-import { memo, ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 
 interface NavigationProps {
   mobileOpen: boolean;

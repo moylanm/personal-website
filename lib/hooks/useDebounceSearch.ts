@@ -15,7 +15,6 @@ const useDebounceSearch = (delay: number = 300) => {
   useEffect(() => {
     debouncedCallback(searchTerm);
 
-    // Cleanup
     return () => {
       debouncedCallback.cancel();
     };

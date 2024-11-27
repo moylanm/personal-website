@@ -8,9 +8,14 @@ type ErrorResponse = {
 
 export const apiResponse = {
   error({ message, status = 500, headers }: ErrorResponse) {
+    const responseInit: ResponseInit = { status };
+    if (headers !== undefined) {
+      responseInit.headers = headers;
+    }
+
     return NextResponse.json(
       { error: message },
-      { status, headers }
+      responseInit
     );
   },
 

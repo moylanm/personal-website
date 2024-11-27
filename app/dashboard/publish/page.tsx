@@ -15,11 +15,17 @@ import {
   setWorkField,
   resetState
 } from '@/lib/dashboard/features/excerpts/excerptSlice';
+import {
+  Autocomplete,
+  Box,
+  Tabs,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { createSelector } from '@reduxjs/toolkit';
-import { RootState } from '@/lib/dashboard/store';
+import type { RootState } from '@/lib/dashboard/store';
 import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
-import { Autocomplete, Box, Tabs, TextField, Typography } from '@mui/material';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { APIStatus, type Excerpt } from '@/lib/constants/definitions';
 import { MessageSnackbar } from '@/components';
 import { fetchCsrfToken } from '@/lib/dashboard/features/csrf/csrfSlice';
@@ -35,6 +41,12 @@ const selectFormState = createSelector(
     bodyField: excerpts.bodyField
   })
 );
+
+type WorksByAuthor = Record<string, string[]>;
+type WorkOption = {
+  readonly author: string;
+  readonly work: string;
+};
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -113,30 +125,42 @@ export default function Page() {
   }, [status, clearForm])
 
   const { authors, worksByAuthor } = useMemo(() => {
-    const uniqueAuthors = Array.from(new Set(excerpts.map(excerpt => excerpt.author))).sort();
-    const workMap = excerpts.reduce<{ [author: string]: string[] }>((acc, excerpt) => {
-      if (!acc[excerpt.author]) {
-        acc[excerpt.author] = [];
-      }
-      if (!acc[excerpt.author].includes(excerpt.work)) {
-        acc[excerpt.author].push(excerpt.work);
+    const uniqueAuthors = Array.from(
+      new Set(excerpts.map(excerpt => excerpt.author))
+    ).sort();
+
+    const workMap = excerpts.reduce<WorksByAuthor>((acc, excerpt) => {
+      const works = acc[excerpt.author] ?? [];
+      if (!works.includes(excerpt.work)) {
+        acc[excerpt.author] = [...works, excerpt.work];
       }
       return acc;
     }, {});
-    return { authors: uniqueAuthors, worksByAuthor: workMap };
+
+    return {
+      authors: uniqueAuthors,
+      worksByAuthor: workMap
+    } as const;
   }, [excerpts]);
 
   const sortedWorksOptions = useMemo(() => 
-    authors.flatMap(author => 
-      worksByAuthor[author].map(work => ({ author, work }))
-    ).sort((a, b) => a.author.localeCompare(b.author) || a.work.localeCompare(b.work)),
+    authors.flatMap((author): WorkOption[] => {
+      const works = worksByAuthor[author] ?? [];
+      return works.map((work) => ({ 
+        author, 
+        work 
+      }));
+    }).sort((a, b) => 
+      a.author.localeCompare(b.author) || a.work.localeCompare(b.work)
+    ),
   [authors, worksByAuthor]);
+  
 
   const filteredWorkOptions = useMemo(() => {
     if (!authorField) {
       return sortedWorksOptions;
     }
-    return worksByAuthor[authorField]?.map(work => ({ author: authorField, work })) || [];
+    return worksByAuthor[authorField]?.map(work => ({ author: authorField, work })) ?? [];
   }, [authorField, worksByAuthor, sortedWorksOptions]);
 
   const isSubmitDisabled = status === APIStatus.Pending;
@@ -150,18 +174,33 @@ export default function Page() {
           onInputChange={handleAuthorFieldChange}
           options={authors}
           renderOption={(props, option) => (
-            <Typography {...props} key={option}>
-              {option}
-            </Typography>
+            <li {...props} key={option}>
+              <Typography>{option}</Typography>
+            </li>
           )}
-          renderInput={(authors) =>
+          renderInput={({
+            id,
+            disabled,
+            fullWidth,
+            size,
+            InputLabelProps,
+            InputProps,
+            inputProps
+          }) => (
             <TextField
-              {...authors}
-              fullWidth
-              id='author'
+              id={id}
+              disabled={disabled}
+              fullWidth={fullWidth}
+              size={size || 'medium'}
+              slotProps={{
+                inputLabel: InputLabelProps,
+                input: InputProps,
+                htmlInput: inputProps
+              }}
               label='Author'
               margin='normal'
-            />}
+            />
+          )}
         />
         <Autocomplete
           freeSolo
@@ -171,18 +210,33 @@ export default function Page() {
           groupBy={(option) => option.author}
           getOptionLabel={(option) => typeof option === 'string' ? option : option.work}
           renderOption={(props, option) => (
-            <Typography {...props} key={option.work}>
-              {option.work}
-            </Typography>
+            <li {...props} key={option.work}>
+              <Typography>{option.work}</Typography>
+            </li>
           )}
-          renderInput={(params) =>
+          renderInput={({
+            id,
+            disabled,
+            fullWidth,
+            size,
+            InputLabelProps,
+            InputProps,
+            inputProps
+          }) => (
             <TextField
-              {...params}
-              fullWidth
-              id='work'
+              id={id}
+              disabled={disabled}
+              fullWidth={fullWidth}
+              size={size || 'medium'}
+              slotProps={{
+                inputLabel: InputLabelProps,
+                input: InputProps,
+                htmlInput: inputProps
+              }}
               label='Work'
               margin='normal'
-            />}
+            />
+          )}
         />
         
         <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 2 }}>

@@ -1,6 +1,6 @@
 import { MenuItem, Menu, Typography } from '@mui/material';
 import Link from 'next/link';
-import { NavPage } from '@/lib/constants/navigation';
+import type { NavPage } from '@/lib/constants/navigation';
 import { MAIN_COLOR } from '@/styles';
 
 interface NavMenuProps {

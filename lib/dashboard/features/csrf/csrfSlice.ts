@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { RootState } from '@/lib/dashboard/store';
+import type { RootState } from '@/lib/dashboard/store';
 
 type ThunkConfig = {
   rejectValue: string;
@@ -16,7 +16,7 @@ const initialState: CsrfState = {
 
 export const fetchCsrfToken = createAsyncThunk<
   string,
-  void,
+  undefined,
   ThunkConfig
 >('csrf/fetchToken', 
   async (_, { rejectWithValue, getState }) => {

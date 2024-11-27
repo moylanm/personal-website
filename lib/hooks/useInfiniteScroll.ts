@@ -1,5 +1,5 @@
-import { Excerpt } from '@/lib/constants/definitions';
-import { useEffect, useRef, RefObject } from 'react';
+import type { Excerpt } from '@/lib/constants/definitions';
+import { useEffect, useRef, type RefObject } from 'react';
 
 export const CHUNK_SIZE = 15;
 
@@ -16,7 +16,7 @@ function useInfiniteScroll(
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
+      if (entries[0]?.isIntersecting) {
         setDisplayCount(prevCount => Math.min(prevCount + CHUNK_SIZE, excerpts.length));
       }
     }, options);

@@ -1,6 +1,6 @@
-import { AppDispatch, RootState } from '@/lib/dashboard/store';
-import { AuthenticatedFetchOptions, authenticatedFetch } from '@/lib/utils/auth';
-import { GetThunkAPI } from '@reduxjs/toolkit';
+import type { AppDispatch, RootState } from '@/lib/dashboard/store';
+import { authenticatedFetch, type AuthenticatedFetchOptions } from '@/lib/utils/auth';
+import type{ GetThunkAPI } from '@reduxjs/toolkit';
 
 type ThunkConfig = {
   rejectValue: string;

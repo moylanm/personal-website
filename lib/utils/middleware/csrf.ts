@@ -17,4 +17,6 @@ export async function withCsrf(request: Request) {
       status: 403
     });
   }
+
+  return;
 }

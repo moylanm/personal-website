@@ -29,6 +29,7 @@ export const createExcerpt = createAsyncThunk<
       if (!excerpt.author || !excerpt.work || !excerpt.body) {
         return 'Empty field detected';
       }
+			return undefined;
     })
     .withTransform((id) => ({
       ...excerpt,
@@ -77,7 +78,7 @@ export const deleteExcerpt = createAsyncThunk<
 
 export const fetchAllExcerpts = createAsyncThunk<
   Excerpt[],
-  void,
+  undefined,
   ThunkConfig
 >(
   'excerpts/fetchAll',

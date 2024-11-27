@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { PAGES, NavPage } from '@/lib/constants/navigation';
+import { PAGES, type NavPage } from '@/lib/constants/navigation';
 
 export const useNavPages = () => {
   const { data: session, status } = useSession();

@@ -93,7 +93,7 @@ export async function publishExcerpt(input: ExcerptInput): Promise<string> {
     `;
 
     await revalidateExcerptCaches();
-    return data.rows[0].id;
+    return data.rows[0]?.id;
   } catch (error) {
     throw new DatabaseError('publishExcerpt', error);
   }

@@ -5,7 +5,7 @@ import { DashboardFormButton, EditorAccordionSummary } from '@/styles';
 import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
 import { APIStatus, type Excerpt } from '@/lib/constants/definitions';
 import { createSelector } from '@reduxjs/toolkit';
-import { RootState } from '@/lib/dashboard/store';
+import type { RootState } from '@/lib/dashboard/store';
 import { MessageSnackbar } from '@/components';
 import { SearchOutlined } from '@mui/icons-material';
 import { Virtuoso } from 'react-virtuoso';
@@ -159,14 +159,35 @@ const Item: React.FC<ItemProps> = ({ excerpt, searchTerm, isLast }) => {
     }
   }, [dispatch, excerpt.id]);
 
-  const handleExpand = useCallback((event: React.SyntheticEvent, isExpanded: boolean) => {
+  const handleExpand = useCallback((_: React.SyntheticEvent, isExpanded: boolean) => {
     setExpanded(isExpanded);
   }, []);
 
   const fields = useMemo(() => [
-    { id: 'author', label: 'Author', defaultValue: excerpt.author, ref: authorRef },
-    { id: 'work', label: 'Work', defaultValue: excerpt.work, ref: workRef },
-    { id: 'body', label: 'Body', defaultValue: excerpt.body, ref: bodyRef, multiline: true, rows: 10 }
+    {
+      id: 'author',
+      label: 'Author',
+      defaultValue: excerpt.author,
+      ref: authorRef,
+      multiline: false,
+      rows: 1
+    },
+    {
+      id: 'work',
+      label: 'Work',
+      defaultValue: excerpt.work,
+      ref: workRef,
+      multiline: false,
+      rows: 1
+    },
+    {
+      id: 'body',
+      label: 'Body',
+      defaultValue: excerpt.body,
+      ref: bodyRef,
+      multiline: true,
+      rows: 10
+    }
   ], [excerpt]);
 
   return (

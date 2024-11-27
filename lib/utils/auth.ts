@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/lib/dashboard/store';
+import type { AppDispatch } from '@/lib/dashboard/store';
 import {
   API_ENDPOINTS,
   AUTH_ROUTES,

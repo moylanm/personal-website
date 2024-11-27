@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { Typography } from '@mui/material';
 import Link from 'next/link';
 import { NotFoundBox, NotFoundButton } from '@/styles';

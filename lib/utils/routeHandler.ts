@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { Session } from 'next-auth';
+import type { Session } from 'next-auth';
 import { auth } from '@/auth';
 import { withCsrf } from './middleware';
 import { apiResponse } from './apiResponses';
