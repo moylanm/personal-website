@@ -1,29 +1,14 @@
+import * as muiMocks from '@/__mocks__/mui-mocks';
+import { Link } from '@/__mocks__/next-mocks';
+import { NavbarButton } from '@/__mocks__/custom-mocks';
 import type { NavPage } from '@/lib/constants/navigation';
 import { render, screen } from '@testing-library/react';
 import { DesktopNav } from '@/components/main/components/DesktopNav';
 
-jest.mock('@mui/material', () => ({
-  Box: ({ children }: React.PropsWithChildren) => <div>{children}</div>
-}));
-
-jest.mock('next/link', () => {
-  const Link = ({ children, href, ...props }: React.PropsWithChildren<{ href: string }>) => (
-    <a href={href} {...props}>{children}</a>
-  );
-  Link.displayName = 'Link';
-  return Link;
-});
-
+jest.mock('@mui/material', () => muiMocks);
+jest.mock('next/link', () => Link);
 jest.mock('@/styles', () => ({
-  NavbarButton: ({ children, href, style }: { 
-    children: React.ReactNode; 
-    href?: string;
-    style?: React.CSSProperties;
-  }) => (
-    <button style={style}>
-      <a href={href}>{children}</a>
-    </button>
-  )
+  NavbarButton
 }));
 
 describe('DesktopNav', () => {
