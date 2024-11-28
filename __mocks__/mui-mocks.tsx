@@ -6,5 +6,5 @@ export const Menu = ({ children, open }: React.PropsWithChildren<{ open: boolean
 export const MenuItem = ({ children, onClick }: React.PropsWithChildren<{ onClick?: () => void }>) => 
   <button onClick={onClick}>{children}</button>;
 
-export const Typography = ({ children }: React.PropsWithChildren) => 
-  <span>{children}</span>;
+export const Typography = ({ children, ...props }: React.PropsWithChildren) => 
+  <span {...props}>{children}</span>;
