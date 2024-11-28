@@ -18,7 +18,7 @@ export const Footer = () => {
     >
       <Container>
         <Typography variant='body2' color='text.secondary' align='center'>
-            {'Powered by '}
+          {'Powered by '}
           <Link color='inherit' href='https://nextjs.org/'>
             Next.js
           </Link>{' in '}
