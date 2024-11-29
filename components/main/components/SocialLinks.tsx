@@ -60,7 +60,8 @@ export const SocialLinks = ({ socialMenu }: SocialLinksProps) => (
             href={link.url} 
             onClick={socialMenu.handleClose}
           >
-            <Image 
+            <Image
+              style={{ marginRight: '5px' }}
               width={24} 
               height={24} 
               src={link.icon} 
