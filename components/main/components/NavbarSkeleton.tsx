@@ -6,7 +6,7 @@ const NavbarSkeleton = () => {
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
           {/* Mobile Menu Icon Skeleton */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
             <Skeleton 
               variant='rectangular' 
               width={40} 
@@ -28,13 +28,13 @@ const NavbarSkeleton = () => {
 
           <Box
             sx={{
-              display: { xs: 'flex', md: 'none' },
+              display: { xs: 'flex', sm: 'none' },
               flexGrow: 1,
             }}
           />
 
           {/* Desktop Nav Items Skeleton */}
-          <Box sx={{ marginLeft: 2, flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 2 }}>
+          <Box sx={{ marginLeft: 2, flexGrow: 1, display: { xs: 'none', sm: 'flex' }, gap: 2 }}>
             {[1, 2, 3].map((item) => (
               <Skeleton 
                 key={item}
@@ -49,7 +49,7 @@ const NavbarSkeleton = () => {
           {/* Social Links Skeleton */}
           <Box sx={{ flexGrow: 0 }}>
             {/* Desktop Social Icons */}
-            <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
+            <Box sx={{ display: { xs: 'none', sm: 'flex' }, gap: 2 }}>
               {[1, 2, 3].map((item) => (
                 <Skeleton 
                   key={item}
@@ -62,7 +62,7 @@ const NavbarSkeleton = () => {
             </Box>
 
             {/* Mobile Social Menu Icon */}
-            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
               <Skeleton 
                 variant='rectangular' 
                 width={40} 
