@@ -5,7 +5,7 @@ import NavbarLogo from '@/components/main/components/NavbarLogo';
 jest.mock('next/image', () => Image);
 
 describe('NavbarLogo', () => {
-  test('renders logo image with correct attributes', () => {
+  it('renders logo image with correct attributes', () => {
     render(<NavbarLogo />);
 
     const logoImage = screen.getByAltText('website logo');
