@@ -6,12 +6,16 @@ const NavbarSkeleton = () => {
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
           {/* Mobile Menu Icon Skeleton */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
+          <Box 
+            data-testid='mobile-menu-container'
+            sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}
+          >
             <Skeleton 
               variant='rectangular' 
               width={40} 
               height={40} 
-              sx={{ bgcolor: 'rgba(255, 255, 255, 0.1)' }} 
+              sx={{ bgcolor: 'rgba(255, 255, 255, 0.1)' }}
+              data-testid='mobile-menu-skeleton'
             />
           </Box>
 
@@ -23,7 +27,8 @@ const NavbarSkeleton = () => {
             sx={{ 
               bgcolor: 'rgba(255, 255, 255, 0.1)',
               display: 'flex'
-            }} 
+            }}
+            data-testid='logo-skeleton'
           />
 
           <Box
@@ -34,14 +39,18 @@ const NavbarSkeleton = () => {
           />
 
           {/* Desktop Nav Items Skeleton */}
-          <Box sx={{ marginLeft: 2, flexGrow: 1, display: { xs: 'none', sm: 'flex' }, gap: 2 }}>
+          <Box 
+            data-testid='desktop-nav-container'
+            sx={{ marginLeft: 2, flexGrow: 1, display: { xs: 'none', sm: 'flex' }, gap: 2 }}
+          >
             {[1, 2, 3].map((item) => (
               <Skeleton 
                 key={item}
                 variant='rectangular' 
                 width={70} 
                 height={36} 
-                sx={{ bgcolor: 'rgba(255, 255, 255, 0.1)' }} 
+                sx={{ bgcolor: 'rgba(255, 255, 255, 0.1)' }}
+                data-testid={`nav-item-skeleton-${item}`}
               />
             ))}
           </Box>
@@ -49,25 +58,33 @@ const NavbarSkeleton = () => {
           {/* Social Links Skeleton */}
           <Box sx={{ flexGrow: 0 }}>
             {/* Desktop Social Icons */}
-            <Box sx={{ display: { xs: 'none', sm: 'flex' }, gap: 2 }}>
+            <Box 
+              data-testid='desktop-social-container'
+              sx={{ display: { xs: 'none', sm: 'flex' }, gap: 2 }}
+            >
               {[1, 2, 3].map((item) => (
                 <Skeleton 
                   key={item}
                   variant='circular' 
                   width={24} 
                   height={24} 
-                  sx={{ bgcolor: 'rgba(255, 255, 255, 0.1)' }} 
+                  sx={{ bgcolor: 'rgba(255, 255, 255, 0.1)' }}
+                  data-testid={`social-icon-skeleton-${item}`}
                 />
               ))}
             </Box>
 
             {/* Mobile Social Menu Icon */}
-            <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
+            <Box 
+              data-testid='mobile-social-container'
+              sx={{ display: { xs: 'flex', sm: 'none' } }}
+            >
               <Skeleton 
                 variant='rectangular' 
                 width={40} 
                 height={40} 
-                sx={{ bgcolor: 'rgba(255, 255, 255, 0.1)' }} 
+                sx={{ bgcolor: 'rgba(255, 255, 255, 0.1)' }}
+                data-testid='mobile-social-skeleton'
               />
             </Box>
           </Box>
