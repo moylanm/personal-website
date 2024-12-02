@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
@@ -6,8 +7,13 @@ const nextConfig: NextConfig = {
       fullUrl: true,
     }
   },
+  eslint: {
+    ignoreDuringBuilds: false,
+    dirs: ['app', 'components', 'lib', 'styles'],
+  },
   reactStrictMode: true,
   poweredByHeader: false,
+  // eslint-disable-next-line @typescript-eslint/require-await
   async headers() {
     const isProd = process.env.NODE_ENV === 'production';
 
