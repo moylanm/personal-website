@@ -43,6 +43,7 @@ const selectFormState = createSelector(
 );
 
 type WorksByAuthor = Record<string, string[]>;
+
 interface WorkOption {
   readonly author: string;
   readonly work: string;
@@ -119,10 +120,10 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    if (status === APIStatus.Fulfilled) {
+    if (status === APIStatus.Fulfilled && statusMessage === 'Excerpt successfully created') {
       clearForm();
     }
-  }, [status, clearForm])
+  }, [status, statusMessage, clearForm])
 
   const { authors, worksByAuthor } = useMemo(() => {
     const uniqueAuthors = Array.from(
