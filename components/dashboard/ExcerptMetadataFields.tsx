@@ -1,6 +1,6 @@
 import { Autocomplete, TextField, Typography } from '@mui/material';
 import React from 'react';
-import type { WorkOption } from '@/lib/dashboard/features/excerpts/excerptTypes';
+import type { WorkOption } from '@/lib/dashboard/features/excerpts/types';
 
 interface ExcerptMetadataFieldsProps {
   authorField: string;

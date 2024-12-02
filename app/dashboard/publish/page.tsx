@@ -16,7 +16,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { APIStatus, type Excerpt } from '@/lib/constants/definitions';
 import { MessageSnackbar } from '@/components';
 import { fetchCsrfToken } from '@/lib/dashboard/features/csrf/csrfSlice';
-import { selectFormState, type WorksByAuthor } from '@/lib/dashboard/features/excerpts/excerptTypes';
+import { selectFormState, type WorksByAuthor } from '@/lib/dashboard/features/excerpts/types';
 import { ExcerptMetadataFields } from '@/components/dashboard/ExcerptMetadataFields';
 import { MarkdownEditor } from '@/components/dashboard/MarkdownEditor';
 
