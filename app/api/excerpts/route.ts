@@ -1,4 +1,3 @@
-// api/excerpts/route.ts
 import { NextResponse } from 'next/server';
 import {
   allExcerpts,

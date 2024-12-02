@@ -1,5 +1,11 @@
 'use client'
 
+import { useState } from "react";
+import type { Excerpt } from "@/lib/constants/definitions";
+import { ExcerptLink } from "@/styles";
+import { Container } from "@mui/system";
+import Markdown from "react-markdown";
+import useInfiniteScroll, { CHUNK_SIZE } from "@/lib/hooks/useInfiniteScroll";
 import {
   Card,
   CardContent,
@@ -7,12 +13,6 @@ import {
   LinearProgress,
   Typography
 } from "@mui/material";
-import type { Excerpt } from "@/lib/constants/definitions";
-import { ExcerptLink } from "@/styles";
-import { Container } from "@mui/system";
-import { useState } from "react";
-import Markdown from "react-markdown";
-import useInfiniteScroll, { CHUNK_SIZE } from "@/lib/hooks/useInfiniteScroll";
 
 const List = ({ excerpts }: { excerpts: Excerpt[] }) => {
 	const [displayCount, setDisplayCount] = useState(CHUNK_SIZE);

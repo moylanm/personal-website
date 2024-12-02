@@ -1,6 +1,6 @@
+import { memo, type ReactNode } from 'react';
 import { Box, Drawer } from '@mui/material';
 import { DRAWER_WIDTH, DRAWER_STYLES } from './constants/styles';
-import { memo, type ReactNode } from 'react';
 
 interface NavigationProps {
   mobileOpen: boolean;
@@ -10,10 +10,10 @@ interface NavigationProps {
 }
 
 const Navigation = memo<NavigationProps>(function Navigation({ 
-  mobileOpen, 
-  onDrawerClose, 
-  isMobile, 
-  children 
+  mobileOpen,
+  onDrawerClose,
+  isMobile,
+  children
 }) {
   return (
     <Box
