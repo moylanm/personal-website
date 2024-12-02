@@ -33,10 +33,6 @@ describe('SocialLinks', () => {
     handleClose: jest.fn(),
   };
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   describe('Desktop View', () => {
     beforeEach(() => {
       global.innerWidth = 1024;
