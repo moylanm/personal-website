@@ -6,7 +6,7 @@ import {
   STATUS,
 } from '@/lib/constants/api';
 import { clearToken, setToken } from '@/lib/dashboard/features/csrf/csrfSlice';
-import { isValidCsrfResponse } from '@/lib/csrf';
+import { isValidCsrfResponse } from '@/lib/utils/validators';
 
 export interface AuthenticatedFetchOptions {
   dispatch: AppDispatch;

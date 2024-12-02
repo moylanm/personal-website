@@ -23,3 +23,14 @@ export const excerptUpdateSchema = excerptInputSchema.extend({
     .positive('ID must be positive')
     .safe('ID must be within safe integer range')
 });
+
+interface CsrfResponse {
+  token: string;
+}
+
+export const isValidCsrfResponse = (data: unknown): data is CsrfResponse => (
+  typeof data === 'object' &&
+  data !== null &&
+  'token' in data &&
+  typeof (data as CsrfResponse).token === 'string'
+);

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { isValidCsrfResponse } from '@/lib/csrf';
+import { isValidCsrfResponse } from '@/lib/utils/validators';
 import type { RootState } from '@/lib/dashboard/store';
 
 interface ThunkConfig {
