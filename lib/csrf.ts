@@ -1,6 +1,10 @@
 import { cookies } from 'next/headers';
 import { randomBytes } from 'crypto';
 
+interface CsrfResponse {
+  token: string;
+}
+
 const CSRF_TOKEN_COOKIE = 'csrf-token';
 const CSRF_SECRET_LENGTH = 32;
 
@@ -25,3 +29,10 @@ export async function validateCsrfToken(token: string) {
   const storedToken = cookiesStore.get(CSRF_TOKEN_COOKIE)?.value;
   return token === storedToken;
 }
+
+export const isValidCsrfResponse = (data: unknown): data is CsrfResponse => (
+  typeof data === 'object' &&
+  data !== null &&
+  'token' in data &&
+  typeof (data as CsrfResponse).token === 'string'
+);

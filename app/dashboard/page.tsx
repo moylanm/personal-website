@@ -10,7 +10,7 @@ export default function Page() {
   const { data: session } = useSession();
 
   useEffect(() => {
-    dispatch(fetchCsrfToken());
+    void dispatch(fetchCsrfToken());
   }, [dispatch]);
 
   return <h2>Welcome {session?.user?.name}...</h2>;

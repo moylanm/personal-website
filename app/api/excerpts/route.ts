@@ -32,8 +32,8 @@ export async function GET(request: Request) {
       : await allExcerpts();
 
     return apiResponse.success(data);
-  } catch (error) {
-    return apiResponse.serverError(error);
+  } catch {
+    return apiResponse.serverError();
   }
 }
 

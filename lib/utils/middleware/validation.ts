@@ -2,12 +2,23 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { apiResponse } from '../apiResponses';
 
-export function withValidation<T extends z.ZodType>(schema: T) {
+export function withValidation<
+  TOutput,
+  TDef extends z.ZodTypeDef,
+  TInput
+>(
+  schema: z.ZodType<TOutput, TDef, TInput>
+) {
   return async (request: Request) => {
     try {
-      const body = await request.json();
-      const parsed = schema.parse(body);
-      return parsed;
+      const rawData: unknown = await request.json();
+      const result = schema.safeParse(rawData);
+
+      if (!result.success) {
+        throw new z.ZodError(result.error.errors);
+      }
+
+      return result.data;
     } catch (error) {
       if (error instanceof z.ZodError) {
         return apiResponse.badRequest(

@@ -3,11 +3,11 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { Typography } from '@mui/material';
 
-type SnackbarProps = {
+interface SnackbarProps {
   response: string;
   severity: 'success' | 'error';
   handleClose: () => void;
-};
+}
 
 export const MessageSnackbar: React.FC<SnackbarProps> = ({
   response,

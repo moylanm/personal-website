@@ -57,7 +57,7 @@ async function fetchLatestExcerpts(count: number): Promise<Excerpt[]> {
     `;
     return data.rows.map((row) => ({
       ...row,
-      createdAt: row.created_at
+      createdAt: row.created_at as string
     } as Excerpt));
   } catch (error) {
     throw new DatabaseError('fetchLatestExcerpts', error);
@@ -77,11 +77,11 @@ async function fetchExcerptById(id: string): Promise<Excerpt | undefined> {
   }
 }
 
-type ExcerptInput = {
+interface ExcerptInput {
   author: string;
   work: string;
   body: string;
-};
+}
 
 export async function publishExcerpt(input: ExcerptInput): Promise<string> {
   try {
@@ -92,14 +92,14 @@ export async function publishExcerpt(input: ExcerptInput): Promise<string> {
       RETURNING id
     `;
 
-    await revalidateExcerptCaches();
-    return data.rows[0]?.id;
+    revalidateExcerptCaches();
+    return data.rows[0]?.id as string;
   } catch (error) {
     throw new DatabaseError('publishExcerpt', error);
   }
 }
 
-type ExcerptUpdate = ExcerptInput & { id: string };
+type ExcerptUpdate = ExcerptInput & { id: number };
 
 export async function updateExcerpt(data: ExcerptUpdate): Promise<void> {
   try {
@@ -108,7 +108,7 @@ export async function updateExcerpt(data: ExcerptUpdate): Promise<void> {
       SET author = ${data.author}, work = ${data.work}, body = ${data.body}
       WHERE id = ${data.id}
     `;
-    await revalidateExcerptCaches();
+    revalidateExcerptCaches();
   } catch (error) {
     throw new DatabaseError('updateExcerpt', error);
   }
@@ -117,12 +117,12 @@ export async function updateExcerpt(data: ExcerptUpdate): Promise<void> {
 export async function deleteExcerpt({ id }: { id: string }): Promise<void> {
   try {
     await sql`DELETE FROM excerpts WHERE id = ${id}`;
-    await revalidateExcerptCaches();
+    revalidateExcerptCaches();
   } catch (error) {
     throw new DatabaseError('deleteExcerpt', error);
   }
 }
 
-async function revalidateExcerptCaches(): Promise<void> {
+function revalidateExcerptCaches() {
   revalidateTag('excerpts');
 }

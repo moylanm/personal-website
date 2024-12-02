@@ -5,27 +5,27 @@ export enum SortDirection {
 	Oldest = 'OLDEST',
 }
 
-type SelectedAuthor = {
+interface SelectedAuthor {
   author: string;
   checked: boolean;
-};
+}
 
-type SelectedWork = {
+interface SelectedWork {
   author: string;
   work: string;
   checked: boolean;
-};
+}
 
 export interface AppState {
   excerpts: Excerpt[];
   authors: string[];
-  works: { [author: string]: string[] };
+  works: Record<string, string[]>;
   sortDirection: SortDirection;
   selectedAuthors: string[];
-  selectedWorks: { [author: string]: string[] };
+  selectedWorks: Record<string, string[]>;
   randomExcerpt: Excerpt | null;
   resetKey: number;
-};
+}
 
 export enum ActionType {
   SetSortOrder = 'SET_SORT_ORDER',
@@ -33,7 +33,7 @@ export enum ActionType {
   SetSelectedWorks = 'SET_SELECTED_WORKS',
   SetRandomExcerpt = 'SET_RANDOM_EXCERPT',
   Reset = 'RESET',
-};
+}
 
 export type Action = 
   | { type: ActionType.SetSortOrder; payload: string }

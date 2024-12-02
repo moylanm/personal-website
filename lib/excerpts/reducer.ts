@@ -40,7 +40,7 @@ export const reducer = (state: AppState, action: Action): AppState => {
     }
     case ActionType.SetSelectedWorks: {
       const { author, work, checked } = action.payload;
-      const authorWorks = state.selectedWorks[author] || [];
+      const authorWorks = state.selectedWorks[author] ?? [];
       const newWorks = checked
         ? [...authorWorks, work]
         : authorWorks.filter(w => w !== work);

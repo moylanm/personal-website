@@ -6,13 +6,14 @@ import {
   STATUS,
 } from '@/lib/constants/api';
 import { clearToken, setToken } from '@/lib/dashboard/features/csrf/csrfSlice';
+import { isValidCsrfResponse } from '@/lib/csrf';
 
-export type AuthenticatedFetchOptions = {
+export interface AuthenticatedFetchOptions {
   dispatch: AppDispatch;
   csrfToken: string | null;
   input: RequestInfo | URL;
   init?: RequestInit;
-};
+}
 
 export class AuthenticationError extends Error {
   constructor(
@@ -31,9 +32,14 @@ async function fetchCsrfToken(dispatch: AppDispatch): Promise<string> {
     throw new AuthenticationError('Failed to fetch CSRF token');
   }
 
-  const { token } = await response.json();
-  dispatch(setToken(token));
-  return token;
+  const data = await response.json() as unknown;
+
+  if (!isValidCsrfResponse(data)) {
+    throw new AuthenticationError('Invalid CSRF token response');
+  }
+
+  dispatch(setToken(data.token));
+  return data.token;
 }
 
 export async function authenticatedFetch({

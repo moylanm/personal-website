@@ -47,7 +47,7 @@ export default function Page() {
   const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchCsrfToken());
+    void dispatch(fetchCsrfToken());
   }, [dispatch]);
 
   useEffect(() => {
@@ -142,7 +142,7 @@ const Item: React.FC<ItemProps> = ({ excerpt, searchTerm, isLast }) => {
 
   const handleDelete = useCallback(() => {
     handleCloseDialog();
-    dispatch(deleteExcerpt(excerpt.id));
+    void dispatch(deleteExcerpt(excerpt.id));
   }, [dispatch, excerpt, handleCloseDialog]);
 
   const handleUpdate = useCallback(async () => {

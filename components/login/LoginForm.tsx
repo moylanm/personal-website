@@ -28,8 +28,7 @@ export function LoginForm() {
         }
 
         return 'Something went wrong.';
-      } catch (error) {
-        console.error('Sign in error:', error);
+      } catch {
         return 'Authentication failed.';
       }
     },

@@ -43,10 +43,10 @@ const selectFormState = createSelector(
 );
 
 type WorksByAuthor = Record<string, string[]>;
-type WorkOption = {
+interface WorkOption {
   readonly author: string;
   readonly work: string;
-};
+}
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -83,7 +83,7 @@ export default function Page() {
   const [tabValue, setTabValue] = useState<number>(0);
 
   useEffect(() => {
-    dispatch(fetchCsrfToken());
+    void dispatch(fetchCsrfToken());
   }, [dispatch]);
 
   const handleSnackbarClose = useCallback(() => {
@@ -107,7 +107,7 @@ export default function Page() {
   }, [dispatch]);
 
   const submitForm = useCallback(() => {
-    dispatch(createExcerpt({
+    void dispatch(createExcerpt({
         author: authorField,
         work: workField,
         body: bodyField
@@ -191,7 +191,7 @@ export default function Page() {
               id={id}
               disabled={disabled}
               fullWidth={fullWidth}
-              size={size || 'medium'}
+              size={size ?? 'medium'}
               slotProps={{
                 inputLabel: InputLabelProps,
                 input: InputProps,
@@ -227,7 +227,7 @@ export default function Page() {
               id={id}
               disabled={disabled}
               fullWidth={fullWidth}
-              size={size || 'medium'}
+              size={size ?? 'medium'}
               slotProps={{
                 inputLabel: InputLabelProps,
                 input: InputProps,

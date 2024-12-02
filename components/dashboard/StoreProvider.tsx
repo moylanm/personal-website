@@ -14,7 +14,7 @@ export function StoreProvider({
 
   if (!storeRef.current) {
     storeRef.current = makeStore()
-    storeRef.current.dispatch(fetchAllExcerpts());
+    void storeRef.current.dispatch(fetchAllExcerpts());
   }
 
   return <Provider store={storeRef.current}>{children}</Provider>

@@ -4,9 +4,9 @@ import { auth } from '@/auth';
 import { withCsrf } from './middleware';
 import { apiResponse } from './apiResponses';
 
-type RouteContext = {
+interface RouteContext {
   session: Session;
-};
+}
 
 type RouteHandler = (
   request: Request,
@@ -23,8 +23,8 @@ export function createProtectedRoute(handler: RouteHandler) {
       if (csrfCheck instanceof NextResponse) return csrfCheck;
 
       return await handler(request, { session });
-    } catch (error) {
-      return apiResponse.serverError(error);
+    } catch {
+      return apiResponse.serverError();
     }
   };
 }

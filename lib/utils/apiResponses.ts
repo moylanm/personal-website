@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 
-type ErrorResponse = {
+interface ErrorResponse {
   message: string;
   status?: number;
   headers?: HeadersInit;
-};
+}
 
 export const apiResponse = {
   error({ message, status = 500, headers }: ErrorResponse) {
@@ -41,8 +41,7 @@ export const apiResponse = {
     return this.error({ message, status: 400 });
   },
 
-  serverError(error: unknown) {
-    console.error('Server error:', error);
+  serverError() {
     return this.error({ 
       message: 'Internal Server Error',
       status: 500 

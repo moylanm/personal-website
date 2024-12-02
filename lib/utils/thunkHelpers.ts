@@ -2,11 +2,11 @@ import type { AppDispatch, RootState } from '@/lib/dashboard/store';
 import { authenticatedFetch, type AuthenticatedFetchOptions } from '@/lib/utils/auth';
 import type{ GetThunkAPI } from '@reduxjs/toolkit';
 
-type ThunkConfig = {
+interface ThunkConfig {
   rejectValue: string;
   state: RootState;
   dispatch: AppDispatch;
-};
+}
 
 type ThunkTools = GetThunkAPI<ThunkConfig>;
 

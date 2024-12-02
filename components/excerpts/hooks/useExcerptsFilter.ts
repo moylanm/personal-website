@@ -5,12 +5,12 @@ import { useReducer, useState, useCallback, useMemo } from 'react';
 
 const createInitialState = (excerpts: Excerpt[]): AppState => {
   const authorsSet = new Set<string>();
-  const works: { [author: string]: Set<string> } = {};
+  const works: Record<string, Set<string>> = {};
 
   for (const excerpt of excerpts) {
     const { author, work } = excerpt;
     authorsSet.add(author);
-    works[author] = works[author] || new Set<string>();
+    works[author] = works[author] ?? new Set<string>();
     works[author].add(work);
   }
 

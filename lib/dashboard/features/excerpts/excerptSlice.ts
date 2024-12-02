@@ -116,13 +116,13 @@ export const excerptSlice = createSlice({
 	name: 'excerpts',
 	initialState,
 	reducers: {
-		setAuthorField: (state, { payload }) => {
+		setAuthorField: (state, { payload }: { payload: string }) => {
 			state.authorField = payload;
 		},
-		setWorkField: (state, { payload }) => {
+		setWorkField: (state, { payload }: { payload: string }) => {
 			state.workField = payload;
 		},
-		setBodyField: (state, { payload }) => {
+		setBodyField: (state, { payload }: { payload: string }) => {
 			state.bodyField = payload;
 		},
 		clearPublishForm: (state) => {

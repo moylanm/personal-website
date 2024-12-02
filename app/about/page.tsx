@@ -53,5 +53,5 @@ export default function Page() {
 			</AboutGrid2>
 		</AboutContainer>
 	);
-};
+}
 

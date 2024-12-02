@@ -1,51 +1,45 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { isValidCsrfResponse } from '@/lib/csrf';
 import type { RootState } from '@/lib/dashboard/store';
 
-type ThunkConfig = {
+interface ThunkConfig {
   rejectValue: string;
   state: RootState;
-};
+}
 
 interface CsrfState {
   token: string | null;
 }
 
-const initialState: CsrfState = {
-  token: null,
-};
+const SLICE_NAME = 'csrf';
+const ERROR_MESSAGE = 'Failed to fetch CSRF token';
 
-export const fetchCsrfToken = createAsyncThunk<
-  string,
-  undefined,
-  ThunkConfig
->('csrf/fetchToken', 
+export const fetchCsrfToken = createAsyncThunk<string, undefined, ThunkConfig>(
+  `${SLICE_NAME}/fetchToken`,
   async (_, { rejectWithValue, getState }) => {
-    const currentState = getState();
-    if (currentState.csrf.token) {
-      return currentState.csrf.token;
-    }
+    const { csrf: { token } } = getState();
+    if (token) return token;
 
     try {
       const response = await fetch('/api/csrf');
-      if (!response.ok) {
-        throw new Error('Failed to fetch CSRF token');
-      }
-      const data = await response.json();
+      if (!response.ok) throw new Error(ERROR_MESSAGE);
+
+      const data = await response.json() as unknown;
+      if (!isValidCsrfResponse(data)) throw new Error('Invalid CSRF token response');
+
       return data.token;
     } catch (error) {
-      return rejectWithValue(
-        error instanceof Error ? error.message : 'Failed to fetch CSRF token'
-      );
+      return rejectWithValue(error instanceof Error ? error.message : ERROR_MESSAGE);
     }
   }
 );
 
 export const csrfSlice = createSlice({
-  name: 'csrf',
-  initialState,
+  name: SLICE_NAME,
+  initialState: { token: null } as CsrfState,
   reducers: {
-    setToken: (state, action) => {
-      state.token = action.payload;
+    setToken: (state, { payload }: { payload: string }) => {
+      state.token = payload;
     },
     clearToken: (state) => {
       state.token = null;
@@ -53,8 +47,8 @@ export const csrfSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCsrfToken.fulfilled, (state, action) => {
-        state.token = action.payload;
+      .addCase(fetchCsrfToken.fulfilled, (state, { payload }) => {
+        state.token = payload;
       })
       .addCase(fetchCsrfToken.rejected, (state) => {
         state.token = null;
