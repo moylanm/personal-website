@@ -9,7 +9,7 @@ import {
 } from '@/styles';
 import { signOut } from 'next-auth/react';
 import { PowerSettingsNewOutlined } from '@mui/icons-material'
-import NavLinks from './NavLinks';
+import NavLinks from './components/NavLinks';
 
 export function SideNav() {
 

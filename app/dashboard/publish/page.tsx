@@ -1,75 +1,25 @@
+// pages/Page.tsx
 'use client'
 
-import {
-  DashboardFormButton,
-  MarkdownPreviewPaper,
-  PublishFormTab,
-  MAIN_COLOR
-} from '@/styles';
+import { DashboardFormButton } from '@/styles';
 import {
   createExcerpt,
   clearPublishForm,
   selectAllExcerpts,
   setAuthorField,
-  setBodyField,
   setWorkField,
+  setBodyField,
   resetState
 } from '@/lib/dashboard/features/excerpts/excerptSlice';
-import {
-  Autocomplete,
-  Box,
-  Tabs,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { createSelector } from '@reduxjs/toolkit';
-import type { RootState } from '@/lib/dashboard/store';
+import { Box } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '@/lib/dashboard/hooks';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { APIStatus, type Excerpt } from '@/lib/constants/definitions';
 import { MessageSnackbar } from '@/components';
 import { fetchCsrfToken } from '@/lib/dashboard/features/csrf/csrfSlice';
-import Markdown from 'react-markdown';
-
-const selectFormState = createSelector(
-  (state: RootState) => state.excerpts,
-  (excerpts) => ({
-    status: excerpts.status,
-    statusMessage: excerpts.statusMessage,
-    authorField: excerpts.authorField,
-    workField: excerpts.workField,
-    bodyField: excerpts.bodyField
-  })
-);
-
-type WorksByAuthor = Record<string, string[]>;
-
-interface WorkOption {
-  readonly author: string;
-  readonly work: string;
-}
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function TabPanel({ children, value, index, ...other }: TabPanelProps) {
-  return (
-    <div
-      role='tabpanel'
-      hidden={value !== index}
-      {...other}
-    >
-      {value === index && (
-        <Box>
-          {children}
-        </Box>
-      )}
-    </div>
-  );
-}
+import { selectFormState, type WorksByAuthor } from '@/lib/dashboard/features/excerpts/excerptTypes';
+import { ExcerptMetadataFields } from '@/components/dashboard/ExcerptMetadataFields';
+import { MarkdownEditor } from '@/components/dashboard/MarkdownEditor';
 
 export default function Page() {
   const dispatch = useAppDispatch();
@@ -109,10 +59,10 @@ export default function Page() {
 
   const submitForm = useCallback(() => {
     void dispatch(createExcerpt({
-        author: authorField,
-        work: workField,
-        body: bodyField
-      } as Excerpt));
+      author: authorField,
+      work: workField,
+      body: bodyField
+    } as Excerpt));
   }, [dispatch, authorField, workField, bodyField]);
 
   const handleTabChange = useCallback((_: React.SyntheticEvent, newValue: number) => {
@@ -123,7 +73,7 @@ export default function Page() {
     if (status === APIStatus.Fulfilled && statusMessage === 'Excerpt successfully created') {
       clearForm();
     }
-  }, [status, statusMessage, clearForm])
+  }, [status, statusMessage, clearForm]);
 
   const { authors, worksByAuthor } = useMemo(() => {
     const uniqueAuthors = Array.from(
@@ -145,7 +95,7 @@ export default function Page() {
   }, [excerpts]);
 
   const sortedWorksOptions = useMemo(() => 
-    authors.flatMap((author): WorkOption[] => {
+    authors.flatMap((author) => {
       const works = worksByAuthor[author] ?? [];
       return works.map((work) => ({ 
         author, 
@@ -155,13 +105,15 @@ export default function Page() {
       a.author.localeCompare(b.author) || a.work.localeCompare(b.work)
     ),
   [authors, worksByAuthor]);
-  
 
   const filteredWorkOptions = useMemo(() => {
     if (!authorField) {
       return sortedWorksOptions;
     }
-    return worksByAuthor[authorField]?.map(work => ({ author: authorField, work })) ?? [];
+    return worksByAuthor[authorField]?.map(work => ({ 
+      author: authorField, 
+      work 
+    })) ?? [];
   }, [authorField, worksByAuthor, sortedWorksOptions]);
 
   const isSubmitDisabled = status === APIStatus.Pending;
@@ -169,134 +121,53 @@ export default function Page() {
   return (
     <>
       <form action={submitForm}>
-        <Autocomplete
-          freeSolo
-          inputValue={authorField}
-          onInputChange={handleAuthorFieldChange}
-          options={authors}
-          renderOption={(props, option) => (
-            <li {...props} key={option}>
-              <Typography>{option}</Typography>
-            </li>
-          )}
-          renderInput={({
-            id,
-            disabled,
-            fullWidth,
-            size,
-            InputLabelProps,
-            InputProps,
-            inputProps
-          }) => (
-            <TextField
-              id={id}
-              disabled={disabled}
-              fullWidth={fullWidth}
-              size={size ?? 'medium'}
-              slotProps={{
-                inputLabel: InputLabelProps,
-                input: InputProps,
-                htmlInput: inputProps
-              }}
-              label='Author'
-              margin='normal'
-            />
-          )}
+        <ExcerptMetadataFields
+          authorField={authorField}
+          workField={workField}
+          authors={authors}
+          filteredWorkOptions={filteredWorkOptions}
+          onAuthorChange={handleAuthorFieldChange}
+          onWorkChange={handleWorkFieldChange}
         />
-        <Autocomplete
-          freeSolo
-          inputValue={workField}
-          onInputChange={handleWorkFieldChange}
-          options={filteredWorkOptions}
-          groupBy={(option) => option.author}
-          getOptionLabel={(option) => typeof option === 'string' ? option : option.work}
-          renderOption={(props, option) => (
-            <li {...props} key={option.work}>
-              <Typography>{option.work}</Typography>
-            </li>
-          )}
-          renderInput={({
-            id,
-            disabled,
-            fullWidth,
-            size,
-            InputLabelProps,
-            InputProps,
-            inputProps
-          }) => (
-            <TextField
-              id={id}
-              disabled={disabled}
-              fullWidth={fullWidth}
-              size={size ?? 'medium'}
-              slotProps={{
-                inputLabel: InputLabelProps,
-                input: InputProps,
-                htmlInput: inputProps
-              }}
-              label='Work'
-              margin='normal'
-            />
-          )}
+
+        <MarkdownEditor
+          bodyField={bodyField}
+          tabValue={tabValue}
+          onBodyChange={handleBodyFieldChange}
+          onTabChange={handleTabChange}
         />
-        
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 2 }}>
-          <Tabs 
-            value={tabValue} 
-            onChange={handleTabChange}
-            aria-label='markdown editor tabs'
-            TabIndicatorProps={{
-              sx: { backgroundColor: MAIN_COLOR }
-            }}
-            sx={{
-              '& .Mui-selected': {
-                color: `${MAIN_COLOR} !important`,
-              },
-            }}
-          >
-            <PublishFormTab label='Edit' />
-            <PublishFormTab label='Preview' />
-          </Tabs>
+
+        <Box sx={{ mt: 2 }}>
+          <DashboardFormButton
+            disabled={isSubmitDisabled}
+            variant='contained'
+            type='submit'>
+              Publish
+          </DashboardFormButton>
+          <Box sx={{ width: '5px', display: 'inline-block' }} />
+          <DashboardFormButton
+            disabled={isSubmitDisabled}
+            variant='contained'
+            onClick={clearForm}>
+              Clear
+          </DashboardFormButton>
         </Box>
-
-        <TabPanel value={tabValue} index={0}>
-          <TextField
-            fullWidth
-            id='body'
-            label='Body'
-            margin='normal'
-            onChange={handleBodyFieldChange}
-            value={bodyField}
-            multiline
-            rows={12}
-          />
-        </TabPanel>
-
-        <TabPanel value={tabValue} index={1}>
-          <MarkdownPreviewPaper variant='outlined' >
-            <Markdown>{bodyField || '*No content to preview*'}</Markdown>
-          </MarkdownPreviewPaper>
-        </TabPanel>
-
-        <DashboardFormButton
-          disabled={isSubmitDisabled}
-          variant='contained'
-          type='submit'>
-            Publish
-          </DashboardFormButton>
-        <Box sx={{ width: '5px', display: 'inline-block' }} />
-        <DashboardFormButton
-          disabled={isSubmitDisabled}
-          variant='contained'
-          onClick={clearForm}>
-            Clear
-          </DashboardFormButton>
       </form>
-    
-      {(status === APIStatus.Fulfilled && statusMessage) &&
-        <MessageSnackbar severity='success' response={statusMessage} handleClose={handleSnackbarClose} />}
-      {(status === APIStatus.Rejected && statusMessage) &&
-        <MessageSnackbar severity='error' response={statusMessage} handleClose={handleSnackbarClose} />}
+
+      {(status === APIStatus.Fulfilled && statusMessage) && (
+        <MessageSnackbar 
+          severity='success' 
+          response={statusMessage} 
+          handleClose={handleSnackbarClose} 
+        />
+      )}
+      {(status === APIStatus.Rejected && statusMessage) && (
+        <MessageSnackbar 
+          severity='error' 
+          response={statusMessage} 
+          handleClose={handleSnackbarClose} 
+        />
+      )}
     </>
   );
 }
