@@ -16,8 +16,8 @@ export default async function Layout({ children }: { children: React.ReactNode }
   if (!session?.user) redirect('/');
 
   return (
-    <StoreProvider>
-      <AuthErrorBoundary>
+    <AuthErrorBoundary>
+      <StoreProvider>
         <Grid2 container direction={{ xs: 'column', md: 'row' }}>
           <Grid2 size={{ xs: 12, md: 2 }}>
             <DashboardLayoutBox>
@@ -32,7 +32,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
             </DashboardLayoutChildrenBox>
           </Grid2>
         </Grid2>
-      </AuthErrorBoundary>
-    </StoreProvider>
+      </StoreProvider>
+    </AuthErrorBoundary>
   );
 }
