@@ -1,4 +1,3 @@
-// pages/Page.tsx
 'use client'
 
 import { DashboardFormButton } from '@/styles';
