@@ -47,10 +47,6 @@ describe('Navbar', () => {
     (useNavPages as jest.Mock).mockReturnValue({ navPages: mockNavPages, isLoading: false });
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   it('renders loading skeleton when data is loading', () => {
     (useNavPages as jest.Mock).mockReturnValue({ navPages: [], isLoading: true });
     render(<Navbar />);
