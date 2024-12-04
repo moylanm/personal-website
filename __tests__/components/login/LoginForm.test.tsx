@@ -140,8 +140,6 @@ describe('LoginForm', () => {
       });
     });
   });
-  
-  
 
   it('redirects to dashboard on successful login', async () => {
     // Mock successful signIn response
@@ -176,7 +174,6 @@ describe('LoginForm', () => {
     });
   });
   
-
   it('handles network errors', async () => {
     (signIn as jest.Mock).mockRejectedValue(new Error('Network error'));
 
