@@ -12,7 +12,7 @@ const credentialsSchema = z.object({
 
 async function getUser(email: string): Promise<User | undefined> {
   try {
-    type UserRow = {
+    interface UserRow {
       name: string;
       password_hash: Buffer;
     }
@@ -32,10 +32,7 @@ async function getUser(email: string): Promise<User | undefined> {
       email,
       passwordHash,
     } as User;
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error('Database error:', error.message);
-    }
+  } catch {
     throw new Error('Failed to fetch user.');
   }
 }
@@ -50,7 +47,7 @@ export const authConfig = {
     updateAge: 30 * 60
   },
   callbacks: {
-    async session({ session, token }) {
+    session({ session, token }) {
       if (token && session.user && typeof token.email === 'string' && typeof token.name === 'string') {
         session.user.email = token.email;
         session.user.name = token.name;
@@ -67,22 +64,18 @@ export const authConfig = {
       async authorize(credentials) {
         if (credentials === null) return null;
 
-        try {
-          const { email, password } = credentialsSchema.parse(credentials);
-          const user = await getUser(email);
+        const { email, password } = credentialsSchema.parse(credentials);
+        const user = await getUser(email);
 
-          if (!user) return null;
+        if (!user) return null;
 
-          const passwordsMatch = await compare(password, user.passwordHash);
+        const passwordsMatch = await compare(password, user.passwordHash);
 
-          if (passwordsMatch) {
-            return {
-              email: user.email,
-              name: user.name
-            };
-          }
-        } catch (error) {
-          console.error('Authorization error:', error);
+        if (passwordsMatch) {
+          return {
+            email: user.email,
+            name: user.name
+          };
         }
 
         return null;
