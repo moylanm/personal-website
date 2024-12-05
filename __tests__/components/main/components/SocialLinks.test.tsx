@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { SocialLinks } from '@/components/main/components/SocialLinks';
-import * as nextMocks from '__mocks__/next-mocks';
+import type { ImageProps } from 'next/image';
 
 export const MOCK_SOCIAL_LINKS = [
   {
@@ -23,7 +23,20 @@ export const MOCK_SOCIAL_LINKS = [
   }
 ] as const;
 
-jest.mock('next', () => nextMocks);
+// Mock next/link
+jest.mock('next/link', () => ({
+  __esModule: true,
+  default: ({ children, href, ...props }: React.PropsWithChildren<{ href: string }>) => 
+    <a href={href} {...props}>{children}</a>
+}));
+
+// Mock next/image
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: ({ alt = '', ...props }: Omit<ImageProps, 'src'> & { src: string }) =>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img alt={alt} {...props} />
+}));
 
 describe('SocialLinks', () => {
   const mockSocialMenu = {
