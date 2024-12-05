@@ -1,8 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import { Image } from '@/__mocks__/next-mocks';
+import type { ImageProps } from 'next/image';
 import NavbarLogo from '@/components/main/components/NavbarLogo';
 
-jest.mock('next/image', () => Image);
+// Mock next/image
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: ({ alt = '', ...props }: Omit<ImageProps, 'src'> & { src: string }) =>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img alt={alt} {...props} />
+}));
 
 describe('NavbarLogo', () => {
   it('renders logo image with correct attributes', () => {
