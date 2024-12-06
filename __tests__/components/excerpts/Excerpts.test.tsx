@@ -132,8 +132,6 @@ describe('Excerpts', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
-
     (useExcerptsFilter as jest.Mock).mockReturnValue({
       state: mockState,
       mobileOpen: false,
