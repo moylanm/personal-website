@@ -51,8 +51,8 @@ describe('FilterButtons', () => {
 
     const buttons = screen.getAllByRole('button');
     buttons.forEach(button => {
-      expect(button).toHaveAttribute('data-variant', 'outlined');
-      expect(button).toHaveAttribute('data-size', 'small');
+      expect(button).toHaveClass('MuiButton-outlined');
+      expect(button).toHaveClass('MuiButton-sizeSmall');
     });
   });
 });
