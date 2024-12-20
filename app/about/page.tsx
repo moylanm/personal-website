@@ -3,38 +3,42 @@ import { Grid2 } from '@mui/material';
 import { AboutCard, AboutContainer, AboutGrid2 } from '@/styles';
 
 export const metadata: Metadata = {
-  title: 'About',
-  description: 'From Navy veteran to software developer - Personal journey and philosophy of Myles Moylan',
+  title: 'About | Curated Wisdom',
+  description: 'A curated collection of meaningful excerpts, insights, and wisdom to provide encouragement and consolation during life\'s challenges',
   openGraph: {
-    title: 'About Myles Moylan',
-    description: 'From Navy veteran to software developer - Personal journey and philosophy of Myles Moylan',
-    type: 'profile',
+    title: 'About | Curated Wisdom Collection',
+    description: 'A thoughtfully curated collection of timeless wisdom, insights, and encouraging words from history\'s most sympathetic minds',
+    type: 'website',
     images: [
       {
         url: '/og-image-about.png',
         width: 1200,
         height: 630,
-        alt: 'About Myles Moylan'
+        alt: 'Curated Wisdom Collection'
       }
     ]
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'About Myles Moylan',
-    description: 'From Navy veteran to software developer - Personal journey and philosophy of Myles Moylan',
+    title: 'About | Curated Wisdom Collection',
+    description: 'A thoughtfully curated collection of timeless wisdom, insights, and encouraging words from history\'s most sympathetic minds',
     images: ['/og-image-about.png']
   },
   alternates: {
     canonical: 'https://mylesmoylan.net/about'
   },
   keywords: [
-    'Navy veteran',
-    'computer science',
-    'software developer',
-    'existentialism',
-    'personal journey',
-    'philosophy',
-    'self-taught programmer'
+    'wisdom collection',
+    'life advice',
+    'philosophical insights',
+    'curated excerpts',
+    'meaningful quotes',
+    'life guidance',
+    'personal growth',
+    'encouragement',
+    'consolation',
+    'human condition',
+    'life challenges'
   ]
 };
 
@@ -51,4 +55,3 @@ export default function Page() {
 		</AboutContainer>
 	);
 }
-
