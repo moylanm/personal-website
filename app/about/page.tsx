@@ -3,10 +3,10 @@ import { Grid2 } from '@mui/material';
 import { AboutCard, AboutContainer, AboutGrid2 } from '@/styles';
 
 export const metadata: Metadata = {
-  title: 'About | Curated Wisdom',
+  title: 'About',
   description: 'A curated collection of meaningful excerpts, insights, and wisdom to provide encouragement and consolation during life\'s challenges',
   openGraph: {
-    title: 'About | Curated Wisdom Collection',
+    title: 'About',
     description: 'A thoughtfully curated collection of timeless wisdom, insights, and encouraging words from history\'s most sympathetic minds',
     type: 'website',
     images: [
