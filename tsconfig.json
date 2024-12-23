@@ -32,9 +32,6 @@
       "@/*": [
         "./*"
       ],
-      "@/components/*": [
-        "components/*"
-      ]
     },
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -64,8 +61,6 @@
     "components/**/*.tsx",
     "lib/**/*.ts",
     "styles/**/*.ts",
-    "__tests__/**/*.ts",
-    "__tests__/**/*.tsx"
   ],
   "exclude": [
     "node_modules"
