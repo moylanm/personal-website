@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@mui/icons-material": "^6.1.9",
+    "@mui/icons-material": "^6.2.1",
     "@mui/material": "^6.1.9",
     "@mui/material-nextjs": "^6.1.9",
     "@mui/system": "^6.1.9",
