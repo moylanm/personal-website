@@ -7,6 +7,7 @@ import { Container } from '@mui/system';
 import Markdown from 'react-markdown';
 import useInfiniteScroll, { CHUNK_SIZE } from '@/lib/hooks/useInfiniteScroll';
 import {
+	Box,
   Card,
   CardContent,
   Grid2,
@@ -50,9 +51,27 @@ const Item: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
               {excerpt.work}
             </Typography>
           </ExcerptLink>
-					<Markdown>
-						{excerpt.body}
-					</Markdown>
+					<Box
+						component='article'
+						sx={{
+							'& p': {
+								mb: 2,
+								lineHeight: 1.7,
+								fontSize: '1.1rem'
+							},
+							'& blockquote': {
+								borderLeft: 4,
+								borderColor: 'primary.main',
+								pl: 2,
+								ml: 0,
+								fontStyle: 'italic'
+							}
+						}}
+					>
+						<Markdown>
+							{excerpt.body}
+						</Markdown>
+					</Box>
 				</CardContent>
 			</Card>
 		</Container>
