@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Box, Container, Typography, Paper } from '@mui/material';
 import { excerptById } from '@/lib/data';
-import Markdown from 'react-markdown';
 import { notFound } from 'next/navigation';
+import ExcerptBody from '@/components/excerpts/ExcerptBody';
 
 interface PageProps {
   params: Promise<{
@@ -73,26 +73,7 @@ export default async function Page({ params }: PageProps) {
             {excerpt.work}
           </Typography>
         </Box>
-
-        <Box 
-          component='article'
-          sx={{ 
-            '& p': { 
-              mb: 2,
-              lineHeight: 1.7,
-              fontSize: '1.1rem'
-            },
-            '& blockquote': {
-              borderLeft: 4,
-              borderColor: 'primary.main',
-              pl: 2,
-              ml: 0,
-              fontStyle: 'italic'
-            }
-          }}
-        >
-          <Markdown>{excerpt.body}</Markdown>
-        </Box>
+        <ExcerptBody body={excerpt.body} />
       </Paper>
     </Container>
   );

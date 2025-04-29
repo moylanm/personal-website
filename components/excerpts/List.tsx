@@ -4,16 +4,15 @@ import { useState } from 'react';
 import type { Excerpt } from '@/lib/constants/definitions';
 import { ExcerptLink } from '@/styles';
 import { Container } from '@mui/system';
-import Markdown from 'react-markdown';
 import useInfiniteScroll, { CHUNK_SIZE } from '@/lib/hooks/useInfiniteScroll';
 import {
-	Box,
   Card,
   CardContent,
   Grid2,
   LinearProgress,
   Typography
 } from '@mui/material';
+import ExcerptBody from './ExcerptBody';
 
 const List = ({ excerpts }: { excerpts: Excerpt[] }) => {
 	const [displayCount, setDisplayCount] = useState(CHUNK_SIZE);
@@ -51,27 +50,7 @@ const Item: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
               {excerpt.work}
             </Typography>
           </ExcerptLink>
-					<Box
-						component='article'
-						sx={{
-							'& p': {
-								mb: 2,
-								lineHeight: 1.7,
-								fontSize: '1.1rem'
-							},
-							'& blockquote': {
-								borderLeft: 4,
-								borderColor: 'primary.main',
-								pl: 2,
-								ml: 0,
-								fontStyle: 'italic'
-							}
-						}}
-					>
-						<Markdown>
-							{excerpt.body}
-						</Markdown>
-					</Box>
+					<ExcerptBody body={excerpt.body} />
 				</CardContent>
 			</Card>
 		</Container>
