@@ -13,7 +13,7 @@ const ExcerptBody: React.FC<{ body: string }> = ({ body }) => {
         },
         '& blockquote': {
           borderLeft: 4,
-          borderColor: '#3e3e3e',
+          borderColor: '#686868',
           pl: 2,
           ml: 0,
           fontStyle: 'italic'
