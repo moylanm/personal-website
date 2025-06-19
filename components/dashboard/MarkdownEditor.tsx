@@ -1,8 +1,8 @@
 import { Box, Tabs, TextField } from '@mui/material';
 import { MAIN_COLOR, MarkdownPreviewPaper, PublishFormTab } from '@/styles';
 import React from 'react';
-import Markdown from 'react-markdown';
 import { TabPanel } from './PreviewTabPanel';
+import ExcerptBody from '../excerpts/ExcerptBody';
 
 interface MarkdownEditorProps {
   bodyField: string;
@@ -53,7 +53,7 @@ export function MarkdownEditor({
 
       <TabPanel value={tabValue} index={1}>
         <MarkdownPreviewPaper variant='outlined'>
-          <Markdown>{bodyField || '*No content to preview*'}</Markdown>
+          <ExcerptBody body={bodyField} />
         </MarkdownPreviewPaper>
       </TabPanel>
     </>
