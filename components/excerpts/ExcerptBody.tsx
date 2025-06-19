@@ -1,4 +1,3 @@
-import { MAIN_COLOR } from '@/styles';
 import { Box } from '@mui/material';
 import Markdown from 'react-markdown';
 
@@ -14,7 +13,7 @@ const ExcerptBody: React.FC<{ body: string }> = ({ body }) => {
         },
         '& blockquote': {
           borderLeft: 4,
-          borderColor: MAIN_COLOR,
+          borderColor: '#3e3e3e',
           pl: 2,
           ml: 0,
           fontStyle: 'italic'
