@@ -48,7 +48,13 @@ export default function Page() {
 			<AboutGrid2 container spacing={0}>
 				<Grid2>
 					<AboutCard>
-						As anyone knows, life isn&apos;t easy, and it can be hard to find encouraging words which are also substantial and meaningful enough to pick one up during dark, difficult times. Fortunately for us we are the progeny of many wise and sympathetic people who left behind little gems of advice, insight, and consolation for the trials and tribulations which are an inherent part of the human condition. That being said, I am, I suppose, somewhat of a collector of these gems, and I built this website so that I could share them with others.
+            Life is rarely simple. In its darker moments, we often reach for words—words that can offer not just comfort, but real meaning. Yet it&apos;s not always easy to find language that speaks honestly to the struggles of the human soul.
+
+            Fortunately, we are not the first to wrestle with life&apos;s questions. Across time and cultures, thoughtful individuals have left behind fragments of wisdom—small gems tucked into pages of books. These works remind us that we are not alone, that the human experience—however fractured or uncertain—has been deeply explored by those who came before us.
+
+            This website is a home for some of those fragments. Over the course of my own soul-search—a journey shaped by curiosity, loss, growth, and wonder—I&apos;ve gathered passages that resonated deeply. They offered me insight, challenged my assumptions, and at times, helped me keep going. I share them here not as answers, but as companions for the road.
+
+            If you find something here that moves you, gives you pause, or helps you feel understood, then this space has done what it was meant to do.
 					</AboutCard>
 				</Grid2>
 			</AboutGrid2>
