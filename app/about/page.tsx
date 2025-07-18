@@ -54,7 +54,7 @@ export default function Page() {
             Fortunately, we are not the first to wrestle with life&apos;s questions. Across time and cultures, thoughtful individuals have left behind fragments of wisdom—small gems tucked into pages of books. These works remind us that we are not alone, that the human experience—however fractured or uncertain—has been deeply explored by those who came before us.
             <br />
             <br />
-            This website is a home for some of those fragments. Over the course of my own soul-search—a journey shaped by curiosity, loss, growth, and wonder—I&apos;ve gathered passages that resonated deeply. They offered me insight, challenged my assumptions, and at times, helped me keep going. I share them here not as answers, but as companions for the road.
+            This website is a home for some of those fragments. Over the course of my own soul-search—a journey shaped by curiosity, loss, growth, and wonder—I&apos;ve gathered passages that resonated deeply. They offered me insight, challenged my assumptions, and at times, helped me to keep going. I share them here not as answers, but as companions for the road.
             <br />
             <br />
             If you find something here that moves you, gives you pause, or helps you feel understood, then this space has done what it was meant to do.
