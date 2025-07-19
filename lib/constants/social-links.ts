@@ -13,15 +13,15 @@ export const SOCIAL_LINKS: SocialLink[] = [
     title: 'Bluesky'
   },
   {
-    url: 'https://github.com/moylanm',
-    icon: '/github.png',
-    alt: 'Github page',
-    title: 'Github'
-  },
-  {
     url: 'https://www.linkedin.com/in/myles-moylan/',
     icon: '/linkedin.png',
     alt: 'LinkedIn page',
     title: 'LinkedIn'
+  },
+  {
+    url: 'https://github.com/moylanm',
+    icon: '/github.png',
+    alt: 'Github page',
+    title: 'Github'
   }
 ];
