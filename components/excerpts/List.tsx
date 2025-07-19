@@ -43,7 +43,7 @@ const Item: React.FC<{ excerpt: Excerpt }> = ({ excerpt }) => {
 				justifyContent: 'center',
 			}}>
 				<CardContent>
-          <ExcerptLink href={`/excerpts/${excerpt.id}`}>
+          <ExcerptLink href={`/excerpts/${excerpt.id}`} target='_blank'>
             <Typography sx={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
               {excerpt.author}
               <br />
