@@ -18,7 +18,7 @@ export const SocialLinks = ({ socialMenu }: SocialLinksProps) => (
     {/* Desktop view */}
     <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
       {SOCIAL_LINKS.map((link) => (
-        <Link key={link.title} href={link.url}>
+        <Link key={link.title} href={link.url} target='_blank'>
           <Image
             style={{ marginLeft: '10px' }}
             width={24}
